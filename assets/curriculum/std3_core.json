@@ -1,0 +1,62 @@
+[
+  {
+    "level_id": 31,
+    "subject": "Math",
+    "rural_theme": "Dairy Milk Collection",
+    "story_intro": "गावातील डेअरीमध्ये आज किती लिटर दूध जमा झाले आहे ते मोजा.",
+    "question_pool": [
+      {
+        "type": "tap_manipulative",
+        "target_answer": "15"
+      },
+      {
+        "type": "voice_input",
+        "target_answer": "वीस"
+      },
+      {
+        "type": "tap_manipulative",
+        "target_answer": "25"
+      }
+    ]
+  },
+  {
+    "level_id": 32,
+    "subject": "Math",
+    "rural_theme": "Mandi Produce Sorting",
+    "story_intro": "बाजार समितीत आज किती पोती कांदा आला आहे ते सांगा.",
+    "question_pool": [
+      {
+        "type": "voice_input",
+        "target_answer": "पन्नास"
+      },
+      {
+        "type": "tap_manipulative",
+        "target_answer": "40"
+      },
+      {
+        "type": "voice_input",
+        "target_answer": "साठ"
+      }
+    ]
+  },
+  {
+    "level_id": 33,
+    "subject": "Language",
+    "rural_theme": "Farming Tools",
+    "story_intro": "शेतीची अवजारे ओळखा आणि त्यांची नावे मोठ्याने सांगा.",
+    "question_pool": [
+      {
+        "type": "voice_input",
+        "target_answer": "नांगर"
+      },
+      {
+        "type": "voice_input",
+        "target_answer": "कुऱ्हाड"
+      },
+      {
+        "type": "tap_manipulative",
+        "target_answer": "विळा"
+      }
+    ]
+  }
+]
