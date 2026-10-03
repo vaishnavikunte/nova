@@ -4,6 +4,7 @@ import 'package:drift/drift.dart' hide Column;
 import '../../../core/db/database.dart';
 import '../../../core/db/student_repository.dart';
 import '../../curriculum/presentation/village_dashboard_screen.dart';
+import '../../../nova_main/screens/onboarding/welcome_screen.dart';
 
 class OnboardingScreen extends ConsumerStatefulWidget {
   const OnboardingScreen({super.key});
@@ -48,7 +49,7 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
     if (mounted) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const VillageDashboardScreen()),
+        MaterialPageRoute(builder: (context) => const WelcomeScreen()),
       );
     }
   }

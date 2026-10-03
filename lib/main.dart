@@ -4,10 +4,16 @@ import 'core/theme/app_theme.dart';
 import 'features/onboarding/presentation/onboarding_screen.dart';
 import 'features/curriculum/presentation/village_dashboard_screen.dart';
 import 'core/routing/boot_logic.dart';
+import 'nova_main/services/app_state.dart';
+import 'nova_main/screens/onboarding/welcome_screen.dart';
 void main() {
+  final appState = AppState();
   runApp(
-    const ProviderScope(
-      child: MajheGaonApp(),
+    ProviderScope(
+      child: AppStateScope(
+        appState: appState,
+        child: const MajheGaonApp(),
+      ),
     ),
   );
 }
@@ -35,7 +41,7 @@ class BootRouter extends ConsumerWidget {
     return bootState.when(
       data: (hasProfiles) {
         if (hasProfiles) {
-          return const VillageDashboardScreen();
+          return const WelcomeScreen();
         } else {
           return const OnboardingScreen();
         }

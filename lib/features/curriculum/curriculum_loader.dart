@@ -55,6 +55,21 @@ class CurriculumLoader {
     final List<dynamic> jsonList = json.decode(jsonString);
 
     _cachedLevels = jsonList.map((json) => LevelModel.fromJson(json)).toList();
+    
+    // Intercept Level 1 for STT/TTS Testing Sandbox
+    final index = _cachedLevels!.indexWhere((l) => l.levelId == 1);
+    if (index != -1) {
+      _cachedLevels![index] = LevelModel(
+        levelId: 1,
+        subject: 'Marathi Reading',
+        ruralTheme: 'Story',
+        storyIntro: 'एक होता कावळा.',
+        questionPool: [
+          QuestionModel(type: 'voice_input', targetAnswer: 'कावळा'),
+        ],
+      );
+    }
+
     return _cachedLevels!;
   }
   

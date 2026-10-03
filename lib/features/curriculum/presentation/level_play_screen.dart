@@ -191,15 +191,25 @@ class _LevelPlayScreenState extends State<LevelPlayScreen> with SingleTickerProv
                             borderRadius: BorderRadius.circular(24),
                           ),
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 64.0, horizontal: 24.0),
-                            child: Text(
-                              _level!.storyIntro,
-                              style: const TextStyle(
-                                fontSize: 32, 
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black87,
-                              ),
-                              textAlign: TextAlign.center,
+                            padding: const EdgeInsets.symmetric(vertical: 48.0, horizontal: 24.0),
+                            child: Column(
+                              children: [
+                                Text(
+                                  _level!.storyIntro,
+                                  style: const TextStyle(
+                                    fontSize: 32, 
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black87,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                                const SizedBox(height: 24),
+                                IconButton(
+                                  icon: const Icon(Icons.volume_up_rounded, size: 56, color: Colors.blue),
+                                  onPressed: () => _playStoryIntro(_level!.storyIntro),
+                                  tooltip: 'गोष्ट ऐका', // Listen to story
+                                ),
+                              ],
                             ),
                           ),
                         ),
