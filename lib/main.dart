@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'nova_main/routes/nova_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'core/theme/app_theme.dart';
 import 'features/onboarding/presentation/onboarding_screen.dart';
@@ -27,6 +28,7 @@ class MajheGaonApp extends StatelessWidget {
       title: 'Majhe Gaon',
       theme: AppTheme.lightTheme,
       home: const BootRouter(),
+      onGenerateRoute: (settings) => NovaRouter.generateRoute(settings, context),
     );
   }
 }
