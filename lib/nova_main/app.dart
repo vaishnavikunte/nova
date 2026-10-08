@@ -18,6 +18,7 @@ import 'screens/onboarding/welcome_screen.dart';
 import 'screens/story/story_screen.dart';
 import 'services/app_state.dart';
 import 'theme/app_theme.dart';
+import '../features/lessons/presentation/screens/lesson_player_screen.dart';
 
 /// Root application widget configuring themes, routes, and accessibility text scaling.
 class NovaApp extends StatelessWidget {
@@ -81,6 +82,15 @@ class NovaApp extends StatelessWidget {
 
           case AppRoutes.story:
             return RouteTransitions.slideUp(const StoryScreen(), reduceMotion: reduceMotion);
+
+          case AppRoutes.lessonPlayer:
+            return RouteTransitions.slideUp(
+              LessonPlayerScreen(
+                standard: appState.student.classNumber,
+                level: appState.activeLevel?.number ?? appState.student.currentLevel,
+              ),
+              reduceMotion: reduceMotion,
+            );
 
           case AppRoutes.levelComplete:
             return RouteTransitions.scaleFade(const LevelCompleteScreen(), reduceMotion: reduceMotion);

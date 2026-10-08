@@ -148,7 +148,11 @@ class LevelDetailScreen extends StatelessWidget {
                         icon: Icons.play_arrow_rounded,
                         onPressed: () {
                           appState.startLevel(level.number);
-                          Navigator.pushReplacementNamed(context, AppRoutes.story);
+                          if (appState.student.classNumber == 1 && level.number == 1) {
+                            Navigator.pushReplacementNamed(context, AppRoutes.lessonPlayer);
+                          } else {
+                            Navigator.pushReplacementNamed(context, AppRoutes.story);
+                          }
                         },
                       ),
                     ],
