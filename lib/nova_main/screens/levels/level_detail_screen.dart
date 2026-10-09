@@ -7,6 +7,8 @@ import '../../theme/app_colors.dart';
 import '../../theme/app_spacing.dart';
 import '../../theme/app_text_styles.dart';
 import '../../widgets/primary_button.dart';
+import '../../../features/curriculum/presentation/std1_level1_story_screen.dart';
+import '../story/story_screen.dart';
 
 /// Level detail preview modal presenting challenge topic, estimated time, and reward stars.
 class LevelDetailScreen extends StatelessWidget {
@@ -148,7 +150,17 @@ class LevelDetailScreen extends StatelessWidget {
                         icon: Icons.play_arrow_rounded,
                         onPressed: () {
                           appState.startLevel(level.number);
-                          Navigator.pushReplacementNamed(context, AppRoutes.story);
+                          if (appState.student.classNumber == 1 && level.number == 1) {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(builder: (context) => const Std1Level1StoryScreen()),
+                            );
+                          } else {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(builder: (context) => const StoryScreen()),
+                            );
+                          }
                         },
                       ),
                     ],

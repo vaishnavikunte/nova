@@ -11,6 +11,7 @@ import '../../theme/app_text_styles.dart';
 import '../../widgets/level_node.dart';
 import '../../widgets/mascot_widget.dart';
 import '../../widgets/offline_badge.dart';
+import '../levels/level_detail_screen.dart';
 
 /// Adventure Map hero screen with winding cubic S-curve path and 15 interactive level nodes.
 class AdventureMapScreen extends StatefulWidget {
@@ -50,7 +51,10 @@ class _AdventureMapScreenState extends State<AdventureMapScreen> {
 
   void _openLevelDetail(AppState appState, LevelModel level) {
     appState.startLevel(level.number);
-    Navigator.pushNamed(context, AppRoutes.levelDetail);
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const LevelDetailScreen()),
+    );
   }
 
   @override
