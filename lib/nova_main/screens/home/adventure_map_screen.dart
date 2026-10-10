@@ -11,6 +11,7 @@ import '../../theme/app_text_styles.dart';
 import '../../widgets/level_node.dart';
 import '../../widgets/mascot_widget.dart';
 import '../../widgets/offline_badge.dart';
+import '../../widgets/child_character_widget.dart';
 import '../levels/level_detail_screen.dart';
 
 /// Adventure Map hero screen with winding cubic S-curve path and 15 interactive level nodes.
@@ -91,7 +92,9 @@ class _AdventureMapScreenState extends State<AdventureMapScreen> {
                         padding: const EdgeInsets.only(top: 30, bottom: 120),
                         child: Center(
                           child: ConstrainedBox(
-                            constraints: const BoxConstraints(maxWidth: AppSpacing.maxContentWidth),
+                            constraints: const BoxConstraints(
+                              maxWidth: AppSpacing.maxContentWidth,
+                            ),
                             child: SizedBox(
                               height: 15 * 130.0 + 80,
                               child: Stack(
@@ -101,9 +104,12 @@ class _AdventureMapScreenState extends State<AdventureMapScreen> {
                                     child: CustomPaint(
                                       painter: _WindingPathPainter(
                                         totalLevels: 15,
-                                        completedLevelMax: student.completedLevels.isEmpty
+                                        completedLevelMax:
+                                            student.completedLevels.isEmpty
                                             ? 0
-                                            : student.completedLevels.reduce(max),
+                                            : student.completedLevels.reduce(
+                                                max,
+                                              ),
                                       ),
                                     ),
                                   ),
@@ -128,6 +134,17 @@ class _AdventureMapScreenState extends State<AdventureMapScreen> {
                 ),
               ],
             ),
+            // Animated child character holding a book (Learning theme)
+            Positioned(
+              bottom: 100,
+              right: -30,
+              child: IgnorePointer(
+                child: const ChildCharacterWidget(
+                  size: 130,
+                  prop: ChildProp.book,
+                ),
+              ),
+            ),
 
             // Persistent floating bottom pill: [ Continue Level {n} ]
             Positioned(
@@ -144,19 +161,30 @@ class _AdventureMapScreenState extends State<AdventureMapScreen> {
                       elevation: 6,
                       shadowColor: AppColors.shadowNavy,
                       minimumSize: const Size(double.infinity, 58),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(29)),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(29),
+                      ),
                     ),
                     onPressed: () {
-                      final currentLvlModel = appState.currentCourse.getLevel(currentLevel);
+                      final currentLvlModel = appState.currentCourse.getLevel(
+                        currentLevel,
+                      );
                       _openLevelDetail(appState, currentLvlModel);
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Icon(Icons.play_circle_fill_rounded, color: AppColors.sunYellow, size: 28),
+                        const Icon(
+                          Icons.play_circle_fill_rounded,
+                          color: AppColors.sunYellow,
+                          size: 28,
+                        ),
                         const SizedBox(width: 8),
                         Text(
-                          AppStrings.continueLevelPill.replaceAll('{n}', '$currentLevel'),
+                          AppStrings.continueLevelPill.replaceAll(
+                            '{n}',
+                            '$currentLevel',
+                          ),
                           style: AppTextStyles.button,
                         ),
                       ],
@@ -175,17 +203,38 @@ class _AdventureMapScreenState extends State<AdventureMapScreen> {
     final student = appState.student;
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: 8),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.md,
+        vertical: 8,
+      ),
       color: Colors.white,
       child: Row(
         children: [
+          // Drawer menu button
+          IconButton(
+            icon: const Icon(
+              Icons.menu_rounded,
+              color: AppColors.navy,
+              size: 30,
+            ),
+            onPressed: () {
+              // Find the parent HomeShell Scaffold to open the drawer
+              context
+                  .findRootAncestorStateOfType<ScaffoldState>()
+                  ?.openDrawer();
+            },
+          ),
+          const SizedBox(width: 4),
+
           // Class chip
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             decoration: BoxDecoration(
               color: const Color(0xFFEEF2FF),
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(color: AppColors.indigo.withValues(alpha: 0.3)),
+              border: Border.all(
+                color: AppColors.indigo.withValues(alpha: 0.3),
+              ),
             ),
             child: Row(
               children: [
@@ -193,7 +242,11 @@ class _AdventureMapScreenState extends State<AdventureMapScreen> {
                 const SizedBox(width: 4),
                 Text(
                   'Class ${student.classNumber}',
-                  style: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.navy, fontSize: 13),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.navy,
+                    fontSize: 13,
+                  ),
                 ),
               ],
             ),
@@ -210,11 +263,19 @@ class _AdventureMapScreenState extends State<AdventureMapScreen> {
             ),
             child: Row(
               children: [
-                const Icon(Icons.star_rounded, color: AppColors.sunYellow, size: 18),
+                const Icon(
+                  Icons.star_rounded,
+                  color: AppColors.sunYellow,
+                  size: 18,
+                ),
                 const SizedBox(width: 4),
                 Text(
                   '${student.stars}',
-                  style: const TextStyle(fontWeight: FontWeight.w800, color: Color(0xFFB45309), fontSize: 13),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w800,
+                    color: Color(0xFFB45309),
+                    fontSize: 13,
+                  ),
                 ),
               ],
             ),
@@ -235,7 +296,11 @@ class _AdventureMapScreenState extends State<AdventureMapScreen> {
                 const SizedBox(width: 4),
                 Text(
                   '${student.streak}',
-                  style: const TextStyle(fontWeight: FontWeight.w800, color: Color(0xFF991B1B), fontSize: 13),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w800,
+                    color: Color(0xFF991B1B),
+                    fontSize: 13,
+                  ),
                 ),
               ],
             ),
@@ -293,7 +358,10 @@ class _WindingPathPainter extends CustomPainter {
   final int totalLevels;
   final int completedLevelMax;
 
-  _WindingPathPainter({required this.totalLevels, required this.completedLevelMax});
+  _WindingPathPainter({
+    required this.totalLevels,
+    required this.completedLevelMax,
+  });
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -323,11 +391,7 @@ class _WindingPathPainter extends CustomPainter {
 
       final path = Path();
       path.moveTo(x1, y1);
-      path.cubicTo(
-        x1, y1 - rowHeight * 0.5,
-        x2, y2 + rowHeight * 0.5,
-        x2, y2,
-      );
+      path.cubicTo(x1, y1 - rowHeight * 0.5, x2, y2 + rowHeight * 0.5, x2, y2);
 
       final int levelNum = 15 - i;
       final bool isSegmentCompleted = levelNum <= completedLevelMax;

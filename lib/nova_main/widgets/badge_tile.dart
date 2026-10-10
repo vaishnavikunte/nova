@@ -11,11 +11,7 @@ class BadgeTile extends StatelessWidget {
   final BadgeModel badge;
   final VoidCallback onTap;
 
-  const BadgeTile({
-    super.key,
-    required this.badge,
-    required this.onTap,
-  });
+  const BadgeTile({super.key, required this.badge, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -29,10 +25,14 @@ class BadgeTile extends StatelessWidget {
         margin: const EdgeInsets.only(right: AppSpacing.md),
         padding: const EdgeInsets.all(AppSpacing.sm),
         decoration: BoxDecoration(
-          color: badge.isUnlocked ? Colors.white : AppColors.softGrey.withValues(alpha: 0.5),
+          color: badge.isUnlocked
+              ? Colors.white
+              : AppColors.softGrey.withValues(alpha: 0.5),
           borderRadius: AppSpacing.roundedCard,
           border: Border.all(
-            color: badge.isUnlocked ? AppColors.sunYellow : AppColors.borderLight,
+            color: badge.isUnlocked
+                ? AppColors.sunYellow
+                : AppColors.borderLight,
             width: badge.isUnlocked ? 2.0 : 1.2,
           ),
           boxShadow: badge.isUnlocked ? AppSpacing.softShadow : null,
@@ -161,5 +161,6 @@ class _RingPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant _RingPainter oldDelegate) => oldDelegate.fraction != fraction;
+  bool shouldRepaint(covariant _RingPainter oldDelegate) =>
+      oldDelegate.fraction != fraction;
 }

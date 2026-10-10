@@ -14,10 +14,5 @@ void main() {
 
   final appState = AppState();
 
-  runApp(
-    AppStateScope(
-      appState: appState,
-      child: const NovaApp(),
-    ),
-  );
+  runApp(AppStateScope(appState: appState, child: const NovaApp()));
 }

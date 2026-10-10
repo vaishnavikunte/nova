@@ -12,17 +12,18 @@ class AppColors {
   static const Color sunYellow = Color(0xFFFFD66B);
   static const Color mint = Color(0xFF6FD9B0);
   static const Color coral = Color(0xFFFF8A7A);
-  static const Color bgLight = Color(0xFFF3F8FF);
-  static const Color card = Color(0xFFFFFFFF);
-  static const Color ink = Color(0xFF1B1F3B);
+  static const Color bgLight =
+      Colors.transparent; // Let global purple wrapper show through
+  static const Color card = Color(0xFFF0E9FF); // Light lilac cards
+  static const Color ink = Color(0xFF2F185E); // Dark purple text
   static const Color inkSoft = Color(0xFF5B6285);
 
   // Surface and utility variants
-  static const Color borderLight = Color(0xFFE2E8F4);
-  static const Color softGrey = Color(0xFFEAEFF8);
-  static const Color disabledGrey = Color(0xFFB0B7C3);
-  static const Color shadowNavy = Color(0x1F1F2A6B); // ~12% opacity
-  static const Color glowYellow = Color(0x80FFD66B);
+  static const Color borderLight = Color(0xFFB9A0FF); // Lavender borders
+  static const Color softGrey = Color(0xFFE5D9FF); // Soft lavender
+  static const Color disabledGrey = Color(0xFFB9A0FF);
+  static const Color shadowNavy = Color(0x335425A8); // Deep purple shadow
+  static const Color glowYellow = Color(0x80FFD65A);
 
   // High contrast theme tokens (WCAG AAA)
   static const Color hcBackground = Color(0xFF000000);

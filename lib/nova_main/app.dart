@@ -18,6 +18,7 @@ import 'screens/onboarding/welcome_screen.dart';
 import 'screens/story/story_screen.dart';
 import 'services/app_state.dart';
 import 'theme/app_theme.dart';
+import 'widgets/global_purple_theme.dart';
 
 /// Root application widget configuring themes, routes, and accessibility text scaling.
 class NovaApp extends StatelessWidget {
@@ -31,7 +32,9 @@ class NovaApp extends StatelessWidget {
     return MaterialApp(
       title: AppStrings.appName,
       debugShowCheckedModeBanner: false,
-      theme: accessibility.highContrast ? AppTheme.highContrastTheme : AppTheme.lightTheme,
+      theme: accessibility.highContrast
+          ? AppTheme.highContrastTheme
+          : AppTheme.lightTheme,
       builder: (context, child) {
         // Accessibility Text Scaling: multiply by 1.3 if largeText is ON, clamp at 2.0 total
         final currentScaler = MediaQuery.textScalerOf(context);
@@ -41,10 +44,12 @@ class NovaApp extends StatelessWidget {
             : min(2.0, baseScale);
 
         return MediaQuery(
-          data: MediaQuery.of(context).copyWith(
-            textScaler: TextScaler.linear(effectiveScale),
+          data: MediaQuery.of(
+            context,
+          ).copyWith(textScaler: TextScaler.linear(effectiveScale)),
+          child: GlobalPurpleThemeWrapper(
+            child: child ?? const SizedBox.shrink(),
           ),
-          child: child ?? const SizedBox.shrink(),
         );
       },
       initialRoute: AppRoutes.splash,
@@ -56,40 +61,76 @@ class NovaApp extends StatelessWidget {
             return MaterialPageRoute(builder: (_) => const SplashScreen());
 
           case AppRoutes.welcome:
-            return RouteTransitions.horizontalSlide(const WelcomeScreen(), reduceMotion: reduceMotion);
+            return RouteTransitions.horizontalSlide(
+              const WelcomeScreen(),
+              reduceMotion: reduceMotion,
+            );
 
           case AppRoutes.studentSetup:
-            return RouteTransitions.horizontalSlide(const StudentSetupScreen(), reduceMotion: reduceMotion);
+            return RouteTransitions.horizontalSlide(
+              const StudentSetupScreen(),
+              reduceMotion: reduceMotion,
+            );
 
           case AppRoutes.assessmentIntro:
-            return RouteTransitions.horizontalSlide(const AssessmentIntroScreen(), reduceMotion: reduceMotion);
+            return RouteTransitions.horizontalSlide(
+              const AssessmentIntroScreen(),
+              reduceMotion: reduceMotion,
+            );
 
           case AppRoutes.assessmentQuestion:
-            return RouteTransitions.slideUp(const AssessmentQuestionScreen(), reduceMotion: reduceMotion);
+            return RouteTransitions.slideUp(
+              const AssessmentQuestionScreen(),
+              reduceMotion: reduceMotion,
+            );
 
           case AppRoutes.assessmentResult:
-            return RouteTransitions.scaleFade(const AssessmentResultScreen(), reduceMotion: reduceMotion);
+            return RouteTransitions.scaleFade(
+              const AssessmentResultScreen(),
+              reduceMotion: reduceMotion,
+            );
 
           case AppRoutes.levelRecommendation:
-            return RouteTransitions.scaleFade(const LevelRecommendationScreen(), reduceMotion: reduceMotion);
+            return RouteTransitions.scaleFade(
+              const LevelRecommendationScreen(),
+              reduceMotion: reduceMotion,
+            );
 
           case AppRoutes.home:
-            return RouteTransitions.horizontalSlide(const HomeShell(), reduceMotion: reduceMotion);
+            return RouteTransitions.horizontalSlide(
+              const HomeShell(),
+              reduceMotion: reduceMotion,
+            );
 
           case AppRoutes.levelDetail:
-            return RouteTransitions.slideUp(const LevelDetailScreen(), reduceMotion: reduceMotion);
+            return RouteTransitions.slideUp(
+              const LevelDetailScreen(),
+              reduceMotion: reduceMotion,
+            );
 
           case AppRoutes.story:
-            return RouteTransitions.slideUp(const StoryScreen(), reduceMotion: reduceMotion);
+            return RouteTransitions.slideUp(
+              const StoryScreen(),
+              reduceMotion: reduceMotion,
+            );
 
           case AppRoutes.levelComplete:
-            return RouteTransitions.scaleFade(const LevelCompleteScreen(), reduceMotion: reduceMotion);
+            return RouteTransitions.scaleFade(
+              const LevelCompleteScreen(),
+              reduceMotion: reduceMotion,
+            );
 
           case AppRoutes.accessibilitySettings:
-            return RouteTransitions.slideUp(const AccessibilitySettingsScreen(), reduceMotion: reduceMotion);
+            return RouteTransitions.slideUp(
+              const AccessibilitySettingsScreen(),
+              reduceMotion: reduceMotion,
+            );
 
           case AppRoutes.screenOffSimulation:
-            return RouteTransitions.slideUp(const ScreenOffSimulationScreen(), reduceMotion: reduceMotion);
+            return RouteTransitions.slideUp(
+              const ScreenOffSimulationScreen(),
+              reduceMotion: reduceMotion,
+            );
 
           default:
             return MaterialPageRoute(builder: (_) => const WelcomeScreen());

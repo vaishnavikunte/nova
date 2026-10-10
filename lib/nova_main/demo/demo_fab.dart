@@ -13,7 +13,7 @@ class DemoFab extends StatefulWidget {
 }
 
 class _DemoFabState extends State<DemoFab> {
-  Offset _position = const Offset(16, 580);
+  Offset _position = const Offset(300, 60);
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +46,11 @@ class _DemoFabState extends State<DemoFab> {
               child: const Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.build_circle_rounded, color: AppColors.sunYellow, size: 20),
+                  Icon(
+                    Icons.build_circle_rounded,
+                    color: AppColors.sunYellow,
+                    size: 20,
+                  ),
                   SizedBox(width: 6),
                   Text(
                     'Demo',

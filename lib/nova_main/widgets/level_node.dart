@@ -64,7 +64,9 @@ class _LevelNodeState extends State<LevelNode> with TickerProviderStateMixin {
           backgroundColor: AppColors.navy,
           behavior: SnackBarBehavior.floating,
           duration: const Duration(milliseconds: 2000),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
         ),
       );
       return;
@@ -99,7 +101,10 @@ class _LevelNodeState extends State<LevelNode> with TickerProviderStateMixin {
               if (isCurrent)
                 Container(
                   margin: const EdgeInsets.only(bottom: 6),
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 3,
+                  ),
                   decoration: BoxDecoration(
                     color: AppColors.sunYellow,
                     borderRadius: BorderRadius.circular(12),
@@ -117,7 +122,10 @@ class _LevelNodeState extends State<LevelNode> with TickerProviderStateMixin {
               else if (widget.isRecommended && !isCompleted)
                 Container(
                   margin: const EdgeInsets.only(bottom: 6),
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 3,
+                  ),
                   decoration: BoxDecoration(
                     color: AppColors.sunYellow,
                     borderRadius: BorderRadius.circular(12),
@@ -148,7 +156,9 @@ class _LevelNodeState extends State<LevelNode> with TickerProviderStateMixin {
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           border: Border.all(
-                            color: AppColors.sunYellow.withValues(alpha: 0.8 - _glowController.value * 0.4),
+                            color: AppColors.sunYellow.withValues(
+                              alpha: 0.8 - _glowController.value * 0.4,
+                            ),
                             width: 3.5,
                           ),
                         ),
@@ -165,11 +175,17 @@ class _LevelNodeState extends State<LevelNode> with TickerProviderStateMixin {
                           color: _getNodeBorderColor(widget.state),
                           width: isCurrent ? 3.5 : 2.5,
                         ),
-                        boxShadow: isCurrent ? AppSpacing.glowShadow : AppSpacing.softShadow,
+                        boxShadow: isCurrent
+                            ? AppSpacing.glowShadow
+                            : AppSpacing.softShadow,
                       ),
                       alignment: Alignment.center,
                       child: isLocked
-                          ? const Icon(Icons.lock_rounded, color: AppColors.disabledGrey, size: 28)
+                          ? const Icon(
+                              Icons.lock_rounded,
+                              color: AppColors.disabledGrey,
+                              size: 28,
+                            )
                           : Text(
                               widget.level.emoji,
                               style: TextStyle(fontSize: isMilestone ? 36 : 30),
@@ -181,10 +197,7 @@ class _LevelNodeState extends State<LevelNode> with TickerProviderStateMixin {
                       const Positioned(
                         top: -24,
                         right: -10,
-                        child: MascotWidget(
-                          size: 44,
-                          mood: NovaMood.excited,
-                        ),
+                        child: MascotWidget(size: 44, mood: NovaMood.excited),
                       ),
 
                     // Check badge for completed
@@ -198,7 +211,11 @@ class _LevelNodeState extends State<LevelNode> with TickerProviderStateMixin {
                             color: AppColors.mint,
                             shape: BoxShape.circle,
                           ),
-                          child: const Icon(Icons.check_rounded, color: Colors.white, size: 16),
+                          child: const Icon(
+                            Icons.check_rounded,
+                            color: Colors.white,
+                            size: 16,
+                          ),
                         ),
                       ),
 
@@ -207,7 +224,10 @@ class _LevelNodeState extends State<LevelNode> with TickerProviderStateMixin {
                       Positioned(
                         bottom: -6,
                         child: Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 6,
+                            vertical: 2,
+                          ),
                           decoration: BoxDecoration(
                             color: AppColors.sky,
                             borderRadius: BorderRadius.circular(8),
@@ -235,7 +255,9 @@ class _LevelNodeState extends State<LevelNode> with TickerProviderStateMixin {
                     final bool earned = starIdx < widget.level.earnedStars;
                     return Icon(
                       Icons.star_rounded,
-                      color: earned ? AppColors.sunYellow : AppColors.disabledGrey,
+                      color: earned
+                          ? AppColors.sunYellow
+                          : AppColors.disabledGrey,
                       size: 16,
                     );
                   }),

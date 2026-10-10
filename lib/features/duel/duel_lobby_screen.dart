@@ -1,9 +1,10 @@
-import 'package:rive/rive.dart';
+import 'package:rive/rive.dart' hide LinearGradient;
 import 'dart:async';
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import '../../nova_main/widgets/child_character_widget.dart';
 import 'duel_arena_screen.dart';
 
 class DuelLobbyScreen extends StatefulWidget {
@@ -15,6 +16,7 @@ class DuelLobbyScreen extends StatefulWidget {
 
 class _DuelLobbyScreenState extends State<DuelLobbyScreen> {
   bool _isHosting = false;
+  bool _isScanning = true;
   List<ScanResult> _nearbyPlayers = [];
   StreamSubscription<List<ScanResult>>? _scanSub;
   Timer? _mockIncomingTimer;
@@ -33,7 +35,17 @@ class _DuelLobbyScreenState extends State<DuelLobbyScreen> {
         if (mounted) {
           setState(() {
             // Filter to devices with names to make the list cleaner
-            _nearbyPlayers = results.where((r) => r.device.platformName.isNotEmpty).toList();
+            _nearbyPlayers = results
+                .where((r) => r.device.platformName.isNotEmpty)
+                .toList();
+          });
+        }
+      });
+      // Handle timeout to stop scanning
+      Future.delayed(const Duration(seconds: 15), () {
+        if (mounted) {
+          setState(() {
+            _isScanning = false;
           });
         }
       });
@@ -54,7 +66,7 @@ class _DuelLobbyScreenState extends State<DuelLobbyScreen> {
     setState(() {
       _isHosting = true;
     });
-    
+
     // Simulate broadcasting BLE name
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
@@ -83,7 +95,9 @@ class _DuelLobbyScreenState extends State<DuelLobbyScreen> {
             SizedBox(
               width: 150,
               height: 150,
-              child: RiveAnimation.asset('assets/riv-assets/7143-13720-children-loading.riv'),
+              child: RiveAnimation.asset(
+                'assets/riv-assets/7143-13720-children-loading.riv',
+              ),
             ),
             const SizedBox(height: 16),
             Text(
@@ -119,7 +133,11 @@ class _DuelLobbyScreenState extends State<DuelLobbyScreen> {
         title: const Text(
           '🔥 New Challenger!',
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.deepOrange),
+          style: TextStyle(
+            fontSize: 28,
+            fontWeight: FontWeight.bold,
+            color: Colors.deepOrange,
+          ),
         ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
@@ -127,7 +145,9 @@ class _DuelLobbyScreenState extends State<DuelLobbyScreen> {
             SizedBox(
               width: 150,
               height: 150,
-              child: RiveAnimation.asset('assets/riv-assets/8315-15931-cat-playing-animation.riv'),
+              child: RiveAnimation.asset(
+                'assets/riv-assets/8315-15931-cat-playing-animation.riv',
+              ),
             ),
             const SizedBox(height: 16),
             Text(
@@ -142,30 +162,46 @@ class _DuelLobbyScreenState extends State<DuelLobbyScreen> {
           TextButton(
             onPressed: () {
               Navigator.pop(ctx);
-              setState(() { _isHosting = false; });
+              setState(() {
+                _isHosting = false;
+              });
             },
-            child: const Text('Reject (नाही)', style: TextStyle(fontSize: 18, color: Colors.grey)),
+            child: const Text(
+              'Reject (नाही)',
+              style: TextStyle(fontSize: 18, color: Colors.grey),
+            ),
           ),
           ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.green,
-              foregroundColor: Colors.white,
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-            ),
-            onPressed: () {
-              Navigator.pop(ctx);
-              final int seed = Random().nextInt(65536);
-              // In real code: send `seed` via GATT characteristic to the client.
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => DuelArenaScreen(seed: seed, isHost: true),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 12,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
                 ),
-              );
-            },
-            child: const Text('Accept (होय)', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-          ).animate(onPlay: (c) => c.repeat(reverse: true)).scaleXY(begin: 1.0, end: 1.05, duration: 600.ms),
+                onPressed: () {
+                  Navigator.pop(ctx);
+                  final int seed = Random().nextInt(65536);
+                  // In real code: send `seed` via GATT characteristic to the client.
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          DuelArenaScreen(seed: seed, isHost: true),
+                    ),
+                  );
+                },
+                child: const Text(
+                  'Accept (होय)',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+              )
+              .animate(onPlay: (c) => c.repeat(reverse: true))
+              .scaleXY(begin: 1.0, end: 1.05, duration: 600.ms),
         ],
       ),
     );
@@ -174,10 +210,13 @@ class _DuelLobbyScreenState extends State<DuelLobbyScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.orange.shade50,
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
-        title: const Text('Ganit Dangal Lobby', style: TextStyle(fontWeight: FontWeight.bold)),
-        backgroundColor: Colors.orange.shade500,
+        title: const Text(
+          'Ganit Dangal Lobby',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        backgroundColor: Colors.transparent,
         foregroundColor: Colors.white,
         elevation: 0,
       ),
@@ -187,34 +226,74 @@ class _DuelLobbyScreenState extends State<DuelLobbyScreen> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             // Massive Host Button
-            ElevatedButton.icon(
-              style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(vertical: 24),
-                backgroundColor: _isHosting ? Colors.orange.shade300 : Colors.orange.shade600,
-                foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-                elevation: _isHosting ? 0 : 8,
+            Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: _isHosting 
+                    ? [Theme.of(context).colorScheme.primary.withValues(alpha: 0.5), const Color(0xFF4054C8).withValues(alpha: 0.5)]
+                    : [Theme.of(context).colorScheme.primary, const Color(0xFF4054C8)],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                borderRadius: BorderRadius.circular(24),
+                boxShadow: _isHosting ? null : [
+                  BoxShadow(
+                    color: Theme.of(context).colorScheme.primary.withValues(alpha: 0.4),
+                    blurRadius: 16,
+                    offset: const Offset(0, 8),
+                  ),
+                ],
               ),
-              onPressed: _isHosting ? null : _hostDuel,
-              icon: const Icon(Icons.stars, size: 40),
-              label: Text(
-                _isHosting ? 'Broadcasting...\n(खेळ तयार आहे)' : '👑 Host a Duel\n(खेळ तयार करा)',
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.transparent,
+                  shadowColor: Colors.transparent,
+                  padding: const EdgeInsets.symmetric(vertical: 24),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                ),
+                onPressed: _isHosting ? null : _hostDuel,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(Icons.flash_on_rounded, size: 40, color: Colors.white),
+                    const SizedBox(width: 16),
+                    Text(
+                      _isHosting
+                          ? 'Broadcasting...\n(खेळ तयार आहे)'
+                          : '⚔️ Host a Duel\n(खेळ तयार करा)',
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ).animate(target: _isHosting ? 1 : 0)
-             .shimmer(duration: 2.seconds, color: Colors.white54),
-             
+            )
+            .animate(target: _isHosting ? 1 : 0)
+            .shimmer(duration: 2.seconds, color: Colors.white54),
+
             if (_isHosting)
-               Padding(
-                 padding: const EdgeInsets.only(top: 16),
-                 child: const Center(
-                   child: Text(
-                     'Waiting for challengers...',
-                     style: TextStyle(fontSize: 18, color: Colors.orange, fontWeight: FontWeight.bold),
-                   ),
-                 ).animate(onPlay: (c) => c.repeat(reverse: true)).fadeIn(duration: 800.ms),
-               ),
+              Padding(
+                padding: const EdgeInsets.only(top: 16),
+                child:
+                    const Center(
+                          child: Text(
+                            'Waiting for challengers...',
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.orange,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        )
+                        .animate(onPlay: (c) => c.repeat(reverse: true))
+                        .fadeIn(duration: 800.ms),
+              ),
 
             const SizedBox(height: 48),
 
@@ -225,31 +304,67 @@ class _DuelLobbyScreenState extends State<DuelLobbyScreen> {
                 const SizedBox(width: 12),
                 Text(
                   '🔍 Players Nearby (जवळचे मित्र)',
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.deepOrange.shade800),
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
                 ),
               ],
             ),
-            const Divider(thickness: 2),
+            const Divider(thickness: 2, color: Colors.white24),
             const SizedBox(height: 16),
 
             Expanded(
               child: _nearbyPlayers.isEmpty
                   ? Center(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          SizedBox(
-                            width: 200,
-                            height: 200,
-                            child: RiveAnimation.asset('assets/riv-assets/7143-13720-children-loading.riv'),
+                      child: _isScanning 
+                        ? Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              SizedBox(
+                                width: 200,
+                                height: 200,
+                                child: RiveAnimation.asset(
+                                  'assets/riv-assets/7143-13720-children-loading.riv',
+                                ),
+                              ),
+                              const SizedBox(height: 16),
+                              Text(
+                                    'Searching for players...',
+                                    style: TextStyle(
+                                      fontSize: 18,
+                                      color: Theme.of(context).textTheme.bodyMedium?.color ?? Colors.grey.shade600,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  )
+                                  .animate(onPlay: (c) => c.repeat(reverse: true))
+                                  .fadeIn(),
+                            ],
+                          )
+                        : Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Icon(Icons.person_off_rounded, size: 64, color: Colors.white54),
+                              const SizedBox(height: 16),
+                              const Text(
+                                'जवळचे खेळाडू सापडले नाहीत',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              const Text(
+                                'मित्र उपलब्ध झाल्यावर येथे दिसतील.',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.white70,
+                                ),
+                              ),
+                            ],
                           ),
-                          const SizedBox(height: 16),
-                          Text(
-                            'Searching for players...',
-                            style: TextStyle(fontSize: 18, color: Colors.grey.shade600, fontWeight: FontWeight.bold),
-                          ).animate(onPlay: (c) => c.repeat(reverse: true)).fadeIn(),
-                        ],
-                      ),
                     )
                   : ListView.builder(
                       itemCount: _nearbyPlayers.length,
@@ -258,51 +373,92 @@ class _DuelLobbyScreenState extends State<DuelLobbyScreen> {
                         return Card(
                           margin: const EdgeInsets.only(bottom: 16),
                           elevation: 4,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16),
+                          ),
                           color: Colors.white,
                           child: Padding(
                             padding: const EdgeInsets.all(16.0),
                             child: Row(
                               children: [
                                 CircleAvatar(
-                                  backgroundColor: Colors.primaries[index % Colors.primaries.length].shade100,
+                                  backgroundColor: Colors
+                                      .primaries[index %
+                                          Colors.primaries.length]
+                                      .shade100,
                                   radius: 28,
                                   child: Icon(
                                     Icons.person,
                                     size: 32,
-                                    color: Colors.primaries[index % Colors.primaries.length].shade700,
+                                    color: Colors
+                                        .primaries[index %
+                                            Colors.primaries.length]
+                                        .shade700,
                                   ),
                                 ),
                                 const SizedBox(width: 16),
                                 Expanded(
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         result.device.platformName,
-                                        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                                        style: const TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                       Text(
                                         'Signal: ${result.rssi} dBm',
-                                        style: TextStyle(color: Colors.grey.shade600),
+                                        style: TextStyle(
+                                          color: Colors.grey.shade600,
+                                        ),
                                       ),
                                     ],
                                   ),
                                 ),
                                 ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.blue.shade600,
-                                    foregroundColor: Colors.white,
-                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                                  ),
-                                  onPressed: () => _requestDuel(result.device),
-                                  child: const Text('DUEL!', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                                ).animate(onPlay: (c) => c.repeat(reverse: true)).scaleXY(begin: 1.0, end: 1.05, duration: 800.ms),
+                                      style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.blue.shade600,
+                                        foregroundColor: Colors.white,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                            20,
+                                          ),
+                                        ),
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 24,
+                                          vertical: 12,
+                                        ),
+                                      ),
+                                      onPressed: () =>
+                                          _requestDuel(result.device),
+                                      child: const Text(
+                                        'DUEL!',
+                                        style: TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    )
+                                    .animate(
+                                      onPlay: (c) => c.repeat(reverse: true),
+                                    )
+                                    .scaleXY(
+                                      begin: 1.0,
+                                      end: 1.05,
+                                      duration: 800.ms,
+                                    ),
                               ],
                             ),
                           ),
-                        ).animate().slideX(begin: 1, end: 0, duration: 400.ms, curve: Curves.easeOutQuad);
+                        ).animate().slideX(
+                          begin: 1,
+                          end: 0,
+                          duration: 400.ms,
+                          curve: Curves.easeOutQuad,
+                        );
                       },
                     ),
             ),

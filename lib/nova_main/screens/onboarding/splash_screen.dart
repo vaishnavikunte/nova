@@ -18,7 +18,8 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMixin {
+class _SplashScreenState extends State<SplashScreen>
+    with TickerProviderStateMixin {
   late AnimationController _logoController;
   late Animation<double> _logoScale;
   late AnimationController _orbitController;
@@ -52,7 +53,10 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
       vsync: this,
       duration: const Duration(milliseconds: 600),
     );
-    _taglineFade = CurvedAnimation(parent: _taglineController, curve: Curves.easeIn);
+    _taglineFade = CurvedAnimation(
+      parent: _taglineController,
+      curve: Curves.easeIn,
+    );
 
     // Start sequence
     _logoController.forward().then((_) {
@@ -113,14 +117,21 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
                               animation: _orbitController,
                               builder: (context, child) {
                                 return Stack(
-                                  children: List.generate(stemIcons.length, (i) {
-                                    final double baseAngle = (i * 2 * pi / stemIcons.length);
-                                    final double progress = _orbitController.value;
-                                    final double angle = baseAngle + (progress * 0.4);
+                                  children: List.generate(stemIcons.length, (
+                                    i,
+                                  ) {
+                                    final double baseAngle =
+                                        (i * 2 * pi / stemIcons.length);
+                                    final double progress =
+                                        _orbitController.value;
+                                    final double angle =
+                                        baseAngle + (progress * 0.4);
                                     const double radius = 105.0;
 
-                                    final double x = 130 + radius * cos(angle) - 18;
-                                    final double y = 130 + radius * sin(angle) - 18;
+                                    final double x =
+                                        130 + radius * cos(angle) - 18;
+                                    final double y =
+                                        130 + radius * sin(angle) - 18;
 
                                     return Positioned(
                                       left: x,
@@ -146,7 +157,10 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   shape: BoxShape.circle,
-                                  border: Border.all(color: AppColors.sunYellow, width: 3.5),
+                                  border: Border.all(
+                                    color: AppColors.sunYellow,
+                                    width: 3.5,
+                                  ),
                                   boxShadow: AppSpacing.glowShadow,
                                 ),
                                 alignment: Alignment.center,
@@ -190,9 +204,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
                   bottom: 24,
                   left: 0,
                   right: 0,
-                  child: Center(
-                    child: OfflineBadge(),
-                  ),
+                  child: Center(child: OfflineBadge()),
                 ),
               ],
             ),

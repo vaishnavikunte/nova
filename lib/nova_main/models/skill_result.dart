@@ -28,10 +28,7 @@ class SkillResult {
     }
   }
 
-  SkillResult copyWith({
-    int? correct,
-    int? asked,
-  }) {
+  SkillResult copyWith({int? correct, int? asked}) {
     return SkillResult(
       skillTag: skillTag,
       displayName: displayName,

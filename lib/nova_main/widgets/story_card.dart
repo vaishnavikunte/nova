@@ -247,10 +247,14 @@ class _StoryCardState extends State<StoryCard> {
                       width: 42,
                       height: 42,
                       decoration: BoxDecoration(
-                        color: tapped ? AppColors.mint.withValues(alpha: 0.3) : Colors.white,
+                        color: tapped
+                            ? AppColors.mint.withValues(alpha: 0.3)
+                            : Colors.white,
                         shape: BoxShape.circle,
                         border: Border.all(
-                          color: tapped ? AppColors.mint : AppColors.borderLight,
+                          color: tapped
+                              ? AppColors.mint
+                              : AppColors.borderLight,
                           width: 2,
                         ),
                       ),
@@ -284,7 +288,10 @@ class _StoryCardState extends State<StoryCard> {
             children: [
               Text(
                 'Remaining: $_unassignedItems 🍎',
-                style: AppTextStyles.label.copyWith(fontWeight: FontWeight.bold, color: AppColors.navy),
+                style: AppTextStyles.label.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.navy,
+                ),
               ),
               const SizedBox(width: 8),
               if (_unassignedItems > 0)
@@ -298,13 +305,19 @@ class _StoryCardState extends State<StoryCard> {
                     opacity: 0.3,
                     child: Container(
                       padding: const EdgeInsets.all(4),
-                      decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
+                      ),
                       child: const Text('🍎', style: TextStyle(fontSize: 26)),
                     ),
                   ),
                   child: Container(
                     padding: const EdgeInsets.all(4),
-                    decoration: const BoxDecoration(color: Colors.white, shape: BoxShape.circle),
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      shape: BoxShape.circle,
+                    ),
                     child: const Text('🍎', style: TextStyle(fontSize: 26)),
                   ),
                 ),
@@ -339,7 +352,9 @@ class _StoryCardState extends State<StoryCard> {
                       color: isHovered ? const Color(0xFFFEF08A) : Colors.white,
                       borderRadius: BorderRadius.circular(16),
                       border: Border.all(
-                        color: isHovered ? AppColors.sunYellow : AppColors.borderLight,
+                        color: isHovered
+                            ? AppColors.sunYellow
+                            : AppColors.borderLight,
                         width: 2.2,
                       ),
                     ),

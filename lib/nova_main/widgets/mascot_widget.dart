@@ -22,7 +22,8 @@ class MascotWidget extends StatefulWidget {
   State<MascotWidget> createState() => _MascotWidgetState();
 }
 
-class _MascotWidgetState extends State<MascotWidget> with TickerProviderStateMixin {
+class _MascotWidgetState extends State<MascotWidget>
+    with TickerProviderStateMixin {
   late AnimationController _floatController;
   late AnimationController _blinkController;
   late AnimationController _mouthController;
@@ -58,7 +59,8 @@ class _MascotWidgetState extends State<MascotWidget> with TickerProviderStateMix
       vsync: this,
       duration: const Duration(milliseconds: 600),
     );
-    if (widget.mood == NovaMood.excited || widget.mood == NovaMood.celebrating) {
+    if (widget.mood == NovaMood.excited ||
+        widget.mood == NovaMood.celebrating) {
       _bounceController.repeat(reverse: true);
     }
   }
@@ -76,7 +78,8 @@ class _MascotWidgetState extends State<MascotWidget> with TickerProviderStateMix
     }
 
     if (widget.mood != oldWidget.mood) {
-      if (widget.mood == NovaMood.excited || widget.mood == NovaMood.celebrating) {
+      if (widget.mood == NovaMood.excited ||
+          widget.mood == NovaMood.celebrating) {
         if (!_bounceController.isAnimating) {
           _bounceController.repeat(reverse: true);
         }
@@ -179,7 +182,10 @@ class _NovaMascotPainter extends CustomPainter {
       ..style = PaintingStyle.stroke;
 
     final antennaStart = Offset(center, centerOffset.dy - bodyRadius + 2);
-    final antennaEnd = Offset(center, centerOffset.dy - bodyRadius - size.height * 0.16);
+    final antennaEnd = Offset(
+      center,
+      centerOffset.dy - bodyRadius - size.height * 0.16,
+    );
 
     canvas.drawLine(antennaStart, antennaEnd, antennaPaint);
 
@@ -203,24 +209,42 @@ class _NovaMascotPainter extends CustomPainter {
       // Arms raised high
       canvas.drawLine(
         Offset(centerOffset.dx - bodyRadius * 0.85, centerOffset.dy),
-        Offset(centerOffset.dx - bodyRadius * 1.25, centerOffset.dy - bodyRadius * 0.7),
+        Offset(
+          centerOffset.dx - bodyRadius * 1.25,
+          centerOffset.dy - bodyRadius * 0.7,
+        ),
         armPaint,
       );
       canvas.drawLine(
         Offset(centerOffset.dx + bodyRadius * 0.85, centerOffset.dy),
-        Offset(centerOffset.dx + bodyRadius * 1.25, centerOffset.dy - bodyRadius * 0.7),
+        Offset(
+          centerOffset.dx + bodyRadius * 1.25,
+          centerOffset.dy - bodyRadius * 0.7,
+        ),
         armPaint,
       );
     } else {
       // Gentle resting arms
       canvas.drawLine(
-        Offset(centerOffset.dx - bodyRadius * 0.9, centerOffset.dy + bodyRadius * 0.2),
-        Offset(centerOffset.dx - bodyRadius * 1.15, centerOffset.dy + bodyRadius * 0.35),
+        Offset(
+          centerOffset.dx - bodyRadius * 0.9,
+          centerOffset.dy + bodyRadius * 0.2,
+        ),
+        Offset(
+          centerOffset.dx - bodyRadius * 1.15,
+          centerOffset.dy + bodyRadius * 0.35,
+        ),
         armPaint,
       );
       canvas.drawLine(
-        Offset(centerOffset.dx + bodyRadius * 0.9, centerOffset.dy + bodyRadius * 0.2),
-        Offset(centerOffset.dx + bodyRadius * 1.15, centerOffset.dy + bodyRadius * 0.35),
+        Offset(
+          centerOffset.dx + bodyRadius * 0.9,
+          centerOffset.dy + bodyRadius * 0.2,
+        ),
+        Offset(
+          centerOffset.dx + bodyRadius * 1.15,
+          centerOffset.dy + bodyRadius * 0.35,
+        ),
         armPaint,
       );
     }
@@ -280,19 +304,33 @@ class _NovaMascotPainter extends CustomPainter {
       lookOffsetY = -eyeRadius * 0.35;
     }
 
-    final leftEyeCenter = Offset(centerOffset.dx - eyeSpacing + lookOffsetX, eyeCenterY + lookOffsetY);
-    final rightEyeCenter = Offset(centerOffset.dx + eyeSpacing + lookOffsetX, eyeCenterY + lookOffsetY);
+    final leftEyeCenter = Offset(
+      centerOffset.dx - eyeSpacing + lookOffsetX,
+      eyeCenterY + lookOffsetY,
+    );
+    final rightEyeCenter = Offset(
+      centerOffset.dx + eyeSpacing + lookOffsetX,
+      eyeCenterY + lookOffsetY,
+    );
 
     final eyePaint = Paint()..color = AppColors.navy;
     final eyeHeight = max(1.5, eyeRadius * 2 * eyeOpenFactor);
 
     // Draw Left & Right Eyes
     canvas.drawOval(
-      Rect.fromCenter(center: leftEyeCenter, width: eyeRadius * 1.8, height: eyeHeight),
+      Rect.fromCenter(
+        center: leftEyeCenter,
+        width: eyeRadius * 1.8,
+        height: eyeHeight,
+      ),
       eyePaint,
     );
     canvas.drawOval(
-      Rect.fromCenter(center: rightEyeCenter, width: eyeRadius * 1.8, height: eyeHeight),
+      Rect.fromCenter(
+        center: rightEyeCenter,
+        width: eyeRadius * 1.8,
+        height: eyeHeight,
+      ),
       eyePaint,
     );
 
@@ -300,12 +338,18 @@ class _NovaMascotPainter extends CustomPainter {
     if (eyeOpenFactor > 0.5) {
       final highlightPaint = Paint()..color = Colors.white;
       canvas.drawCircle(
-        Offset(leftEyeCenter.dx - eyeRadius * 0.3, leftEyeCenter.dy - eyeRadius * 0.3),
+        Offset(
+          leftEyeCenter.dx - eyeRadius * 0.3,
+          leftEyeCenter.dy - eyeRadius * 0.3,
+        ),
         eyeRadius * 0.35,
         highlightPaint,
       );
       canvas.drawCircle(
-        Offset(rightEyeCenter.dx - eyeRadius * 0.3, rightEyeCenter.dy - eyeRadius * 0.3),
+        Offset(
+          rightEyeCenter.dx - eyeRadius * 0.3,
+          rightEyeCenter.dy - eyeRadius * 0.3,
+        ),
         eyeRadius * 0.35,
         highlightPaint,
       );
@@ -367,9 +411,17 @@ class _NovaMascotPainter extends CustomPainter {
     }
   }
 
-  void _drawStar(Canvas canvas, Offset center, double radius, Color color, bool pulse) {
+  void _drawStar(
+    Canvas canvas,
+    Offset center,
+    double radius,
+    Color color,
+    bool pulse,
+  ) {
     final path = Path();
-    final double r = pulse ? radius * (1.0 + sin(animationProgress * 2 * pi) * 0.2) : radius;
+    final double r = pulse
+        ? radius * (1.0 + sin(animationProgress * 2 * pi) * 0.2)
+        : radius;
     final double innerR = r * 0.45;
     const int points = 5;
 
@@ -434,7 +486,10 @@ class _NovaMascotPainter extends CustomPainter {
       ..color = AppColors.mint
       ..style = PaintingStyle.fill;
 
-    final sproutCenter = Offset(center.dx + radius * 0.8, center.dy - radius * 0.6);
+    final sproutCenter = Offset(
+      center.dx + radius * 0.8,
+      center.dy - radius * 0.6,
+    );
     canvas.drawCircle(sproutCenter, 5.0, sproutPaint);
   }
 

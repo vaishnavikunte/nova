@@ -1,4 +1,3 @@
-
 import '../models/answer_option.dart';
 import '../models/class_course.dart';
 import '../models/level_model.dart';
@@ -42,7 +41,8 @@ class CurriculumData {
           topic: 'Place Value',
           emoji: '🔢',
           storyTitle: 'The Observatory Number Hunt',
-          description: 'Help NOVA read the secret numbers glowing in the stars.',
+          description:
+              'Help NOVA read the secret numbers glowing in the stars.',
           difficulty: 1,
           minutes: 6,
           reward: 20,
@@ -51,13 +51,15 @@ class CurriculumData {
           beats: const [
             StoryBeat(
               id: 'c4l1b1',
-              narration: 'Welcome to the observatory! NOVA found a row of glowing numbers.',
+              narration:
+                  'Welcome to the observatory! NOVA found a row of glowing numbers.',
               sceneType: SceneType.observatory,
               novaMood: NovaMood.excited,
             ),
             StoryBeat(
               id: 'c4l1b2',
-              narration: 'Look at each digit carefully. Its place tells us how much it is worth.',
+              narration:
+                  'Look at each digit carefully. Its place tells us how much it is worth.',
               sceneType: SceneType.observatory,
               novaMood: NovaMood.thinking,
             ),
@@ -69,7 +71,8 @@ class CurriculumData {
             ),
             StoryBeat(
               id: 'c4l1b4',
-              narration: 'The star map is complete. You helped NOVA unlock the next trail.',
+              narration:
+                  'The star map is complete. You helped NOVA unlock the next trail.',
               sceneType: SceneType.treasure,
               novaMood: NovaMood.celebrating,
             ),
@@ -80,7 +83,13 @@ class CurriculumData {
               ['What is the value of the 7 in 3,742?', '700', '70', '7', '0'],
               ['Which number is greatest?', '2,408', '2,840', '2,480', '1'],
               ['What is 4,000 + 300 + 20 + 5?', '4,325', '4,352', '4,235', '0'],
-              ['Which digit is in the tens place in 5,681?', '8', '6', '1', '1'],
+              [
+                'Which digit is in the tens place in 5,681?',
+                '8',
+                '6',
+                '1',
+                '1',
+              ],
               ['Round 347 to the nearest hundred.', '300', '400', '350', '1'],
             ],
           ),
@@ -92,7 +101,8 @@ class CurriculumData {
           topic: 'Addition & Subtraction',
           emoji: '➕',
           storyTitle: 'The Market Mystery',
-          description: 'Count supplies and solve change puzzles at NOVA’s space market.',
+          description:
+              'Count supplies and solve change puzzles at NOVA’s space market.',
           difficulty: 1,
           minutes: 7,
           reward: 22,
@@ -101,19 +111,22 @@ class CurriculumData {
           beats: const [
             StoryBeat(
               id: 'c4l2b1',
-              narration: 'The market robots need help counting their delivery crates.',
+              narration:
+                  'The market robots need help counting their delivery crates.',
               sceneType: SceneType.market,
               novaMood: NovaMood.happy,
             ),
             StoryBeat(
               id: 'c4l2b2',
-              narration: 'We can line up the numbers and add from right to left.',
+              narration:
+                  'We can line up the numbers and add from right to left.',
               sceneType: SceneType.market,
               novaMood: NovaMood.thinking,
             ),
             StoryBeat(
               id: 'c4l2b3',
-              narration: 'Now the robots have a few subtraction puzzles for us.',
+              narration:
+                  'Now the robots have a few subtraction puzzles for us.',
               sceneType: SceneType.market,
               novaMood: NovaMood.encouraging,
             ),
@@ -131,7 +144,13 @@ class CurriculumData {
               ['What is 500 − 176?', '324', '334', '314', '0'],
               ['What is 367 + 208?', '565', '575', '585', '1'],
               ['What is 900 − 425?', '475', '485', '465', '0'],
-              ['A shop has 125 apples and gets 75 more. How many?', '190', '200', '210', '1'],
+              [
+                'A shop has 125 apples and gets 75 more. How many?',
+                '190',
+                '200',
+                '210',
+                '1',
+              ],
             ],
           ),
         );
@@ -142,7 +161,8 @@ class CurriculumData {
           topic: 'Multiplication',
           emoji: '✖️',
           storyTitle: 'The Robot Factory',
-          description: 'Build equal groups of robot parts using multiplication.',
+          description:
+              'Build equal groups of robot parts using multiplication.',
           difficulty: 2,
           minutes: 8,
           reward: 24,
@@ -151,7 +171,8 @@ class CurriculumData {
           beats: const [
             StoryBeat(
               id: 'c4l3b1',
-              narration: 'Inside the robot factory, parts arrive in equal groups.',
+              narration:
+                  'Inside the robot factory, parts arrive in equal groups.',
               sceneType: SceneType.factory,
               novaMood: NovaMood.excited,
             ),
@@ -178,10 +199,22 @@ class CurriculumData {
             prefix: 'c4l3',
             items: const [
               ['What is 7 × 6?', '36', '42', '48', '1'],
-              ['There are 4 groups of 8. How many altogether?', '24', '32', '36', '1'],
+              [
+                'There are 4 groups of 8. How many altogether?',
+                '24',
+                '32',
+                '36',
+                '1',
+              ],
               ['What is 9 × 5?', '40', '45', '50', '1'],
               ['What is 6 × 7?', '36', '42', '48', '1'],
-              ['Three shelves hold 12 books each. How many books?', '24', '36', '42', '1'],
+              [
+                'Three shelves hold 12 books each. How many books?',
+                '24',
+                '36',
+                '42',
+                '1',
+              ],
             ],
           ),
         );
@@ -216,13 +249,15 @@ class CurriculumData {
             ),
             StoryBeat(
               id: 'c4l4b3',
-              narration: 'Try each sharing puzzle and check that every group is fair.',
+              narration:
+                  'Try each sharing puzzle and check that every group is fair.',
               sceneType: SceneType.garden,
               novaMood: NovaMood.encouraging,
             ),
             StoryBeat(
               id: 'c4l4b4',
-              narration: 'Every garden bed has the same number of seeds. Great sharing!',
+              narration:
+                  'Every garden bed has the same number of seeds. Great sharing!',
               sceneType: SceneType.garden,
               novaMood: NovaMood.celebrating,
             ),
@@ -231,10 +266,28 @@ class CurriculumData {
             prefix: 'c4l4',
             items: const [
               ['What is 24 ÷ 4?', '5', '6', '7', '1'],
-              ['Share 18 stars equally into 3 groups. How many per group?', '5', '6', '7', '1'],
+              [
+                'Share 18 stars equally into 3 groups. How many per group?',
+                '5',
+                '6',
+                '7',
+                '1',
+              ],
               ['What is 35 ÷ 5?', '6', '7', '8', '1'],
-              ['Which multiplication fact checks 32 ÷ 8 = 4?', '8 × 3 = 24', '8 × 4 = 32', '8 × 5 = 40', '1'],
-              ['There are 40 stickers shared among 10 children. Each gets?', '4', '5', '6', '0'],
+              [
+                'Which multiplication fact checks 32 ÷ 8 = 4?',
+                '8 × 3 = 24',
+                '8 × 4 = 32',
+                '8 × 5 = 40',
+                '1',
+              ],
+              [
+                'There are 40 stickers shared among 10 children. Each gets?',
+                '4',
+                '5',
+                '6',
+                '0',
+              ],
             ],
           ),
         );
@@ -268,7 +321,8 @@ class CurriculumData {
             ),
             StoryBeat(
               id: 'c4l5b3',
-              narration: 'The top number tells how many parts we have. The bottom tells the total equal parts.',
+              narration:
+                  'The top number tells how many parts we have. The bottom tells the total equal parts.',
               sceneType: SceneType.treasure,
               novaMood: NovaMood.encouraging,
             ),
@@ -282,11 +336,23 @@ class CurriculumData {
           questions: _questions(
             prefix: 'c4l5',
             items: const [
-              ['Which fraction means one out of four equal parts?', '1/4', '1/2', '3/4', '0'],
+              [
+                'Which fraction means one out of four equal parts?',
+                '1/4',
+                '1/2',
+                '3/4',
+                '0',
+              ],
               ['Which is greater?', '1/4', '3/4', '1/8', '1'],
               ['How many fourths make one whole?', '2', '3', '4', '2'],
               ['Which fraction is equal to 1/2?', '2/4', '1/4', '3/4', '0'],
-              ['What fraction is shaded if 3 of 5 equal parts are shaded?', '2/5', '3/5', '4/5', '1'],
+              [
+                'What fraction is shaded if 3 of 5 equal parts are shaded?',
+                '2/5',
+                '3/5',
+                '4/5',
+                '1',
+              ],
             ],
           ),
         );
@@ -320,7 +386,8 @@ class CurriculumData {
       topic: topic,
       emoji: ['🔢', '➕', '✖️', '➗', '🍰'][number % 5],
       storyTitle: 'NOVA’s $topic Adventure',
-      description: 'A structured local curriculum placeholder for Class $classNumber, Level $number.',
+      description:
+          'A structured local curriculum placeholder for Class $classNumber, Level $number.',
       difficulty: number <= 5 ? 1 : (number <= 10 ? 2 : 3),
       minutes: 6 + (number % 4),
       reward: 18 + number,
@@ -423,7 +490,8 @@ class CurriculumData {
           'Think about the numbers or groups you can see.',
           'Take it one small step at a time with NOVA.',
         ],
-        explanation: 'Use a simple step-by-step strategy and check your answer.',
+        explanation:
+            'Use a simple step-by-step strategy and check your answer.',
         spokenAnswers: [item[correct + 1]],
       );
     });
@@ -441,7 +509,11 @@ class CurriculumData {
         ],
         correctIndex: 1,
         tier: 1,
-        hints: const ['Look at the change between numbers.', 'The numbers increase by the same amount.', 'Add 2 each time.'],
+        hints: const [
+          'Look at the change between numbers.',
+          'The numbers increase by the same amount.',
+          'Add 2 each time.',
+        ],
         explanation: 'The pattern increases by 2.',
         spokenAnswers: const ['8', 'eight'],
       ),
@@ -449,13 +521,29 @@ class CurriculumData {
         id: '${prefix}_q2',
         prompt: 'Which group shows equal sharing?',
         options: const [
-          AnswerOptionModel(id: 'g2a', label: '2, 2, 2', semanticLabel: 'three equal groups of two'),
-          AnswerOptionModel(id: 'g2b', label: '2, 3, 2', semanticLabel: 'unequal groups'),
-          AnswerOptionModel(id: 'g2c', label: '1, 2, 3', semanticLabel: 'increasing groups'),
+          AnswerOptionModel(
+            id: 'g2a',
+            label: '2, 2, 2',
+            semanticLabel: 'three equal groups of two',
+          ),
+          AnswerOptionModel(
+            id: 'g2b',
+            label: '2, 3, 2',
+            semanticLabel: 'unequal groups',
+          ),
+          AnswerOptionModel(
+            id: 'g2c',
+            label: '1, 2, 3',
+            semanticLabel: 'increasing groups',
+          ),
         ],
         correctIndex: 0,
         tier: 1,
-        hints: const ['Look at every group.', 'Equal means the same amount.', 'All three groups have 2.'],
+        hints: const [
+          'Look at every group.',
+          'Equal means the same amount.',
+          'All three groups have 2.',
+        ],
         explanation: 'Equal groups contain the same number.',
         spokenAnswers: const ['2, 2, 2'],
       ),

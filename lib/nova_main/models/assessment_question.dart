@@ -4,7 +4,8 @@ import 'answer_option.dart';
 class AssessmentQuestion {
   final String id;
   final int classNumber;
-  final String skillTag; // numbers, shapes, addsub, multiply, divide, fractions, patterns
+  final String
+  skillTag; // numbers, shapes, addsub, multiply, divide, fractions, patterns
   final int? gatesLevel; // null for non-gating warmups like shapes and patterns
   final String question;
   final VisualType visualType;

@@ -30,11 +30,7 @@ class FractionVisual extends StatelessWidget {
       width: size,
       height: type == VisualType.fractionBars ? size * 0.45 : size,
       child: CustomPaint(
-        painter: _FractionPainter(
-          numerator: num,
-          denominator: den,
-          type: type,
-        ),
+        painter: _FractionPainter(numerator: num, denominator: den, type: type),
       ),
     );
   }
@@ -91,7 +87,10 @@ class _FractionPainter extends CustomPainter {
 
     for (int i = 0; i < denominator; i++) {
       final double angle = -pi / 2 + (2 * pi / denominator) * i;
-      final p2 = Offset(center.dx + radius * cos(angle), center.dy + radius * sin(angle));
+      final p2 = Offset(
+        center.dx + radius * cos(angle),
+        center.dy + radius * sin(angle),
+      );
       canvas.drawLine(center, p2, linePaint);
     }
 
@@ -136,7 +135,10 @@ class _FractionPainter extends CustomPainter {
     final pepPaint = Paint()..color = const Color(0xFFC0392B);
     for (int i = 0; i < denominator; i++) {
       final double angle = -pi / 2 + (2 * pi / denominator) * (i + 0.5);
-      final dot = Offset(center.dx + radius * 0.5 * cos(angle), center.dy + radius * 0.5 * sin(angle));
+      final dot = Offset(
+        center.dx + radius * 0.5 * cos(angle),
+        center.dy + radius * 0.5 * sin(angle),
+      );
       canvas.drawCircle(dot, radius * 0.12, pepPaint);
     }
 
@@ -147,7 +149,10 @@ class _FractionPainter extends CustomPainter {
 
     for (int i = 0; i < denominator; i++) {
       final double angle = -pi / 2 + (2 * pi / denominator) * i;
-      final p2 = Offset(center.dx + radius * cos(angle), center.dy + radius * sin(angle));
+      final p2 = Offset(
+        center.dx + radius * cos(angle),
+        center.dy + radius * sin(angle),
+      );
       canvas.drawLine(center, p2, cutPaint);
     }
   }
@@ -169,7 +174,12 @@ class _FractionPainter extends CustomPainter {
       ..style = PaintingStyle.fill;
 
     for (int i = 0; i < numerator; i++) {
-      final segRect = Rect.fromLTWH(2 + i * segmentWidth, 2, segmentWidth, size.height - 4);
+      final segRect = Rect.fromLTWH(
+        2 + i * segmentWidth,
+        2,
+        segmentWidth,
+        size.height - 4,
+      );
       canvas.drawRect(segRect, shadedPaint);
     }
 

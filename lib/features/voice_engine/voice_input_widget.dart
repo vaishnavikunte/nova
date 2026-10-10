@@ -21,7 +21,8 @@ class VoiceInputWidget extends StatefulWidget {
   State<VoiceInputWidget> createState() => _VoiceInputWidgetState();
 }
 
-class _VoiceInputWidgetState extends State<VoiceInputWidget> with SingleTickerProviderStateMixin {
+class _VoiceInputWidgetState extends State<VoiceInputWidget>
+    with SingleTickerProviderStateMixin {
   final stt.SpeechToText _speech = stt.SpeechToText();
   final FlutterTts _flutterTts = FlutterTts();
   late AnimationController _pulseController;
@@ -87,7 +88,9 @@ class _VoiceInputWidgetState extends State<VoiceInputWidget> with SingleTickerPr
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
           backgroundColor: Colors.red.shade500,
           foregroundColor: Colors.white,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(24),
+          ),
           elevation: 8,
           minimumSize: const Size.fromHeight(80),
         ),
@@ -138,10 +141,10 @@ class _BottomSheetContentState extends State<_BottomSheetContent> {
   Future<void> _startFlow() async {
     // Read the question aloud
     await widget.tts.speak(widget.questionText);
-    
+
     // Give a tiny delay in case TTS completes instantly due to engine specifics
     await Future.delayed(const Duration(milliseconds: 500));
-    
+
     bool available = await widget.speech.initialize(
       onError: (val) {
         debugPrint('STT Error: ${val.errorMsg}');
@@ -185,10 +188,13 @@ class _BottomSheetContentState extends State<_BottomSheetContent> {
     if (!_isListening) return; // Prevent double submission
     setState(() => _isListening = false);
     await widget.speech.stop();
-    
-    bool isCorrect = VoiceAnswerMatcher.evaluateAnswer(spoken, widget.expectedAnswer);
+
+    bool isCorrect = VoiceAnswerMatcher.evaluateAnswer(
+      spoken,
+      widget.expectedAnswer,
+    );
     if (!isCorrect) {
-      // Correct sound is handled by LevelPlayScreen directly 
+      // Correct sound is handled by LevelPlayScreen directly
       // but incorrect feedback is spoken here for context
       await widget.tts.speak("पुन्हा प्रयत्न करा");
     }
@@ -209,7 +215,9 @@ class _BottomSheetContentState extends State<_BottomSheetContent> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Transform.scale(
-            scale: 1.0 + (_soundLevel.clamp(0.0, 50.0) / 100.0), // Grow based on volume
+            scale:
+                1.0 +
+                (_soundLevel.clamp(0.0, 50.0) / 100.0), // Grow based on volume
             child: ScaleTransition(
               scale: widget.pulseAnimation,
               child: const CircleAvatar(
@@ -221,8 +229,14 @@ class _BottomSheetContentState extends State<_BottomSheetContent> {
           ),
           const SizedBox(height: 32),
           Text(
-            _isListening ? "ऐकत आहे... (Listening...)" : "प्रक्रिया करत आहे... (Processing...)",
-            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black87),
+            _isListening
+                ? "ऐकत आहे... (Listening...)"
+                : "प्रक्रिया करत आहे... (Processing...)",
+            style: const TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: Colors.black87,
+            ),
           ),
           const SizedBox(height: 24),
           if (_recognizedText.isNotEmpty)
@@ -235,14 +249,23 @@ class _BottomSheetContentState extends State<_BottomSheetContent> {
               ),
               child: Text(
                 '"$_recognizedText"',
-                style: const TextStyle(fontSize: 28, fontStyle: FontStyle.italic, color: Colors.blueAccent, fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                  fontSize: 28,
+                  fontStyle: FontStyle.italic,
+                  color: Colors.blueAccent,
+                  fontWeight: FontWeight.bold,
+                ),
                 textAlign: TextAlign.center,
               ),
             )
           else if (_isListening)
             const Text(
               'मोठ्याने बोला... (Speak loudly...)',
-              style: TextStyle(fontSize: 22, color: Colors.grey, fontStyle: FontStyle.italic),
+              style: TextStyle(
+                fontSize: 22,
+                color: Colors.grey,
+                fontStyle: FontStyle.italic,
+              ),
             ),
           const SizedBox(height: 32),
           ElevatedButton.icon(
@@ -259,7 +282,9 @@ class _BottomSheetContentState extends State<_BottomSheetContent> {
               backgroundColor: Colors.blueAccent,
               foregroundColor: Colors.white,
               padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(24),
+              ),
               elevation: 4,
             ),
           ),
@@ -269,7 +294,10 @@ class _BottomSheetContentState extends State<_BottomSheetContent> {
               widget.speech.stop();
               Navigator.pop(context);
             },
-            child: const Text('Cancel', style: TextStyle(fontSize: 20, color: Colors.grey)),
+            child: const Text(
+              'Cancel',
+              style: TextStyle(fontSize: 20, color: Colors.grey),
+            ),
           ),
         ],
       ),

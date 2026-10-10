@@ -20,7 +20,8 @@ class StarReward extends StatefulWidget {
   State<StarReward> createState() => _StarRewardState();
 }
 
-class _StarRewardState extends State<StarReward> with SingleTickerProviderStateMixin {
+class _StarRewardState extends State<StarReward>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _countAnimation;
 
@@ -32,13 +33,14 @@ class _StarRewardState extends State<StarReward> with SingleTickerProviderStateM
       duration: const Duration(milliseconds: 1000),
     );
 
-    _countAnimation = Tween<double>(begin: 0.0, end: widget.stars.toDouble()).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeOutCubic),
-    )..addStatusListener((status) {
-        if (status == AnimationStatus.completed) {
-          widget.onCompleted?.call();
-        }
-      });
+    _countAnimation =
+        Tween<double>(begin: 0.0, end: widget.stars.toDouble()).animate(
+          CurvedAnimation(parent: _controller, curve: Curves.easeOutCubic),
+        )..addStatusListener((status) {
+          if (status == AnimationStatus.completed) {
+            widget.onCompleted?.call();
+          }
+        });
 
     if (widget.animated) {
       _controller.forward();
@@ -60,7 +62,10 @@ class _StarRewardState extends State<StarReward> with SingleTickerProviderStateM
       builder: (context, child) {
         final currentCount = _countAnimation.value.toInt();
         return Container(
-          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.sm),
+          padding: const EdgeInsets.symmetric(
+            horizontal: AppSpacing.lg,
+            vertical: AppSpacing.sm,
+          ),
           decoration: BoxDecoration(
             color: const Color(0xFFFFFBEB),
             borderRadius: AppSpacing.roundedChip,
@@ -70,7 +75,11 @@ class _StarRewardState extends State<StarReward> with SingleTickerProviderStateM
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Icon(Icons.star_rounded, color: AppColors.sunYellow, size: 36),
+              const Icon(
+                Icons.star_rounded,
+                color: AppColors.sunYellow,
+                size: 36,
+              ),
               const SizedBox(width: AppSpacing.sm),
               Text(
                 '+$currentCount Stars',
@@ -106,7 +115,8 @@ class SkillBar extends StatefulWidget {
   State<SkillBar> createState() => _SkillBarState();
 }
 
-class _SkillBarState extends State<SkillBar> with SingleTickerProviderStateMixin {
+class _SkillBarState extends State<SkillBar>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _fillAnimation;
 
@@ -121,9 +131,10 @@ class _SkillBarState extends State<SkillBar> with SingleTickerProviderStateMixin
       duration: const Duration(milliseconds: 700),
     );
 
-    _fillAnimation = Tween<double>(begin: 0.0, end: targetFill).animate(
-      CurvedAnimation(parent: _controller, curve: Curves.easeOutCubic),
-    );
+    _fillAnimation = Tween<double>(
+      begin: 0.0,
+      end: targetFill,
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOutCubic));
 
     Future.delayed(Duration(milliseconds: widget.animationDelayMs), () {
       if (mounted) {
@@ -169,7 +180,12 @@ class _SkillBarState extends State<SkillBar> with SingleTickerProviderStateMixin
             children: [
               Text(widget.emoji, style: const TextStyle(fontSize: 20)),
               const SizedBox(width: AppSpacing.sm),
-              Text(widget.label, style: AppTextStyles.label.copyWith(fontWeight: FontWeight.bold)),
+              Text(
+                widget.label,
+                style: AppTextStyles.label.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               const Spacer(),
               Text(
                 _statusLabel,

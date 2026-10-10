@@ -1,8 +1,4 @@
-enum AdaptationAction {
-  maintain,
-  scaffoldWithinLevel,
-  routeToBridgeRunway,
-}
+enum AdaptationAction { maintain, scaffoldWithinLevel, routeToBridgeRunway }
 
 class StudentPerformanceState {
   double pMastery;
@@ -30,11 +26,13 @@ class DiagnosticManager {
     // 1. Calculate the conditional probability of mastery given the observation
     double pMasteryGivenObs;
     if (isCorrect) {
-      pMasteryGivenObs = (state.pMastery * (1 - slip)) /
+      pMasteryGivenObs =
+          (state.pMastery * (1 - slip)) /
           ((state.pMastery * (1 - slip)) + ((1 - state.pMastery) * guess));
       state.consecutiveFails = 0;
     } else {
-      pMasteryGivenObs = (state.pMastery * slip) /
+      pMasteryGivenObs =
+          (state.pMastery * slip) /
           ((state.pMastery * slip) + ((1 - state.pMastery) * (1 - guess)));
       state.consecutiveFails += 1;
     }

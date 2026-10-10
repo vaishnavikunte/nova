@@ -10,7 +10,10 @@ class ClassCourse {
     required this.classNumber,
     required this.title,
     required this.levels,
-  }) : assert(levels.length == 15, 'Each course must contain exactly 15 levels');
+  }) : assert(
+         levels.length == 15,
+         'Each course must contain exactly 15 levels',
+       );
 
   LevelModel getLevel(int levelNumber) {
     return levels.firstWhere(

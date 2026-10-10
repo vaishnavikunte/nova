@@ -1,4 +1,3 @@
-
 import '../models/answer_option.dart';
 import '../models/assessment_question.dart';
 
@@ -23,7 +22,11 @@ class AssessmentData {
       options: [
         AnswerOptionModel(id: 'a1o1', label: '48', semanticLabel: '48'),
         AnswerOptionModel(id: 'a1o2', label: '84', semanticLabel: '84'),
-        AnswerOptionModel(id: 'a1o3', label: 'Both are equal', semanticLabel: 'both are equal'),
+        AnswerOptionModel(
+          id: 'a1o3',
+          label: 'Both are equal',
+          semanticLabel: 'both are equal',
+        ),
       ],
       correctIndex: 1,
       semanticLabel: 'Choose the greater number',
@@ -110,9 +113,17 @@ class AssessmentData {
       gatesLevel: 6,
       question: 'Which fraction is equal to one half?',
       options: [
-        AnswerOptionModel(id: 'a7o1', label: '2/4', semanticLabel: 'two fourths'),
+        AnswerOptionModel(
+          id: 'a7o1',
+          label: '2/4',
+          semanticLabel: 'two fourths',
+        ),
         AnswerOptionModel(id: 'a7o2', label: '1/3', semanticLabel: 'one third'),
-        AnswerOptionModel(id: 'a7o3', label: '3/4', semanticLabel: 'three fourths'),
+        AnswerOptionModel(
+          id: 'a7o3',
+          label: '3/4',
+          semanticLabel: 'three fourths',
+        ),
       ],
       correctIndex: 0,
       semanticLabel: 'Choose the fraction equal to one half',
@@ -139,19 +150,21 @@ class AssessmentData {
     // same assessment structure with classNumber changed for UI navigation.
     if (classNumber == 4) return class4Questions;
     return class4Questions
-        .map((q) => AssessmentQuestion(
-              id: '${q.id}_c$classNumber',
-              classNumber: classNumber,
-              skillTag: q.skillTag,
-              gatesLevel: q.gatesLevel,
-              question: q.question,
-              visualType: q.visualType,
-              visualData: q.visualData,
-              options: q.options,
-              correctIndex: q.correctIndex,
-              semanticLabel: q.semanticLabel,
-              spokenAnswers: q.spokenAnswers,
-            ))
+        .map(
+          (q) => AssessmentQuestion(
+            id: '${q.id}_c$classNumber',
+            classNumber: classNumber,
+            skillTag: q.skillTag,
+            gatesLevel: q.gatesLevel,
+            question: q.question,
+            visualType: q.visualType,
+            visualData: q.visualData,
+            options: q.options,
+            correctIndex: q.correctIndex,
+            semanticLabel: q.semanticLabel,
+            spokenAnswers: q.spokenAnswers,
+          ),
+        )
         .toList();
   }
 }

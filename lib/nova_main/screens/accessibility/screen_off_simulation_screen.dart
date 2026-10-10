@@ -14,10 +14,12 @@ class ScreenOffSimulationScreen extends StatefulWidget {
   const ScreenOffSimulationScreen({super.key});
 
   @override
-  State<ScreenOffSimulationScreen> createState() => _ScreenOffSimulationScreenState();
+  State<ScreenOffSimulationScreen> createState() =>
+      _ScreenOffSimulationScreenState();
 }
 
-class _ScreenOffSimulationScreenState extends State<ScreenOffSimulationScreen> with SingleTickerProviderStateMixin {
+class _ScreenOffSimulationScreenState extends State<ScreenOffSimulationScreen>
+    with SingleTickerProviderStateMixin {
   late AnimationController _pulseController;
   int _currentStepIndex = 0;
   String _gestureFeedback = '';
@@ -123,7 +125,9 @@ class _ScreenOffSimulationScreenState extends State<ScreenOffSimulationScreen> w
               // Center Eyes-Free Audio Visuals
               Center(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xl),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppSpacing.xl,
+                  ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -131,7 +135,8 @@ class _ScreenOffSimulationScreenState extends State<ScreenOffSimulationScreen> w
                       AnimatedBuilder(
                         animation: _pulseController,
                         builder: (context, child) {
-                          final double waveScale = 1.0 + (_pulseController.value * 0.15);
+                          final double waveScale =
+                              1.0 + (_pulseController.value * 0.15);
                           return Stack(
                             alignment: Alignment.center,
                             children: [
@@ -140,7 +145,9 @@ class _ScreenOffSimulationScreenState extends State<ScreenOffSimulationScreen> w
                                 height: 140 * waveScale,
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
-                                  color: const Color(0xFF1E293B).withValues(alpha: 0.4),
+                                  color: const Color(
+                                    0xFF1E293B,
+                                  ).withValues(alpha: 0.4),
                                 ),
                               ),
                               Container(
@@ -196,14 +203,22 @@ class _ScreenOffSimulationScreenState extends State<ScreenOffSimulationScreen> w
 
                       // Shake Simulation Button
                       OutlinedButton.icon(
-                        icon: const Icon(Icons.vibration_rounded, color: AppColors.sunYellow),
+                        icon: const Icon(
+                          Icons.vibration_rounded,
+                          color: AppColors.sunYellow,
+                        ),
                         label: const Text(
                           'Simulate Shake (Repeat)',
-                          style: TextStyle(color: AppColors.sunYellow, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                            color: AppColors.sunYellow,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         style: OutlinedButton.styleFrom(
                           side: const BorderSide(color: AppColors.sunYellow),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
                         ),
                         onPressed: _onSimulateShake,
                       ),
@@ -223,14 +238,21 @@ class _ScreenOffSimulationScreenState extends State<ScreenOffSimulationScreen> w
                     if (_gestureFeedback.isNotEmpty)
                       Container(
                         margin: const EdgeInsets.only(bottom: 8),
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 4,
+                        ),
                         decoration: BoxDecoration(
                           color: const Color(0xFF334155),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Text(
                           _gestureFeedback,
-                          style: const TextStyle(color: AppColors.sunYellow, fontSize: 12, fontWeight: FontWeight.bold),
+                          style: const TextStyle(
+                            color: AppColors.sunYellow,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     const GestureLegend(),

@@ -1,13 +1,5 @@
 /// Background themes for story screens.
-enum SceneType {
-  observatory,
-  market,
-  factory,
-  garden,
-  cave,
-  treasure,
-  general,
-}
+enum SceneType { observatory, market, factory, garden, cave, treasure, general }
 
 /// Mascot mood states driving animations and facial expressions.
 enum NovaMood {
@@ -22,11 +14,7 @@ enum NovaMood {
 }
 
 /// Optional interactive touch activity embedded in a story beat.
-enum InteractionType {
-  none,
-  tapToCount,
-  dragToShare,
-}
+enum InteractionType { none, tapToCount, dragToShare }
 
 /// A narrative story beat delivered by NOVA.
 class StoryBeat {

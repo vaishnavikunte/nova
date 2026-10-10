@@ -15,10 +15,7 @@ class BadgeModel {
     this.unlockedAt,
   });
 
-  BadgeModel copyWith({
-    bool? isUnlocked,
-    DateTime? unlockedAt,
-  }) {
+  BadgeModel copyWith({bool? isUnlocked, DateTime? unlockedAt}) {
     return BadgeModel(
       id: id,
       name: name,

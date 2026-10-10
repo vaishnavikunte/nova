@@ -27,7 +27,10 @@ class ProgressScreen extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: AppSpacing.roundedCard),
         title: Row(
           children: [
-            Text(badge.isUnlocked ? badge.emoji : '❓', style: const TextStyle(fontSize: 28)),
+            Text(
+              badge.isUnlocked ? badge.emoji : '❓',
+              style: const TextStyle(fontSize: 28),
+            ),
             const SizedBox(width: 8),
             Expanded(
               child: Text(
@@ -67,7 +70,9 @@ class ProgressScreen extends StatelessWidget {
           padding: const EdgeInsets.all(AppSpacing.lg),
           child: Center(
             child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: AppSpacing.maxContentWidth),
+              constraints: const BoxConstraints(
+                maxWidth: AppSpacing.maxContentWidth,
+              ),
               child: Column(
                 children: [
                   // NOVA encouraging speech bubble
@@ -78,7 +83,10 @@ class ProgressScreen extends StatelessWidget {
                       const SizedBox(width: AppSpacing.sm),
                       Expanded(
                         child: SpeechBubble(
-                          text: AppStrings.progressBubble.replaceAll('{name}', student.name),
+                          text: AppStrings.progressBubble.replaceAll(
+                            '{name}',
+                            student.name,
+                          ),
                           speaker: 'NOVA',
                           typewriter: false,
                         ),
@@ -93,7 +101,10 @@ class ProgressScreen extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: AppSpacing.roundedCard,
-                      border: Border.all(color: AppColors.borderLight, width: 2.0),
+                      border: Border.all(
+                        color: AppColors.borderLight,
+                        width: 2.0,
+                      ),
                       boxShadow: AppSpacing.softShadow,
                     ),
                     child: Column(
@@ -107,9 +118,21 @@ class ProgressScreen extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            _buildStatChip('Class ${student.classNumber}', '🎒', const Color(0xFFEEF2FF)),
-                            _buildStatChip('Level ${student.currentLevel}', '🚀', const Color(0xFFE8FBF4)),
-                            _buildStatChip('${student.streak} Days', '🔥', const Color(0xFFFFF1F0)),
+                            _buildStatChip(
+                              'Class ${student.classNumber}',
+                              '🎒',
+                              const Color(0xFFEEF2FF),
+                            ),
+                            _buildStatChip(
+                              'Level ${student.currentLevel}',
+                              '🚀',
+                              const Color(0xFFE8FBF4),
+                            ),
+                            _buildStatChip(
+                              '${student.streak} Days',
+                              '🔥',
+                              const Color(0xFFFFF1F0),
+                            ),
                           ],
                         ),
                       ],
@@ -123,7 +146,10 @@ class ProgressScreen extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: const Color(0xFFFFFBEB),
                       borderRadius: AppSpacing.roundedCard,
-                      border: Border.all(color: AppColors.sunYellow, width: 2.0),
+                      border: Border.all(
+                        color: AppColors.sunYellow,
+                        width: 2.0,
+                      ),
                       boxShadow: AppSpacing.softShadow,
                     ),
                     child: Row(
@@ -136,7 +162,10 @@ class ProgressScreen extends StatelessWidget {
                             shape: BoxShape.circle,
                           ),
                           alignment: Alignment.center,
-                          child: const Text('🍯', style: TextStyle(fontSize: 32)),
+                          child: const Text(
+                            '🍯',
+                            style: TextStyle(fontSize: 32),
+                          ),
                         ),
                         const SizedBox(width: AppSpacing.md),
                         Expanded(
@@ -153,7 +182,9 @@ class ProgressScreen extends StatelessWidget {
                               const SizedBox(height: 2),
                               Text(
                                 'Great learning momentum! Keep going!',
-                                style: AppTextStyles.labelSoft.copyWith(fontSize: 13),
+                                style: AppTextStyles.labelSoft.copyWith(
+                                  fontSize: 13,
+                                ),
                               ),
                             ],
                           ),
@@ -216,7 +247,11 @@ class ProgressScreen extends StatelessWidget {
           const SizedBox(width: 4),
           Text(
             text,
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.navy),
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 13,
+              color: AppColors.navy,
+            ),
           ),
         ],
       ),

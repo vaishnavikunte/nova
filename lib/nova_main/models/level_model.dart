@@ -2,12 +2,7 @@ import 'question_model.dart';
 import 'story_beat.dart';
 
 /// Progression state of a level node on the Adventure Map.
-enum LevelState {
-  locked,
-  available,
-  current,
-  completed,
-}
+enum LevelState { locked, available, current, completed }
 
 /// Full metadata and content structure for a curriculum level.
 class LevelModel {

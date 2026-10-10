@@ -25,7 +25,8 @@ class SecondaryButton extends StatefulWidget {
   State<SecondaryButton> createState() => _SecondaryButtonState();
 }
 
-class _SecondaryButtonState extends State<SecondaryButton> with SingleTickerProviderStateMixin {
+class _SecondaryButtonState extends State<SecondaryButton>
+    with SingleTickerProviderStateMixin {
   late AnimationController _scaleController;
   late Animation<double> _scaleAnimation;
 
@@ -85,7 +86,9 @@ class _SecondaryButtonState extends State<SecondaryButton> with SingleTickerProv
               child: Container(
                 height: AppSpacing.minTouchTarget,
                 decoration: BoxDecoration(
-                  color: widget.isOutlined ? Colors.transparent : AppColors.softGrey,
+                  color: widget.isOutlined
+                      ? Colors.transparent
+                      : AppColors.softGrey,
                   borderRadius: AppSpacing.roundedButton,
                   border: widget.isOutlined
                       ? Border.all(color: AppColors.navy, width: 2.0)

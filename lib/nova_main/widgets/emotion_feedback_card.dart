@@ -118,7 +118,11 @@ class _EmotionFeedbackCardState extends State<EmotionFeedbackCard> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  for (int i = 0; i <= _activeStep && i < widget.stepByStepSteps.length; i++) ...[
+                  for (
+                    int i = 0;
+                    i <= _activeStep && i < widget.stepByStepSteps.length;
+                    i++
+                  ) ...[
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 4.0),
                       child: Row(
@@ -174,7 +178,9 @@ class _EmotionFeedbackCardState extends State<EmotionFeedbackCard> {
           ],
           const SizedBox(height: AppSpacing.lg),
           // Primary action
-          if (widget.state == EmotionState.frustrated && !_showingStepByStep && widget.stepByStepSteps.isNotEmpty)
+          if (widget.state == EmotionState.frustrated &&
+              !_showingStepByStep &&
+              widget.stepByStepSteps.isNotEmpty)
             PrimaryButton(
               label: 'Show Me Step by Step',
               icon: Icons.format_list_numbered_rounded,
@@ -189,7 +195,9 @@ class _EmotionFeedbackCardState extends State<EmotionFeedbackCard> {
             PrimaryButton(
               label: widget.primaryLabel,
               color: widget.isCorrect
-                  ? (widget.state == EmotionState.confident ? AppColors.indigo : AppColors.mint)
+                  ? (widget.state == EmotionState.confident
+                        ? AppColors.indigo
+                        : AppColors.mint)
                   : AppColors.navy,
               onPressed: widget.onPrimary,
             ),

@@ -26,9 +26,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   Future<void> _startJourney() async {
     final name = _nameController.text.trim();
     if (name.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please enter your name')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Please enter your name')));
       return;
     }
 
@@ -67,9 +67,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
               Text(
                 'माझे गाव मध्ये तुमचे स्वागत आहे!',
                 style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 60),
@@ -110,13 +110,20 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
         icon: const Icon(Icons.rocket_launch, size: 28),
         backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Theme.of(context).colorScheme.onPrimary,
-        extendedPadding: const EdgeInsets.symmetric(horizontal: 48, vertical: 20),
+        extendedPadding: const EdgeInsets.symmetric(
+          horizontal: 48,
+          vertical: 20,
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 
-  Widget _buildStandardCard(int standard, String marathiText, String englishText) {
+  Widget _buildStandardCard(
+    int standard,
+    String marathiText,
+    String englishText,
+  ) {
     final isSelected = _selectedStandard == standard;
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
@@ -128,7 +135,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
         });
       },
       child: Card(
-        color: isSelected ? colorScheme.secondary.withOpacity(0.1) : Colors.white,
+        color: isSelected
+            ? colorScheme.secondary.withOpacity(0.1)
+            : Colors.white,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),
           side: BorderSide(
@@ -153,7 +162,9 @@ class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
                 englishText,
                 style: TextStyle(
                   fontSize: 16,
-                  color: isSelected ? colorScheme.secondary.withOpacity(0.8) : Colors.black54,
+                  color: isSelected
+                      ? colorScheme.secondary.withOpacity(0.8)
+                      : Colors.black54,
                 ),
               ),
             ],

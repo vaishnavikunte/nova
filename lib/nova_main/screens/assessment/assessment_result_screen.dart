@@ -51,9 +51,14 @@ class _AssessmentResultScreenState extends State<AssessmentResultScreen> {
             child: SafeArea(
               child: Center(
                 child: SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.md),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppSpacing.lg,
+                    vertical: AppSpacing.md,
+                  ),
                   child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: AppSpacing.maxContentWidth),
+                    constraints: const BoxConstraints(
+                      maxWidth: AppSpacing.maxContentWidth,
+                    ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -67,8 +72,13 @@ class _AssessmentResultScreenState extends State<AssessmentResultScreen> {
 
                         // Congratulations greeting
                         Text(
-                          AppStrings.resultGreeting.replaceAll('{name}', studentName),
-                          style: AppTextStyles.headingLarge.copyWith(fontSize: 28),
+                          AppStrings.resultGreeting.replaceAll(
+                            '{name}',
+                            studentName,
+                          ),
+                          style: AppTextStyles.headingLarge.copyWith(
+                            fontSize: 28,
+                          ),
                           textAlign: TextAlign.center,
                         ),
                         const SizedBox(height: 6),
@@ -85,7 +95,10 @@ class _AssessmentResultScreenState extends State<AssessmentResultScreen> {
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: AppSpacing.roundedCard,
-                            border: Border.all(color: AppColors.borderLight, width: 2.0),
+                            border: Border.all(
+                              color: AppColors.borderLight,
+                              width: 2.0,
+                            ),
                             boxShadow: AppSpacing.softShadow,
                           ),
                           child: Column(
@@ -93,11 +106,17 @@ class _AssessmentResultScreenState extends State<AssessmentResultScreen> {
                             children: [
                               Row(
                                 children: [
-                                  const Icon(Icons.explore_rounded, color: AppColors.purple, size: 26),
+                                  const Icon(
+                                    Icons.explore_rounded,
+                                    color: AppColors.purple,
+                                    size: 26,
+                                  ),
                                   const SizedBox(width: AppSpacing.sm),
                                   Text(
                                     AppStrings.understandingMapTitle,
-                                    style: AppTextStyles.questionText.copyWith(fontSize: 20),
+                                    style: AppTextStyles.questionText.copyWith(
+                                      fontSize: 20,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -143,7 +162,10 @@ class _AssessmentResultScreenState extends State<AssessmentResultScreen> {
                           label: AppStrings.continueButton,
                           icon: Icons.arrow_forward_rounded,
                           onPressed: () {
-                            Navigator.pushReplacementNamed(context, AppRoutes.levelRecommendation);
+                            Navigator.pushReplacementNamed(
+                              context,
+                              AppRoutes.levelRecommendation,
+                            );
                           },
                         ),
                       ],

@@ -8,10 +8,7 @@ import '../theme/app_text_styles.dart';
 class OfflineBadge extends StatelessWidget {
   final bool compact;
 
-  const OfflineBadge({
-    super.key,
-    this.compact = false,
-  });
+  const OfflineBadge({super.key, this.compact = false});
 
   @override
   Widget build(BuildContext context) {

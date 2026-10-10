@@ -51,11 +51,13 @@ class CurriculumLoader {
       return _cachedLevels!;
     }
 
-    final String jsonString = await rootBundle.loadString('assets/curriculum/std3_core.json');
+    final String jsonString = await rootBundle.loadString(
+      'assets/curriculum/std3_core.json',
+    );
     final List<dynamic> jsonList = json.decode(jsonString);
 
     _cachedLevels = jsonList.map((json) => LevelModel.fromJson(json)).toList();
-    
+
     // Intercept Level 1 for STT/TTS Testing Sandbox
     final index = _cachedLevels!.indexWhere((l) => l.levelId == 1);
     if (index != -1) {
@@ -72,7 +74,7 @@ class CurriculumLoader {
 
     return _cachedLevels!;
   }
-  
+
   void clearCache() {
     _cachedLevels = null;
   }

@@ -26,7 +26,8 @@ class AssessmentQuestionScreen extends StatefulWidget {
   const AssessmentQuestionScreen({super.key});
 
   @override
-  State<AssessmentQuestionScreen> createState() => _AssessmentQuestionScreenState();
+  State<AssessmentQuestionScreen> createState() =>
+      _AssessmentQuestionScreenState();
 }
 
 class _AssessmentQuestionScreenState extends State<AssessmentQuestionScreen> {
@@ -45,7 +46,9 @@ class _AssessmentQuestionScreenState extends State<AssessmentQuestionScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     final appState = AppStateScope.of(context);
-    _questions = AssessmentData.getQuestionsForClass(appState.student.classNumber);
+    _questions = AssessmentData.getQuestionsForClass(
+      appState.student.classNumber,
+    );
   }
 
   void _onOptionTapped(int index) {
@@ -57,10 +60,14 @@ class _AssessmentQuestionScreenState extends State<AssessmentQuestionScreen> {
     setState(() {
       _isInputLocked = true;
       _tappedOptionIndex = index;
-      _optionState = isCorrect ? OptionState.correct : OptionState.gentleTryAgain;
+      _optionState = isCorrect
+          ? OptionState.correct
+          : OptionState.gentleTryAgain;
       _reactionChipText = isCorrect
-          ? FeedbackMessages.correctAnswers[index % FeedbackMessages.correctAnswers.length]
-          : FeedbackMessages.gentleTryAgain[index % FeedbackMessages.gentleTryAgain.length];
+          ? FeedbackMessages.correctAnswers[index %
+                FeedbackMessages.correctAnswers.length]
+          : FeedbackMessages.gentleTryAgain[index %
+                FeedbackMessages.gentleTryAgain.length];
     });
 
     _selectedIndices.add(index);
@@ -118,18 +125,31 @@ class _AssessmentQuestionScreenState extends State<AssessmentQuestionScreen> {
       context: context,
       builder: (ctx) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: AppSpacing.roundedCard),
-        title: Text(AppStrings.pauseAdventureTitle, style: AppTextStyles.questionText),
-        content: Text(AppStrings.exitAssessmentConfirm, style: AppTextStyles.body),
+        title: Text(
+          AppStrings.pauseAdventureTitle,
+          style: AppTextStyles.questionText,
+        ),
+        content: Text(
+          AppStrings.exitAssessmentConfirm,
+          style: AppTextStyles.body,
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: Text(AppStrings.stayButton, style: AppTextStyles.buttonSecondary),
+            child: Text(
+              AppStrings.stayButton,
+              style: AppTextStyles.buttonSecondary,
+            ),
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(backgroundColor: AppColors.coral),
             onPressed: () {
               Navigator.pop(ctx);
-              Navigator.pushNamedAndRemoveUntil(context, AppRoutes.welcome, (r) => false);
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                AppRoutes.welcome,
+                (r) => false,
+              );
             },
             child: Text(AppStrings.leaveButton, style: AppTextStyles.button),
           ),
@@ -155,11 +175,18 @@ class _AssessmentQuestionScreenState extends State<AssessmentQuestionScreen> {
               children: [
                 // Top Progress Bar
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.sm),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppSpacing.md,
+                    vertical: AppSpacing.sm,
+                  ),
                   child: Row(
                     children: [
                       IconButton(
-                        icon: const Icon(Icons.close_rounded, color: AppColors.inkSoft, size: 28),
+                        icon: const Icon(
+                          Icons.close_rounded,
+                          color: AppColors.inkSoft,
+                          size: 28,
+                        ),
                         onPressed: _onExitPressed,
                       ),
                       Expanded(
@@ -173,7 +200,10 @@ class _AssessmentQuestionScreenState extends State<AssessmentQuestionScreen> {
                             const SizedBox(height: 4),
                             Text(
                               'Step ${_currentIndex + 1} of ${_questions.length} of your adventure',
-                              style: AppTextStyles.labelSoft.copyWith(fontSize: 13, fontWeight: FontWeight.bold),
+                              style: AppTextStyles.labelSoft.copyWith(
+                                fontSize: 13,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ],
                         ),
@@ -184,8 +214,8 @@ class _AssessmentQuestionScreenState extends State<AssessmentQuestionScreen> {
                         mood: _optionState == OptionState.correct
                             ? NovaMood.celebrating
                             : (_optionState == OptionState.gentleTryAgain
-                                ? NovaMood.encouraging
-                                : NovaMood.happy),
+                                  ? NovaMood.encouraging
+                                  : NovaMood.happy),
                       ),
                     ],
                   ),
@@ -198,7 +228,9 @@ class _AssessmentQuestionScreenState extends State<AssessmentQuestionScreen> {
                     padding: const EdgeInsets.all(AppSpacing.lg),
                     child: Center(
                       child: ConstrainedBox(
-                        constraints: const BoxConstraints(maxWidth: AppSpacing.maxContentWidth),
+                        constraints: const BoxConstraints(
+                          maxWidth: AppSpacing.maxContentWidth,
+                        ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
@@ -208,7 +240,10 @@ class _AssessmentQuestionScreenState extends State<AssessmentQuestionScreen> {
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: AppSpacing.roundedCard,
-                                border: Border.all(color: AppColors.borderLight, width: 2.0),
+                                border: Border.all(
+                                  color: AppColors.borderLight,
+                                  width: 2.0,
+                                ),
                                 boxShadow: AppSpacing.softShadow,
                               ),
                               child: Column(
@@ -218,7 +253,8 @@ class _AssessmentQuestionScreenState extends State<AssessmentQuestionScreen> {
                                     style: AppTextStyles.questionText,
                                     textAlign: TextAlign.center,
                                   ),
-                                  if (currentQ.visualType != VisualType.none) ...[
+                                  if (currentQ.visualType !=
+                                      VisualType.none) ...[
                                     const SizedBox(height: AppSpacing.md),
                                     _buildQuestionVisual(currentQ),
                                   ],
@@ -231,7 +267,10 @@ class _AssessmentQuestionScreenState extends State<AssessmentQuestionScreen> {
                             if (_reactionChipText != null)
                               Center(
                                 child: Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 16,
+                                    vertical: 8,
+                                  ),
                                   decoration: BoxDecoration(
                                     color: _optionState == OptionState.correct
                                         ? const Color(0xFFE8FBF4)
@@ -259,13 +298,19 @@ class _AssessmentQuestionScreenState extends State<AssessmentQuestionScreen> {
                             const SizedBox(height: AppSpacing.sm),
 
                             // Options List
-                            for (int i = 0; i < currentQ.options.length; i++) ...[
+                            for (
+                              int i = 0;
+                              i < currentQ.options.length;
+                              i++
+                            ) ...[
                               AnswerOptionWidget(
                                 option: currentQ.options[i],
                                 index: i,
                                 state: _tappedOptionIndex == i
                                     ? _optionState
-                                    : (_isInputLocked ? OptionState.disabled : OptionState.idle),
+                                    : (_isInputLocked
+                                          ? OptionState.disabled
+                                          : OptionState.idle),
                                 onTap: () => _onOptionTapped(i),
                               ),
                             ],
@@ -348,24 +393,52 @@ class _AssessmentQuestionScreenState extends State<AssessmentQuestionScreen> {
       case VisualType.fractionCircles:
       case VisualType.fractionBars:
       case VisualType.pizza:
-        return FractionVisual(fractionStr: q.visualData ?? '1/2', type: q.visualType, size: 76);
+        return FractionVisual(
+          fractionStr: q.visualData ?? '1/2',
+          type: q.visualType,
+          size: 76,
+        );
       case VisualType.arrayDots:
         return Container(
           padding: const EdgeInsets.all(8),
-          decoration: BoxDecoration(color: AppColors.softGrey, borderRadius: BorderRadius.circular(10)),
-          child: const Text('• • • • • • •\n• • • • • • •\n• • • • • • •\n• • • • • • •\n• • • • • • •\n• • • • • • •', textAlign: TextAlign.center, style: TextStyle(fontSize: 16, letterSpacing: 4, height: 1.2)),
+          decoration: BoxDecoration(
+            color: AppColors.softGrey,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: const Text(
+            '• • • • • • •\n• • • • • • •\n• • • • • • •\n• • • • • • •\n• • • • • • •\n• • • • • • •',
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 16, letterSpacing: 4, height: 1.2),
+          ),
         );
       case VisualType.groupedDots:
         return Container(
           padding: const EdgeInsets.all(8),
-          decoration: BoxDecoration(color: AppColors.softGrey, borderRadius: BorderRadius.circular(10)),
-          child: const Text('( • • • • • • )  ( • • • • • • )\n( • • • • • • )  ( • • • • • • )', textAlign: TextAlign.center, style: TextStyle(fontSize: 16, height: 1.4)),
+          decoration: BoxDecoration(
+            color: AppColors.softGrey,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: const Text(
+            '( • • • • • • )  ( • • • • • • )\n( • • • • • • )  ( • • • • • • )',
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 16, height: 1.4),
+          ),
         );
       case VisualType.patternStrip:
         return Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          decoration: BoxDecoration(color: const Color(0xFFEEF2FF), borderRadius: BorderRadius.circular(12)),
-          child: const Text('2  ➔  4  ➔  6  ➔  ❓', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: AppColors.indigo)),
+          decoration: BoxDecoration(
+            color: const Color(0xFFEEF2FF),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: const Text(
+            '2  ➔  4  ➔  6  ➔  ❓',
+            style: TextStyle(
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+              color: AppColors.indigo,
+            ),
+          ),
         );
       default:
         return const SizedBox.shrink();

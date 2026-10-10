@@ -62,7 +62,9 @@ class _SpeechBubbleState extends State<SpeechBubble> {
     }
 
     _displayedLength = 0;
-    _typewriterTimer = Timer.periodic(const Duration(milliseconds: 32), (timer) {
+    _typewriterTimer = Timer.periodic(const Duration(milliseconds: 32), (
+      timer,
+    ) {
       if (_displayedLength < widget.text.length) {
         setState(() {
           _displayedLength++;
@@ -101,7 +103,12 @@ class _SpeechBubbleState extends State<SpeechBubble> {
         clipBehavior: Clip.none,
         children: [
           Container(
-            padding: const EdgeInsets.fromLTRB(AppSpacing.lg, AppSpacing.md, AppSpacing.lg, AppSpacing.md),
+            padding: const EdgeInsets.fromLTRB(
+              AppSpacing.lg,
+              AppSpacing.md,
+              AppSpacing.lg,
+              AppSpacing.md,
+            ),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: AppSpacing.roundedCard,
@@ -119,20 +126,24 @@ class _SpeechBubbleState extends State<SpeechBubble> {
                       if (widget.speaker != null) ...[
                         Text(
                           widget.speaker!,
-                          style: AppTextStyles.chip.copyWith(color: AppColors.purple),
+                          style: AppTextStyles.chip.copyWith(
+                            color: AppColors.purple,
+                          ),
                         ),
                         const SizedBox(height: AppSpacing.xs),
                       ],
-                      Text(
-                        currentText,
-                        style: AppTextStyles.storyNarration,
-                      ),
+                      Text(currentText, style: AppTextStyles.storyNarration),
                     ],
                   ),
                 ),
-                if (widget.onReplay != null || true) // Always show speaker if we can play TTS
+                if (widget.onReplay != null ||
+                    true) // Always show speaker if we can play TTS
                   IconButton(
-                    icon: const Icon(Icons.volume_up_rounded, color: AppColors.indigo, size: 26),
+                    icon: const Icon(
+                      Icons.volume_up_rounded,
+                      color: AppColors.indigo,
+                      size: 26,
+                    ),
                     onPressed: () {
                       _startTypewriter();
                       _playTts(); // Play TTS!

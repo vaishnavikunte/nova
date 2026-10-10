@@ -31,7 +31,8 @@ class PrimaryButton extends StatefulWidget {
   State<PrimaryButton> createState() => _PrimaryButtonState();
 }
 
-class _PrimaryButtonState extends State<PrimaryButton> with SingleTickerProviderStateMixin {
+class _PrimaryButtonState extends State<PrimaryButton>
+    with SingleTickerProviderStateMixin {
   late AnimationController _scaleController;
   late Animation<double> _scaleAnimation;
 
@@ -72,7 +73,8 @@ class _PrimaryButtonState extends State<PrimaryButton> with SingleTickerProvider
 
   @override
   Widget build(BuildContext context) {
-    final bool isClickable = widget.enabled && !widget.isLoading && widget.onPressed != null;
+    final bool isClickable =
+        widget.enabled && !widget.isLoading && widget.onPressed != null;
 
     final gradient = widget.color != null
         ? LinearGradient(colors: [widget.color!, widget.color!])
@@ -109,7 +111,9 @@ class _PrimaryButtonState extends State<PrimaryButton> with SingleTickerProvider
                         height: 24,
                         child: CircularProgressIndicator(
                           strokeWidth: 2.5,
-                          valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                          valueColor: AlwaysStoppedAnimation<Color>(
+                            Colors.white,
+                          ),
                         ),
                       )
                     : Row(

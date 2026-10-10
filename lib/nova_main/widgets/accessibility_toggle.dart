@@ -27,7 +27,10 @@ class AccessibilityToggle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 6.0),
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.sm),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.md,
+        vertical: AppSpacing.sm,
+      ),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: AppSpacing.roundedCard,
@@ -94,7 +97,10 @@ class AccessibilityToggle extends StatelessWidget {
               ),
               child: Text(
                 previewText!,
-                style: AppTextStyles.labelSoft.copyWith(fontSize: 12, color: AppColors.indigo),
+                style: AppTextStyles.labelSoft.copyWith(
+                  fontSize: 12,
+                  color: AppColors.indigo,
+                ),
               ),
             ),
           ],
@@ -109,18 +115,17 @@ class NovaSpeechCaption extends StatelessWidget {
   final String text;
   final bool visible;
 
-  const NovaSpeechCaption({
-    super.key,
-    required this.text,
-    this.visible = true,
-  });
+  const NovaSpeechCaption({super.key, required this.text, this.visible = true});
 
   @override
   Widget build(BuildContext context) {
     if (!visible || text.isEmpty) return const SizedBox.shrink();
 
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: 4),
+      margin: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.md,
+        vertical: 4,
+      ),
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       decoration: BoxDecoration(
         color: const Color(0xE61F2A6B), // 90% navy
@@ -128,7 +133,11 @@ class NovaSpeechCaption extends StatelessWidget {
       ),
       child: Row(
         children: [
-          const Icon(Icons.volume_up_rounded, color: AppColors.sunYellow, size: 20),
+          const Icon(
+            Icons.volume_up_rounded,
+            color: AppColors.sunYellow,
+            size: 20,
+          ),
           const SizedBox(width: 8),
           Expanded(
             child: Text(

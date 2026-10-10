@@ -20,7 +20,9 @@ class StudentRepository {
   Future<List<LevelRecord>> getUnlockedLevels(String studentId) async {
     return await (_db.select(_db.levelRecords)
           ..where((l) => l.studentId.equals(studentId))
-          ..where((l) => l.status.isIn(['AVAILABLE', 'PROFICIENT', 'MASTERED'])))
+          ..where(
+            (l) => l.status.isIn(['AVAILABLE', 'PROFICIENT', 'MASTERED']),
+          ))
         .get();
   }
 }

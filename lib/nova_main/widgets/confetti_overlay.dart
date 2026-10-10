@@ -19,7 +19,8 @@ class ConfettiOverlay extends StatefulWidget {
   State<ConfettiOverlay> createState() => _ConfettiOverlayState();
 }
 
-class _ConfettiOverlayState extends State<ConfettiOverlay> with SingleTickerProviderStateMixin {
+class _ConfettiOverlayState extends State<ConfettiOverlay>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late List<_ConfettiParticle> _particles;
   final Random _random = Random();
@@ -130,7 +131,8 @@ class _ConfettiPainter extends CustomPainter {
 
     for (final p in particles) {
       final double currY = (progress * p.speedY * size.height) - 20;
-      final double currX = (p.x * size.width) + (sin(progress * pi * 2 + p.x) * 40 * p.speedX);
+      final double currX =
+          (p.x * size.width) + (sin(progress * pi * 2 + p.x) * 40 * p.speedX);
       final double opacity = (1.0 - progress * 0.9).clamp(0.0, 1.0);
 
       final paint = Paint()
@@ -142,7 +144,11 @@ class _ConfettiPainter extends CustomPainter {
       canvas.rotate(progress * p.rotationSpeed * pi);
       canvas.drawRRect(
         RRect.fromRectAndRadius(
-          Rect.fromCenter(center: Offset.zero, width: p.size, height: p.size * 0.6),
+          Rect.fromCenter(
+            center: Offset.zero,
+            width: p.size,
+            height: p.size * 0.6,
+          ),
           const Radius.circular(2),
         ),
         paint,
@@ -152,5 +158,6 @@ class _ConfettiPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant _ConfettiPainter oldDelegate) => oldDelegate.progress != progress;
+  bool shouldRepaint(covariant _ConfettiPainter oldDelegate) =>
+      oldDelegate.progress != progress;
 }

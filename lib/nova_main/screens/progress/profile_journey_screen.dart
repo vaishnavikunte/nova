@@ -23,7 +23,11 @@ class ProfileJourneyScreen extends StatelessWidget {
     AppColors.indigo,
   ];
 
-  void _confirmClassSwitch(BuildContext context, AppState appState, int targetClass) {
+  void _confirmClassSwitch(
+    BuildContext context,
+    AppState appState,
+    int targetClass,
+  ) {
     if (targetClass == appState.student.classNumber) return;
 
     HapticsService.lightImpact();
@@ -31,7 +35,10 @@ class ProfileJourneyScreen extends StatelessWidget {
       context: context,
       builder: (ctx) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: AppSpacing.roundedCard),
-        title: const Text('Change Class?', style: TextStyle(fontWeight: FontWeight.bold)),
+        title: const Text(
+          'Change Class?',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         content: Text(
           AppStrings.switchClassConfirm
               .replaceAll('{n}', '$targetClass')
@@ -49,7 +56,13 @@ class ProfileJourneyScreen extends StatelessWidget {
               appState.setClassNumber(targetClass);
               Navigator.pop(ctx);
             },
-            child: const Text('Move to Class', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+            child: const Text(
+              'Move to Class',
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
         ],
       ),
@@ -68,7 +81,9 @@ class ProfileJourneyScreen extends StatelessWidget {
           padding: const EdgeInsets.all(AppSpacing.lg),
           child: Center(
             child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: AppSpacing.maxContentWidth),
+              constraints: const BoxConstraints(
+                maxWidth: AppSpacing.maxContentWidth,
+              ),
               child: Column(
                 children: [
                   // Profile Header Card
@@ -77,16 +92,25 @@ class ProfileJourneyScreen extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: AppSpacing.roundedCard,
-                      border: Border.all(color: AppColors.borderLight, width: 2.0),
+                      border: Border.all(
+                        color: AppColors.borderLight,
+                        width: 2.0,
+                      ),
                       boxShadow: AppSpacing.softShadow,
                     ),
                     child: Column(
                       children: [
-                        const MascotWidget(size: 96, mood: NovaMood.happy, showGlow: true),
+                        const MascotWidget(
+                          size: 96,
+                          mood: NovaMood.happy,
+                          showGlow: true,
+                        ),
                         const SizedBox(height: 8),
                         Text(
                           student.name,
-                          style: AppTextStyles.headingMedium.copyWith(fontSize: 24),
+                          style: AppTextStyles.headingMedium.copyWith(
+                            fontSize: 24,
+                          ),
                         ),
                         const SizedBox(height: 4),
                         Text(
@@ -99,21 +123,26 @@ class ProfileJourneyScreen extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: List.generate(avatarColors.length, (index) {
-                            final bool selected = student.avatarColorIndex == index;
+                            final bool selected =
+                                student.avatarColorIndex == index;
                             return GestureDetector(
                               onTap: () {
                                 HapticsService.selectionClick();
                                 appState.setAvatarColorIndex(index);
                               },
                               child: Container(
-                                margin: const EdgeInsets.symmetric(horizontal: 5),
+                                margin: const EdgeInsets.symmetric(
+                                  horizontal: 5,
+                                ),
                                 width: 28,
                                 height: 28,
                                 decoration: BoxDecoration(
                                   color: avatarColors[index],
                                   shape: BoxShape.circle,
                                   border: Border.all(
-                                    color: selected ? AppColors.navy : Colors.white,
+                                    color: selected
+                                        ? AppColors.navy
+                                        : Colors.white,
                                     width: selected ? 3.0 : 1.5,
                                   ),
                                 ),
@@ -149,7 +178,8 @@ class ProfileJourneyScreen extends StatelessWidget {
                           color: isCurrent ? Colors.white : AppColors.navy,
                           fontWeight: FontWeight.bold,
                         ),
-                        onSelected: (_) => _confirmClassSwitch(context, appState, c),
+                        onSelected: (_) =>
+                            _confirmClassSwitch(context, appState, c),
                       );
                     }),
                   ),
@@ -169,14 +199,33 @@ class ProfileJourneyScreen extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: AppSpacing.roundedCard,
-                      border: Border.all(color: AppColors.borderLight, width: 2.0),
+                      border: Border.all(
+                        color: AppColors.borderLight,
+                        width: 2.0,
+                      ),
                     ),
                     child: Column(
                       children: [
-                        _buildTimelineItem('Took the "What You Know" game', '🧭', 'Starting level unlocked'),
-                        _buildTimelineItem('Earned Star Explorer badge', '🌟', 'Welcome quest completed'),
-                        _buildTimelineItem('Achieved 3-Day streak', '🔥', 'Consistent exploration'),
-                        _buildTimelineItem('Explored Fractions in Level 6', '🍕', 'Sharing pirate treasure'),
+                        _buildTimelineItem(
+                          'Took the "What You Know" game',
+                          '🧭',
+                          'Starting level unlocked',
+                        ),
+                        _buildTimelineItem(
+                          'Earned Star Explorer badge',
+                          '🌟',
+                          'Welcome quest completed',
+                        ),
+                        _buildTimelineItem(
+                          'Achieved 3-Day streak',
+                          '🔥',
+                          'Consistent exploration',
+                        ),
+                        _buildTimelineItem(
+                          'Explored Fractions in Level 6',
+                          '🍕',
+                          'Sharing pirate treasure',
+                        ),
                       ],
                     ),
                   ),
@@ -187,7 +236,10 @@ class ProfileJourneyScreen extends StatelessWidget {
                     label: AppStrings.accessibilityBtn,
                     icon: Icons.accessibility_new_rounded,
                     onPressed: () {
-                      Navigator.pushNamed(context, AppRoutes.accessibilitySettings);
+                      Navigator.pushNamed(
+                        context,
+                        AppRoutes.accessibilitySettings,
+                      );
                     },
                   ),
                   const SizedBox(height: AppSpacing.sm),
@@ -205,7 +257,9 @@ class ProfileJourneyScreen extends StatelessWidget {
                     onPressed: () {
                       appState.resetDemo();
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Demo reset successfully!')),
+                        const SnackBar(
+                          content: Text('Demo reset successfully!'),
+                        ),
                       );
                     },
                   ),
@@ -241,8 +295,16 @@ class ProfileJourneyScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title, style: AppTextStyles.label.copyWith(fontWeight: FontWeight.bold)),
-                Text(subtitle, style: AppTextStyles.labelSoft.copyWith(fontSize: 13)),
+                Text(
+                  title,
+                  style: AppTextStyles.label.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  subtitle,
+                  style: AppTextStyles.labelSoft.copyWith(fontSize: 13),
+                ),
               ],
             ),
           ),

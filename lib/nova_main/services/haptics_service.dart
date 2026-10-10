@@ -1,4 +1,3 @@
-
 import 'package:flutter/services.dart';
 
 /// Small local haptics adapter used by the UI prototype.

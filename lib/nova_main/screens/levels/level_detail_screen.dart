@@ -9,6 +9,7 @@ import '../../theme/app_text_styles.dart';
 import '../../widgets/primary_button.dart';
 import '../../../features/curriculum/presentation/std1_level1_story_screen.dart';
 import '../story/story_screen.dart';
+import '../../widgets/child_character_widget.dart';
 
 /// Level detail preview modal presenting challenge topic, estimated time, and reward stars.
 class LevelDetailScreen extends StatelessWidget {
@@ -17,7 +18,9 @@ class LevelDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appState = AppStateScope.of(context);
-    final level = appState.activeLevel ?? appState.currentCourse.getLevel(appState.student.currentLevel);
+    final level =
+        appState.activeLevel ??
+        appState.currentCourse.getLevel(appState.student.currentLevel);
 
     String difficultyLabel = 'Easy';
     if (level.difficulty == 2) difficultyLabel = 'Medium';
@@ -29,7 +32,11 @@ class LevelDetailScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back_rounded, color: AppColors.navy, size: 28),
+          icon: const Icon(
+            Icons.arrow_back_rounded,
+            color: AppColors.navy,
+            size: 28,
+          ),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -40,7 +47,9 @@ class LevelDetailScreen extends StatelessWidget {
               child: SingleChildScrollView(
                 padding: const EdgeInsets.all(AppSpacing.xl),
                 child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: AppSpacing.maxContentWidth),
+                  constraints: const BoxConstraints(
+                    maxWidth: AppSpacing.maxContentWidth,
+                  ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -51,17 +60,26 @@ class LevelDetailScreen extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: Colors.white,
                           shape: BoxShape.circle,
-                          border: Border.all(color: AppColors.sunYellow, width: 3.5),
+                          border: Border.all(
+                            color: AppColors.sunYellow,
+                            width: 3.5,
+                          ),
                           boxShadow: AppSpacing.glowShadow,
                         ),
                         alignment: Alignment.center,
-                        child: Text(level.emoji, style: const TextStyle(fontSize: 54)),
+                        child: Text(
+                          level.emoji,
+                          style: const TextStyle(fontSize: 54),
+                        ),
                       ),
                       const SizedBox(height: AppSpacing.md),
 
                       // Level Tag
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 5),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 14,
+                          vertical: 5,
+                        ),
                         decoration: BoxDecoration(
                           color: AppColors.navy,
                           borderRadius: BorderRadius.circular(14),
@@ -105,7 +123,9 @@ class LevelDetailScreen extends StatelessWidget {
                               mainAxisSize: MainAxisSize.min,
                               children: List.generate(3, (i) {
                                 return Icon(
-                                  i < level.difficulty ? Icons.star_rounded : Icons.star_border_rounded,
+                                  i < level.difficulty
+                                      ? Icons.star_rounded
+                                      : Icons.star_border_rounded,
                                   color: AppColors.sunYellow,
                                   size: 18,
                                 );
@@ -115,12 +135,20 @@ class LevelDetailScreen extends StatelessWidget {
                           _buildInfoCard(
                             'Time',
                             '${level.estMinutes} min',
-                            const Icon(Icons.timer_outlined, color: AppColors.indigo, size: 20),
+                            const Icon(
+                              Icons.timer_outlined,
+                              color: AppColors.indigo,
+                              size: 20,
+                            ),
                           ),
                           _buildInfoCard(
                             'Reward',
                             '${level.rewardStars} Stars',
-                            const Icon(Icons.stars_rounded, color: Color(0xFFD97706), size: 20),
+                            const Icon(
+                              Icons.stars_rounded,
+                              color: Color(0xFFD97706),
+                              size: 20,
+                            ),
                           ),
                         ],
                       ),
@@ -128,7 +156,10 @@ class LevelDetailScreen extends StatelessWidget {
 
                       // Voice or tap hint
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 14,
+                          vertical: 8,
+                        ),
                         decoration: BoxDecoration(
                           color: const Color(0xFFEEF2FF),
                           borderRadius: BorderRadius.circular(16),
@@ -150,15 +181,21 @@ class LevelDetailScreen extends StatelessWidget {
                         icon: Icons.play_arrow_rounded,
                         onPressed: () {
                           appState.startLevel(level.number);
-                          if (appState.student.classNumber == 1 && level.number == 1) {
+                          if (appState.student.classNumber == 1 &&
+                              level.number == 1) {
                             Navigator.pushReplacement(
                               context,
-                              MaterialPageRoute(builder: (context) => const Std1Level1StoryScreen()),
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    const Std1Level1StoryScreen(),
+                              ),
                             );
                           } else {
                             Navigator.pushReplacement(
                               context,
-                              MaterialPageRoute(builder: (context) => const StoryScreen()),
+                              MaterialPageRoute(
+                                builder: (context) => const StoryScreen(),
+                              ),
                             );
                           }
                         },
@@ -166,6 +203,18 @@ class LevelDetailScreen extends StatelessWidget {
                     ],
                   ),
                 ),
+              ),
+            ),
+          ),
+
+          // Animated child holding a rocket (Science/Exploration)
+          Positioned(
+            bottom: 40,
+            left: 20,
+            child: IgnorePointer(
+              child: const ChildCharacterWidget(
+                size: 110,
+                prop: ChildProp.rocket,
               ),
             ),
           ),
@@ -191,7 +240,11 @@ class LevelDetailScreen extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             val,
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: AppColors.navy),
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 13,
+              color: AppColors.navy,
+            ),
             textAlign: TextAlign.center,
           ),
           Text(

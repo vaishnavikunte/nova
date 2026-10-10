@@ -21,7 +21,8 @@ class LevelCompleteScreen extends StatefulWidget {
   State<LevelCompleteScreen> createState() => _LevelCompleteScreenState();
 }
 
-class _LevelCompleteScreenState extends State<LevelCompleteScreen> with SingleTickerProviderStateMixin {
+class _LevelCompleteScreenState extends State<LevelCompleteScreen>
+    with SingleTickerProviderStateMixin {
   late AnimationController _trophyController;
   late Animation<double> _trophyScale;
   bool _playConfetti = true;
@@ -84,9 +85,14 @@ class _LevelCompleteScreenState extends State<LevelCompleteScreen> with SingleTi
             child: SafeArea(
               child: Center(
                 child: SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xl, vertical: AppSpacing.lg),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppSpacing.xl,
+                    vertical: AppSpacing.lg,
+                  ),
                   child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: AppSpacing.maxContentWidth),
+                    constraints: const BoxConstraints(
+                      maxWidth: AppSpacing.maxContentWidth,
+                    ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -102,16 +108,25 @@ class _LevelCompleteScreenState extends State<LevelCompleteScreen> with SingleTi
                                 decoration: BoxDecoration(
                                   color: Colors.white,
                                   shape: BoxShape.circle,
-                                  border: Border.all(color: AppColors.sunYellow, width: 3.5),
+                                  border: Border.all(
+                                    color: AppColors.sunYellow,
+                                    width: 3.5,
+                                  ),
                                   boxShadow: AppSpacing.glowShadow,
                                 ),
                                 alignment: Alignment.center,
-                                child: const Text('🏆', style: TextStyle(fontSize: 68)),
+                                child: const Text(
+                                  '🏆',
+                                  style: TextStyle(fontSize: 68),
+                                ),
                               ),
                               const Positioned(
                                 right: -12,
                                 bottom: -10,
-                                child: MascotWidget(size: 78, mood: NovaMood.celebrating),
+                                child: MascotWidget(
+                                  size: 78,
+                                  mood: NovaMood.celebrating,
+                                ),
                               ),
                             ],
                           ),
@@ -120,7 +135,9 @@ class _LevelCompleteScreenState extends State<LevelCompleteScreen> with SingleTi
 
                         // Title
                         Text(
-                          isClassComplete ? AppStrings.classCompleteTitle : AppStrings.adventureComplete,
+                          isClassComplete
+                              ? AppStrings.classCompleteTitle
+                              : AppStrings.adventureComplete,
                           style: AppTextStyles.headingLarge,
                           textAlign: TextAlign.center,
                         ),
@@ -141,23 +158,44 @@ class _LevelCompleteScreenState extends State<LevelCompleteScreen> with SingleTi
 
                         // Streak and Badge Chips
                         Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 10,
+                          ),
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: AppSpacing.roundedCard,
-                            border: Border.all(color: AppColors.borderLight, width: 1.5),
+                            border: Border.all(
+                              color: AppColors.borderLight,
+                              width: 1.5,
+                            ),
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Text(
-                                AppStrings.streakDays.replaceAll('{days}', '${student.streak}'),
-                                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: AppColors.navy),
+                                AppStrings.streakDays.replaceAll(
+                                  '{days}',
+                                  '${student.streak}',
+                                ),
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                  color: AppColors.navy,
+                                ),
                               ),
-                              Container(width: 1.5, height: 20, color: AppColors.borderLight),
+                              Container(
+                                width: 1.5,
+                                height: 20,
+                                color: AppColors.borderLight,
+                              ),
                               const Text(
                                 '🏆 Badge Unlocked',
-                                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: AppColors.purple),
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14,
+                                  color: AppColors.purple,
+                                ),
                               ),
                             ],
                           ),
@@ -174,13 +212,20 @@ class _LevelCompleteScreenState extends State<LevelCompleteScreen> with SingleTi
                         // ▶ Primary Action: [ Next Level ] or [ Next Class ]
                         PrimaryButton(
                           label: isClassComplete && student.classNumber < 6
-                              ? AppStrings.goToNextClass.replaceAll('{n}', '${student.classNumber + 1}')
+                              ? AppStrings.goToNextClass.replaceAll(
+                                  '{n}',
+                                  '${student.classNumber + 1}',
+                                )
                               : AppStrings.nextLevelBtn,
                           icon: Icons.arrow_forward_rounded,
                           onPressed: () {
                             if (isClassComplete && student.classNumber < 6) {
                               appState.setClassNumber(student.classNumber + 1);
-                              Navigator.pushNamedAndRemoveUntil(context, AppRoutes.home, (r) => false);
+                              Navigator.pushNamedAndRemoveUntil(
+                                context,
+                                AppRoutes.home,
+                                (r) => false,
+                              );
                             } else {
                               _onNextLevel(appState);
                             }
@@ -192,7 +237,11 @@ class _LevelCompleteScreenState extends State<LevelCompleteScreen> with SingleTi
                         SecondaryButton(
                           label: AppStrings.backToMapBtn,
                           onPressed: () {
-                            Navigator.pushNamedAndRemoveUntil(context, AppRoutes.home, (r) => false);
+                            Navigator.pushNamedAndRemoveUntil(
+                              context,
+                              AppRoutes.home,
+                              (r) => false,
+                            );
                           },
                         ),
                       ],

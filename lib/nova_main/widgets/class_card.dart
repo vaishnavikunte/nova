@@ -25,7 +25,8 @@ class ClassCard extends StatefulWidget {
   State<ClassCard> createState() => _ClassCardState();
 }
 
-class _ClassCardState extends State<ClassCard> with SingleTickerProviderStateMixin {
+class _ClassCardState extends State<ClassCard>
+    with SingleTickerProviderStateMixin {
   late AnimationController _bounceController;
   late Animation<double> _scaleAnimation;
 
@@ -65,10 +66,10 @@ class _ClassCardState extends State<ClassCard> with SingleTickerProviderStateMix
           height: 110,
           padding: const EdgeInsets.all(AppSpacing.md),
           decoration: BoxDecoration(
-            color: widget.selected ? const Color(0xFFF3F5FF) : Colors.white,
+            color: widget.selected ? Theme.of(context).colorScheme.primaryContainer : Theme.of(context).cardTheme.color ?? Colors.white,
             borderRadius: AppSpacing.roundedCard,
             border: Border.all(
-              color: widget.selected ? AppColors.indigo : AppColors.borderLight,
+              color: widget.selected ? Theme.of(context).colorScheme.primary : (Theme.of(context).colorScheme.outline ?? AppColors.borderLight),
               width: widget.selected ? 2.8 : 1.5,
             ),
             boxShadow: widget.selected ? AppSpacing.softShadow : null,
@@ -89,7 +90,9 @@ class _ClassCardState extends State<ClassCard> with SingleTickerProviderStateMix
                       'Class ${widget.classNumber}',
                       style: AppTextStyles.questionText.copyWith(
                         fontSize: 19,
-                        color: widget.selected ? AppColors.indigo : AppColors.navy,
+                        color: widget.selected
+                            ? Theme.of(context).colorScheme.primary
+                            : Theme.of(context).textTheme.bodyLarge?.color,
                       ),
                     ),
                   ],
@@ -101,11 +104,15 @@ class _ClassCardState extends State<ClassCard> with SingleTickerProviderStateMix
                   right: 0,
                   child: Container(
                     padding: const EdgeInsets.all(4),
-                    decoration: const BoxDecoration(
-                      color: AppColors.indigo,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.primary,
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(Icons.check, color: Colors.white, size: 16),
+                    child: Icon(
+                      Icons.check,
+                      color: Theme.of(context).colorScheme.onPrimary,
+                      size: 16,
+                    ),
                   ),
                 ),
             ],

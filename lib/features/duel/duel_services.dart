@@ -19,7 +19,9 @@ class DuelClientService {
 
     FlutterBluePlus.scanResults.listen((results) {
       for (ScanResult r in results) {
-        if (r.advertisementData.serviceUuids.contains(Guid(ganitDangalServiceUuid))) {
+        if (r.advertisementData.serviceUuids.contains(
+          Guid(ganitDangalServiceUuid),
+        )) {
           targetDevice = r.device;
           FlutterBluePlus.stopScan();
           _connectToHost();
@@ -33,7 +35,7 @@ class DuelClientService {
     if (targetDevice == null) return;
     await targetDevice!.connect(autoConnect: false, license: License.nonprofit);
     List<BluetoothService> services = await targetDevice!.discoverServices();
-    
+
     for (var service in services) {
       if (service.uuid == Guid(ganitDangalServiceUuid)) {
         for (var characteristic in service.characteristics) {
@@ -41,7 +43,9 @@ class DuelClientService {
             seedChar = characteristic;
           } else if (characteristic.uuid == Guid(ganitDangalScoreCharUuid)) {
             scoreChar = characteristic;
-            await scoreChar!.setNotifyValue(true); // Listen for opponent score updates
+            await scoreChar!.setNotifyValue(
+              true,
+            ); // Listen for opponent score updates
           }
         }
       }
@@ -73,18 +77,18 @@ class DuelClientService {
 class DuelHostService {
   int? currentSeed;
 
-  /// Note: flutter_blue_plus natively acts as a Central (Client). 
+  /// Note: flutter_blue_plus natively acts as a Central (Client).
   /// True peripheral/advertising mode typically requires `flutter_ble_peripheral`.
   /// Below represents the architectural implementation required for the Host mode.
   Future<void> startHost() async {
     // 1. Generate 4-digit seed
-    currentSeed = 1000 + Random().nextInt(9000); 
+    currentSeed = 1000 + Random().nextInt(9000);
 
     // 2. Setup GATT Server (Peripheral mode)
     // - Add Service UUID: ganitDangalServiceUuid
     // - Add Characteristic UUID: ganitDangalSeedCharUuid (Permissions: Read)
     // - Add Characteristic UUID: ganitDangalScoreCharUuid (Permissions: WriteWithoutResponse, Notify)
-    
+
     // 3. Set the characteristic value for the seed
     // e.g. seedCharacteristic.setValue([currentSeed! >> 8, currentSeed! & 0xFF]);
 

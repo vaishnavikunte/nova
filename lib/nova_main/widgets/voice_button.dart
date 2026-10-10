@@ -23,7 +23,8 @@ class VoiceButton extends StatefulWidget {
   State<VoiceButton> createState() => _VoiceButtonState();
 }
 
-class _VoiceButtonState extends State<VoiceButton> with TickerProviderStateMixin {
+class _VoiceButtonState extends State<VoiceButton>
+    with TickerProviderStateMixin {
   late AnimationController _rippleController;
   late AnimationController _waveformController;
 
@@ -94,7 +95,9 @@ class _VoiceButtonState extends State<VoiceButton> with TickerProviderStateMixin
                     builder: (context, child) {
                       return CustomPaint(
                         size: Size(widget.size + 40, widget.size + 40),
-                        painter: _RipplePainter(progress: _rippleController.value),
+                        painter: _RipplePainter(
+                          progress: _rippleController.value,
+                        ),
                       );
                     },
                   ),
@@ -123,16 +126,18 @@ class _VoiceButtonState extends State<VoiceButton> with TickerProviderStateMixin
                           height: 32,
                           child: CircularProgressIndicator(
                             strokeWidth: 3,
-                            valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              Colors.white,
+                            ),
                           ),
                         )
                       : isListening
-                          ? _buildWaveform()
-                          : const Icon(
-                              Icons.mic_rounded,
-                              color: Colors.white,
-                              size: 44,
-                            ),
+                      ? _buildWaveform()
+                      : const Icon(
+                          Icons.mic_rounded,
+                          color: Colors.white,
+                          size: 44,
+                        ),
                 ),
               ],
             ),
@@ -204,5 +209,6 @@ class _RipplePainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant _RipplePainter oldDelegate) => oldDelegate.progress != progress;
+  bool shouldRepaint(covariant _RipplePainter oldDelegate) =>
+      oldDelegate.progress != progress;
 }

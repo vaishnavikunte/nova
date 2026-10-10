@@ -11,9 +11,15 @@ class RouteTransitions {
     return PageRouteBuilder<T>(
       pageBuilder: (context, animation, secondaryAnimation) => page,
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        final curved = CurvedAnimation(parent: animation, curve: Curves.easeOutCubic);
+        final curved = CurvedAnimation(
+          parent: animation,
+          curve: Curves.easeOutCubic,
+        );
         return SlideTransition(
-          position: Tween<Offset>(begin: const Offset(0, 0.25), end: Offset.zero).animate(curved),
+          position: Tween<Offset>(
+            begin: const Offset(0, 0.25),
+            end: Offset.zero,
+          ).animate(curved),
           child: FadeTransition(opacity: curved, child: child),
         );
       },
@@ -28,9 +34,15 @@ class RouteTransitions {
     return PageRouteBuilder<T>(
       pageBuilder: (context, animation, secondaryAnimation) => page,
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        final curved = CurvedAnimation(parent: animation, curve: Curves.easeOutCubic);
+        final curved = CurvedAnimation(
+          parent: animation,
+          curve: Curves.easeOutCubic,
+        );
         return SlideTransition(
-          position: Tween<Offset>(begin: const Offset(0.3, 0), end: Offset.zero).animate(curved),
+          position: Tween<Offset>(
+            begin: const Offset(0.3, 0),
+            end: Offset.zero,
+          ).animate(curved),
           child: FadeTransition(opacity: curved, child: child),
         );
       },
@@ -45,7 +57,10 @@ class RouteTransitions {
     return PageRouteBuilder<T>(
       pageBuilder: (context, animation, secondaryAnimation) => page,
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        final curved = CurvedAnimation(parent: animation, curve: Curves.easeOutCubic);
+        final curved = CurvedAnimation(
+          parent: animation,
+          curve: Curves.easeOutCubic,
+        );
         return ScaleTransition(
           scale: Tween<double>(begin: 0.90, end: 1.0).animate(curved),
           child: FadeTransition(opacity: curved, child: child),

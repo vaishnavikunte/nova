@@ -41,7 +41,11 @@ class HintCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Icon(Icons.lightbulb_rounded, color: Color(0xFFD97706), size: 28),
+              const Icon(
+                Icons.lightbulb_rounded,
+                color: Color(0xFFD97706),
+                size: 28,
+              ),
               const SizedBox(width: AppSpacing.sm),
               Text(
                 'Helpful Clues ($revealedCount of ${hints.length})',
@@ -78,14 +82,21 @@ class HintCard extends StatelessWidget {
                     alignment: Alignment.center,
                     child: Text(
                       '${i + 1}',
-                      style: const TextStyle(fontWeight: FontWeight.bold, color: AppColors.navy, fontSize: 14),
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.navy,
+                        fontSize: 14,
+                      ),
                     ),
                   ),
                   const SizedBox(width: AppSpacing.sm),
                   Expanded(
                     child: Text(
                       hints[i],
-                      style: AppTextStyles.body.copyWith(fontSize: 17, color: AppColors.ink),
+                      style: AppTextStyles.body.copyWith(
+                        fontSize: 17,
+                        color: AppColors.ink,
+                      ),
                     ),
                   ),
                 ],

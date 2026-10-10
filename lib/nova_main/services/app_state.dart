@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../data/badges_data.dart';
 import '../data/curriculum_data.dart';
 import '../models/accessibility_settings.dart';
@@ -58,6 +59,18 @@ class AppState extends ChangeNotifier {
 
     // Set Level 1 to available/completed
     _updateLevelStatesForClass(4, 1, 1);
+
+    _loadPreferences();
+  }
+
+  Future<void> _loadPreferences() async {
+    final prefs = await SharedPreferences.getInstance();
+    if (prefs.containsKey('isDarkMode')) {
+      _accessibility = _accessibility.copyWith(
+        isDarkMode: prefs.getBool('isDarkMode'),
+      );
+      notifyListeners();
+    }
   }
 
   // Getters
@@ -77,7 +90,8 @@ class AppState extends ChangeNotifier {
   bool get voiceMishearOnce => _voiceMishearOnce;
   bool get showDemoFab => _showDemoFab;
 
-  ClassCourse get currentCourse => _courses[_student.classNumber] ?? _courses[4]!;
+  ClassCourse get currentCourse =>
+      _courses[_student.classNumber] ?? _courses[4]!;
   List<LevelModel> get currentLevels => currentCourse.levels;
 
   // ---------------------------------------------------------------------------
@@ -104,6 +118,24 @@ class AppState extends ChangeNotifier {
 
   void setAvatarColorIndex(int index) {
     _student = _student.copyWith(avatarColorIndex: index);
+    notifyListeners();
+  }
+
+  void clearStudentSession() {
+    // Clear student name without clearing progress
+    _student = _student.copyWith(name: 'Explorer');
+    
+    // Clear active session info
+    _activeLevel = null;
+    _currentTier = 1;
+    _sessionQuestionSlot = 0;
+    _sessionAttempts = [];
+    _currentQuestionHints = 0;
+    _currentEmotion = EmotionState.neutral;
+    _lastEvaluation = null;
+    _hintsUsedInSession = 0;
+    _resolvedWithHelpCount = 0;
+
     notifyListeners();
   }
 
@@ -140,7 +172,11 @@ class AppState extends ChangeNotifier {
 
   void setCurrentLevel(int levelNumber) {
     _student = _student.copyWith(currentLevel: levelNumber);
-    _updateLevelStatesForClass(_student.classNumber, levelNumber, _student.recommendedLevel);
+    _updateLevelStatesForClass(
+      _student.classNumber,
+      levelNumber,
+      _student.recommendedLevel,
+    );
     notifyListeners();
   }
 
@@ -220,7 +256,10 @@ class AppState extends ChangeNotifier {
     _currentTier = eval.nextTier;
 
     _sessionAttempts.add(
-      QuestionAttempt(isCorrect: eval.isCorrect, hintsUsed: _currentQuestionHints),
+      QuestionAttempt(
+        isCorrect: eval.isCorrect,
+        hintsUsed: _currentQuestionHints,
+      ),
     );
 
     // Clear single-use emotion if not locked
@@ -243,9 +282,7 @@ class AppState extends ChangeNotifier {
 
   void resolveQuestionWithHelp() {
     _resolvedWithHelpCount++;
-    _sessionAttempts.add(
-      const QuestionAttempt(isCorrect: true, hintsUsed: 3),
-    );
+    _sessionAttempts.add(const QuestionAttempt(isCorrect: true, hintsUsed: 3));
     advanceToNextQuestionSlot();
   }
 
@@ -266,7 +303,8 @@ class AppState extends ChangeNotifier {
       starRating = 2;
     }
 
-    final newCompleted = Set<int>.from(_student.completedLevels)..add(lvl.number);
+    final newCompleted = Set<int>.from(_student.completedLevels)
+      ..add(lvl.number);
     final nextLevelNum = min(15, lvl.number + 1);
 
     // Unlock badge if defined
@@ -288,10 +326,7 @@ class AppState extends ChangeNotifier {
     final course = currentCourse;
     final updatedLevels = course.levels.map((l) {
       if (l.number == lvl.number) {
-        return l.copyWith(
-          state: LevelState.completed,
-          earnedStars: starRating,
-        );
+        return l.copyWith(state: LevelState.completed, earnedStars: starRating);
       } else if (l.number == nextLevelNum) {
         return l.copyWith(state: LevelState.current);
       }
@@ -322,6 +357,11 @@ class AppState extends ChangeNotifier {
   // ---------------------------------------------------------------------------
 
   void updateAccessibility(AccessibilitySettings settings) {
+    if (_accessibility.isDarkMode != settings.isDarkMode) {
+      SharedPreferences.getInstance().then((prefs) {
+        prefs.setBool('isDarkMode', settings.isDarkMode);
+      });
+    }
     _accessibility = settings;
     notifyListeners();
   }

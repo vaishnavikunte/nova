@@ -106,7 +106,9 @@ class _StoryScreenState extends State<StoryScreen> {
 
     setState(() {
       _activeEvaluation = eval;
-      _optionState = eval.isCorrect ? OptionState.correct : OptionState.gentleTryAgain;
+      _optionState = eval.isCorrect
+          ? OptionState.correct
+          : OptionState.gentleTryAgain;
     });
 
     // Check if tier changed to show toast
@@ -171,7 +173,11 @@ class _StoryScreenState extends State<StoryScreen> {
         shape: RoundedRectangleBorder(borderRadius: AppSpacing.roundedCard),
         title: Row(
           children: [
-            const Icon(Icons.record_voice_over_rounded, color: AppColors.indigo, size: 28),
+            const Icon(
+              Icons.record_voice_over_rounded,
+              color: AppColors.indigo,
+              size: 28,
+            ),
             const SizedBox(width: 8),
             Text(
               AppStrings.youSaid.replaceAll('{text}', recognizedText),
@@ -187,7 +193,10 @@ class _StoryScreenState extends State<StoryScreen> {
                 _voiceState = VoiceRecognitionState.idle;
               });
             },
-            child: Text(AppStrings.sayItAgain, style: AppTextStyles.buttonSecondary),
+            child: Text(
+              AppStrings.sayItAgain,
+              style: AppTextStyles.buttonSecondary,
+            ),
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(backgroundColor: AppColors.mint),
@@ -219,7 +228,10 @@ class _StoryScreenState extends State<StoryScreen> {
       context: context,
       builder: (ctx) => AlertDialog(
         shape: RoundedRectangleBorder(borderRadius: AppSpacing.roundedCard),
-        title: Text(AppStrings.pauseAdventureTitle, style: AppTextStyles.questionText),
+        title: Text(
+          AppStrings.pauseAdventureTitle,
+          style: AppTextStyles.questionText,
+        ),
         content: const Text(
           'Your progress in this adventure is waiting for you.',
           style: TextStyle(fontSize: 17),
@@ -227,13 +239,20 @@ class _StoryScreenState extends State<StoryScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: Text(AppStrings.stayButton, style: AppTextStyles.buttonSecondary),
+            child: Text(
+              AppStrings.stayButton,
+              style: AppTextStyles.buttonSecondary,
+            ),
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(backgroundColor: AppColors.coral),
             onPressed: () {
               Navigator.pop(ctx);
-              Navigator.pushNamedAndRemoveUntil(context, AppRoutes.home, (r) => false);
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                AppRoutes.home,
+                (r) => false,
+              );
             },
             child: Text(AppStrings.leaveButton, style: AppTextStyles.button),
           ),
@@ -245,7 +264,9 @@ class _StoryScreenState extends State<StoryScreen> {
   @override
   Widget build(BuildContext context) {
     final appState = AppStateScope.of(context);
-    final level = appState.activeLevel ?? appState.currentCourse.getLevel(appState.student.currentLevel);
+    final level =
+        appState.activeLevel ??
+        appState.currentCourse.getLevel(appState.student.currentLevel);
     final beats = level.storyBeats;
     final currentBeat = beats.isNotEmpty
         ? beats[_currentBeatIndex.clamp(0, beats.length - 1)]
@@ -262,11 +283,18 @@ class _StoryScreenState extends State<StoryScreen> {
               children: [
                 // Top App Bar
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: 6),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppSpacing.md,
+                    vertical: 6,
+                  ),
                   child: Row(
                     children: [
                       IconButton(
-                        icon: const Icon(Icons.close_rounded, color: AppColors.inkSoft, size: 26),
+                        icon: const Icon(
+                          Icons.close_rounded,
+                          color: AppColors.inkSoft,
+                          size: 26,
+                        ),
                         onPressed: _onExitPressed,
                       ),
                       Expanded(
@@ -292,10 +320,16 @@ class _StoryScreenState extends State<StoryScreen> {
                       ),
                       AdaptiveDifficultyStars(tier: appState.currentTier),
                       PopupMenuButton<String>(
-                        icon: const Icon(Icons.more_vert_rounded, color: AppColors.inkSoft),
+                        icon: const Icon(
+                          Icons.more_vert_rounded,
+                          color: AppColors.inkSoft,
+                        ),
                         onSelected: (val) {
                           if (val == 'screen_off') {
-                            Navigator.pushNamed(context, AppRoutes.screenOffSimulation);
+                            Navigator.pushNamed(
+                              context,
+                              AppRoutes.screenOffSimulation,
+                            );
                           } else if (val == 'step_by_step') {
                             appState.resolveQuestionWithHelp();
                           }
@@ -305,7 +339,10 @@ class _StoryScreenState extends State<StoryScreen> {
                             value: 'screen_off',
                             child: Row(
                               children: [
-                                Icon(Icons.hearing_rounded, color: AppColors.indigo),
+                                Icon(
+                                  Icons.hearing_rounded,
+                                  color: AppColors.indigo,
+                                ),
                                 SizedBox(width: 8),
                                 Text('Screen-Off Mode'),
                               ],
@@ -315,7 +352,10 @@ class _StoryScreenState extends State<StoryScreen> {
                             value: 'step_by_step',
                             child: Row(
                               children: [
-                                Icon(Icons.help_outline_rounded, color: AppColors.mint),
+                                Icon(
+                                  Icons.help_outline_rounded,
+                                  color: AppColors.mint,
+                                ),
                                 SizedBox(width: 8),
                                 Text('Solve with NOVA'),
                               ],
@@ -334,7 +374,9 @@ class _StoryScreenState extends State<StoryScreen> {
                     padding: const EdgeInsets.only(bottom: 80),
                     child: Center(
                       child: ConstrainedBox(
-                        constraints: const BoxConstraints(maxWidth: AppSpacing.maxContentWidth),
+                        constraints: const BoxConstraints(
+                          maxWidth: AppSpacing.maxContentWidth,
+                        ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
@@ -344,7 +386,9 @@ class _StoryScreenState extends State<StoryScreen> {
                             StoryCard(
                               sceneType: currentBeat.sceneType,
                               novaMood: _activeEvaluation != null
-                                  ? (_activeEvaluation!.isCorrect ? NovaMood.celebrating : NovaMood.encouraging)
+                                  ? (_activeEvaluation!.isCorrect
+                                        ? NovaMood.celebrating
+                                        : NovaMood.encouraging)
                                   : currentBeat.novaMood,
                               interactionType: currentBeat.interactionType,
                               itemsToCount: currentBeat.itemsToCount,
@@ -358,9 +402,13 @@ class _StoryScreenState extends State<StoryScreen> {
 
                             // 2. Speech Bubble
                             Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: AppSpacing.md,
+                              ),
                               child: SpeechBubble(
-                                text: _isInBeatMode ? currentBeat.narration : (question?.prompt ?? ''),
+                                text: _isInBeatMode
+                                    ? currentBeat.narration
+                                    : (question?.prompt ?? ''),
                                 speaker: 'NOVA',
                                 typewriter: true,
                               ),
@@ -370,16 +418,37 @@ class _StoryScreenState extends State<StoryScreen> {
                             // Quick Simulate Emotion chips for fast evaluator testing
                             if (!_isInBeatMode)
                               Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: AppSpacing.md,
+                                ),
                                 child: SingleChildScrollView(
                                   scrollDirection: Axis.horizontal,
                                   child: Row(
                                     children: [
-                                      const Text('Simulate:', style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold, color: AppColors.inkSoft)),
+                                      const Text(
+                                        'Simulate:',
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                          color: AppColors.inkSoft,
+                                        ),
+                                      ),
                                       const SizedBox(width: 6),
-                                      _buildQuickEmotionChip('🚀 Confident', EmotionState.confident, appState),
-                                      _buildQuickEmotionChip('💡 Confused', EmotionState.confused, appState),
-                                      _buildQuickEmotionChip('🌱 Frustrated', EmotionState.frustrated, appState),
+                                      _buildQuickEmotionChip(
+                                        '🚀 Confident',
+                                        EmotionState.confident,
+                                        appState,
+                                      ),
+                                      _buildQuickEmotionChip(
+                                        '💡 Confused',
+                                        EmotionState.confused,
+                                        appState,
+                                      ),
+                                      _buildQuickEmotionChip(
+                                        '🌱 Frustrated',
+                                        EmotionState.frustrated,
+                                        appState,
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -389,9 +458,13 @@ class _StoryScreenState extends State<StoryScreen> {
                             if (_isInBeatMode) ...[
                               const SizedBox(height: AppSpacing.xl),
                               Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xl),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: AppSpacing.xl,
+                                ),
                                 child: PrimaryButton(
-                                  label: _isOutroMode ? 'Complete Adventure 🎉' : AppStrings.nextButton,
+                                  label: _isOutroMode
+                                      ? 'Complete Adventure 🎉'
+                                      : AppStrings.nextButton,
                                   onPressed: () => _onBeatContinue(appState),
                                 ),
                               ),
@@ -399,17 +472,21 @@ class _StoryScreenState extends State<StoryScreen> {
                               // Active Question Area
                               if (_activeEvaluation != null) ...[
                                 Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: AppSpacing.md,
+                                  ),
                                   child: EmotionFeedbackCard(
                                     state: _activeEvaluation!.emotion,
                                     isCorrect: _activeEvaluation!.isCorrect,
                                     message: _activeEvaluation!.message,
                                     primaryLabel: _activeEvaluation!.isCorrect
-                                        ? (_activeEvaluation!.emotion == EmotionState.confident
-                                            ? AppStrings.nextChallenge
-                                            : AppStrings.nextButton)
+                                        ? (_activeEvaluation!.emotion ==
+                                                  EmotionState.confident
+                                              ? AppStrings.nextChallenge
+                                              : AppStrings.nextButton)
                                         : AppStrings.tryAgain,
-                                    stepByStepSteps: _activeEvaluation!.stepByStepSteps,
+                                    stepByStepSteps:
+                                        _activeEvaluation!.stepByStepSteps,
                                     onPrimary: () {
                                       if (_activeEvaluation!.isCorrect) {
                                         _onNextQuestionSlot(appState);
@@ -421,7 +498,9 @@ class _StoryScreenState extends State<StoryScreen> {
                                         });
                                       }
                                     },
-                                    secondaryLabel: !_activeEvaluation!.isCorrect && !_showHints
+                                    secondaryLabel:
+                                        !_activeEvaluation!.isCorrect &&
+                                            !_showHints
                                         ? AppStrings.giveHint
                                         : null,
                                     onSecondary: () {
@@ -436,7 +515,8 @@ class _StoryScreenState extends State<StoryScreen> {
                                 Center(
                                   child: VoiceButton(
                                     state: _voiceState,
-                                    onTap: () => _startVoiceInput(appState, question),
+                                    onTap: () =>
+                                        _startVoiceInput(appState, question),
                                   ),
                                 ),
                                 const SizedBox(height: AppSpacing.sm),
@@ -444,10 +524,15 @@ class _StoryScreenState extends State<StoryScreen> {
                                 // Progressive Hint Stack
                                 if (_showHints)
                                   Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: AppSpacing.md,
+                                    ),
                                     child: HintCard(
                                       hints: question.hints,
-                                      revealedCount: appState.currentQuestionHints == 0 ? 1 : appState.currentQuestionHints,
+                                      revealedCount:
+                                          appState.currentQuestionHints == 0
+                                          ? 1
+                                          : appState.currentQuestionHints,
                                       onNextHint: () => appState.useHint(),
                                       onClose: () {
                                         setState(() {
@@ -459,18 +544,24 @@ class _StoryScreenState extends State<StoryScreen> {
 
                                 // Answer Options (3 choices)
                                 Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: AppSpacing.md,
+                                  ),
                                   child: Column(
-                                    children: List.generate(question.options.length, (idx) {
-                                      return AnswerOptionWidget(
-                                        option: question.options[idx],
-                                        index: idx,
-                                        state: _selectedOptionIndex == idx
-                                            ? _optionState
-                                            : OptionState.idle,
-                                        onTap: () => _onAnswerSelected(appState, idx),
-                                      );
-                                    }),
+                                    children: List.generate(
+                                      question.options.length,
+                                      (idx) {
+                                        return AnswerOptionWidget(
+                                          option: question.options[idx],
+                                          index: idx,
+                                          state: _selectedOptionIndex == idx
+                                              ? _optionState
+                                              : OptionState.idle,
+                                          onTap: () =>
+                                              _onAnswerSelected(appState, idx),
+                                        );
+                                      },
+                                    ),
                                   ),
                                 ),
                                 const SizedBox(height: AppSpacing.xs),
@@ -479,10 +570,18 @@ class _StoryScreenState extends State<StoryScreen> {
                                 if (!_showHints)
                                   Center(
                                     child: TextButton.icon(
-                                      icon: const Icon(Icons.lightbulb_outline_rounded, color: AppColors.indigo, size: 20),
+                                      icon: const Icon(
+                                        Icons.lightbulb_outline_rounded,
+                                        color: AppColors.indigo,
+                                        size: 20,
+                                      ),
                                       label: const Text(
                                         AppStrings.giveHint,
-                                        style: TextStyle(color: AppColors.indigo, fontWeight: FontWeight.bold, fontSize: 16),
+                                        style: TextStyle(
+                                          color: AppColors.indigo,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16,
+                                        ),
                                       ),
                                       onPressed: () {
                                         HapticsService.selectionClick();
@@ -510,7 +609,11 @@ class _StoryScreenState extends State<StoryScreen> {
     );
   }
 
-  Widget _buildQuickEmotionChip(String label, EmotionState state, AppState appState) {
+  Widget _buildQuickEmotionChip(
+    String label,
+    EmotionState state,
+    AppState appState,
+  ) {
     return Padding(
       padding: const EdgeInsets.only(right: 6.0),
       child: ActionChip(

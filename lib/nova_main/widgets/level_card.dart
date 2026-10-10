@@ -10,11 +10,7 @@ class LevelCard extends StatelessWidget {
   final LevelModel level;
   final VoidCallback onTap;
 
-  const LevelCard({
-    super.key,
-    required this.level,
-    required this.onTap,
-  });
+  const LevelCard({super.key, required this.level, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +35,10 @@ class LevelCard extends StatelessWidget {
               decoration: BoxDecoration(
                 color: const Color(0xFFF3F5FF),
                 shape: BoxShape.circle,
-                border: Border.all(color: AppColors.purple.withValues(alpha: 0.3), width: 2),
+                border: Border.all(
+                  color: AppColors.purple.withValues(alpha: 0.3),
+                  width: 2,
+                ),
               ),
               alignment: Alignment.center,
               child: Text(level.emoji, style: const TextStyle(fontSize: 32)),
@@ -53,7 +52,10 @@ class LevelCard extends StatelessWidget {
                   Row(
                     children: [
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 3,
+                        ),
                         decoration: BoxDecoration(
                           color: AppColors.navy,
                           borderRadius: BorderRadius.circular(6),
@@ -91,7 +93,11 @@ class LevelCard extends StatelessWidget {
                 ],
               ),
             ),
-            const Icon(Icons.chevron_right_rounded, color: AppColors.inkSoft, size: 28),
+            const Icon(
+              Icons.chevron_right_rounded,
+              color: AppColors.inkSoft,
+              size: 28,
+            ),
           ],
         ),
       ),

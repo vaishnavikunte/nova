@@ -17,7 +17,8 @@ class LevelRecommendationScreen extends StatefulWidget {
   const LevelRecommendationScreen({super.key});
 
   @override
-  State<LevelRecommendationScreen> createState() => _LevelRecommendationScreenState();
+  State<LevelRecommendationScreen> createState() =>
+      _LevelRecommendationScreenState();
 }
 
 class _LevelRecommendationScreenState extends State<LevelRecommendationScreen> {
@@ -33,7 +34,9 @@ class _LevelRecommendationScreenState extends State<LevelRecommendationScreen> {
   void _showLevelPicker(BuildContext context, AppState appState) {
     showModalBottomSheet(
       context: context,
-      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(24))),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
       builder: (ctx) {
         return Container(
           padding: const EdgeInsets.all(AppSpacing.lg),
@@ -81,9 +84,14 @@ class _LevelRecommendationScreenState extends State<LevelRecommendationScreen> {
           SafeArea(
             child: Center(
               child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xl, vertical: AppSpacing.lg),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppSpacing.xl,
+                  vertical: AppSpacing.lg,
+                ),
                 child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: AppSpacing.maxContentWidth),
+                  constraints: const BoxConstraints(
+                    maxWidth: AppSpacing.maxContentWidth,
+                  ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -102,7 +110,10 @@ class _LevelRecommendationScreenState extends State<LevelRecommendationScreen> {
                       ),
                       const SizedBox(height: 6),
                       Text(
-                        AppStrings.recommendationMessage.replaceAll('{n}', '$recLevelNum'),
+                        AppStrings.recommendationMessage.replaceAll(
+                          '{n}',
+                          '$recLevelNum',
+                        ),
                         style: AppTextStyles.questionText.copyWith(
                           color: AppColors.indigo,
                           fontSize: 21,
@@ -120,7 +131,10 @@ class _LevelRecommendationScreenState extends State<LevelRecommendationScreen> {
 
                       // ▶ Primary Action: [ Start Level {n} ]
                       PrimaryButton(
-                        label: AppStrings.startLevelBtn.replaceAll('{n}', '$recLevelNum'),
+                        label: AppStrings.startLevelBtn.replaceAll(
+                          '{n}',
+                          '$recLevelNum',
+                        ),
                         icon: Icons.play_arrow_rounded,
                         onPressed: () => _startRecommendedLevel(appState),
                       ),

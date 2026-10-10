@@ -18,9 +18,15 @@ class AppSpacing {
   static const double radiusButton = 28.0;
   static const double radiusCircle = 999.0;
 
-  static const BorderRadius roundedChip = BorderRadius.all(Radius.circular(radiusChip));
-  static const BorderRadius roundedCard = BorderRadius.all(Radius.circular(radiusCard));
-  static const BorderRadius roundedButton = BorderRadius.all(Radius.circular(radiusButton));
+  static const BorderRadius roundedChip = BorderRadius.all(
+    Radius.circular(radiusChip),
+  );
+  static const BorderRadius roundedCard = BorderRadius.all(
+    Radius.circular(radiusCard),
+  );
+  static const BorderRadius roundedButton = BorderRadius.all(
+    Radius.circular(radiusButton),
+  );
 
   static const double minTouchTarget = 56.0;
   static const double minButtonHeight = 60.0;

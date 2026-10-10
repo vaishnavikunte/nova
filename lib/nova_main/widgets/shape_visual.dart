@@ -55,14 +55,26 @@ class _ShapePainter extends CustomPainter {
     switch (shape) {
       case 'square':
         final rect = Rect.fromLTWH(pad, pad, w, w);
-        canvas.drawRRect(RRect.fromRectAndRadius(rect, const Radius.circular(8)), fillPaint);
-        canvas.drawRRect(RRect.fromRectAndRadius(rect, const Radius.circular(8)), borderPaint);
+        canvas.drawRRect(
+          RRect.fromRectAndRadius(rect, const Radius.circular(8)),
+          fillPaint,
+        );
+        canvas.drawRRect(
+          RRect.fromRectAndRadius(rect, const Radius.circular(8)),
+          borderPaint,
+        );
         break;
 
       case 'rectangle':
         final rect = Rect.fromLTWH(pad, pad + h * 0.15, w, h * 0.7);
-        canvas.drawRRect(RRect.fromRectAndRadius(rect, const Radius.circular(8)), fillPaint);
-        canvas.drawRRect(RRect.fromRectAndRadius(rect, const Radius.circular(8)), borderPaint);
+        canvas.drawRRect(
+          RRect.fromRectAndRadius(rect, const Radius.circular(8)),
+          fillPaint,
+        );
+        canvas.drawRRect(
+          RRect.fromRectAndRadius(rect, const Radius.circular(8)),
+          borderPaint,
+        );
         break;
 
       case 'triangle':

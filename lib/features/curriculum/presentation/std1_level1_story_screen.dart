@@ -44,7 +44,7 @@ class _Std1Level1StoryScreenState extends State<Std1Level1StoryScreen> {
   final VoskFlutterService _voskService = VoskFlutterService();
 
   bool _isTtsPlaying = false;
-  bool _showAction = false; 
+  bool _showAction = false;
   bool _isListening = false;
 
   @override
@@ -103,12 +103,18 @@ class _Std1Level1StoryScreenState extends State<Std1Level1StoryScreen> {
 
   String? _getImageForStep(int step) {
     switch (step) {
-      case 2: return 'assets/images/frame1story1.png';
-      case 3: return 'assets/images/frame2story1.png';
-      case 4: return 'assets/images/frame3story1.png';
-      case 5: return 'assets/images/frame3story1.png'; // Step 5 re-uses frame3
-      case 6: return 'assets/images/frame4story1.png';
-      default: return null;
+      case 2:
+        return 'assets/images/frame1story1.png';
+      case 3:
+        return 'assets/images/frame2story1.png';
+      case 4:
+        return 'assets/images/frame3story1.png';
+      case 5:
+        return 'assets/images/frame3story1.png'; // Step 5 re-uses frame3
+      case 6:
+        return 'assets/images/frame4story1.png';
+      default:
+        return null;
     }
   }
 
@@ -119,7 +125,7 @@ class _Std1Level1StoryScreenState extends State<Std1Level1StoryScreen> {
       _showAction = false;
       _isListening = false;
     });
-    
+
     await _flutterTts.speak(_getStepText(step));
   }
 
@@ -139,15 +145,18 @@ class _Std1Level1StoryScreenState extends State<Std1Level1StoryScreen> {
     setState(() {
       _isListening = true;
     });
-    _voskService.listen(onResult: (text) {
-      if (text.toLowerCase().contains("good morning") || text.toLowerCase().contains("morning")) {
-        _stopListening();
-        _onCorrectAnswer();
-      } else {
-        _stopListening();
-        _onIncorrectAnswer("नाही, पुन्हा प्रयत्न कर");
-      }
-    });
+    _voskService.listen(
+      onResult: (text) {
+        if (text.toLowerCase().contains("good morning") ||
+            text.toLowerCase().contains("morning")) {
+          _stopListening();
+          _onCorrectAnswer();
+        } else {
+          _stopListening();
+          _onIncorrectAnswer("नाही, पुन्हा प्रयत्न कर");
+        }
+      },
+    );
   }
 
   void _stopListening() {
@@ -177,12 +186,16 @@ class _Std1Level1StoryScreenState extends State<Std1Level1StoryScreen> {
               color: Colors.black.withValues(alpha: 0.1),
               blurRadius: 8,
               offset: const Offset(0, 4),
-            )
+            ),
           ],
         ),
         child: Text(
           label,
-          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: AppColors.navy),
+          style: const TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: AppColors.navy,
+          ),
         ),
       ),
     );
@@ -198,19 +211,31 @@ class _Std1Level1StoryScreenState extends State<Std1Level1StoryScreen> {
               onTap: _isListening ? _stopListening : _startListening,
               child: CircleAvatar(
                 radius: 40,
-                backgroundColor: _isListening ? Colors.redAccent : AppColors.indigo,
-                child: Icon(_isListening ? Icons.mic_off : Icons.mic, size: 40, color: Colors.white),
+                backgroundColor: _isListening
+                    ? Colors.redAccent
+                    : AppColors.indigo,
+                child: Icon(
+                  _isListening ? Icons.mic_off : Icons.mic,
+                  size: 40,
+                  color: Colors.white,
+                ),
               ),
             ),
             if (_isListening)
               Container(
                 margin: const EdgeInsets.only(left: 16),
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 8,
+                ),
                 decoration: BoxDecoration(
                   color: Colors.black.withValues(alpha: 0.7),
                   borderRadius: BorderRadius.circular(20),
                 ),
-                child: const Text("ऐकत आहे... (Listening...)", style: TextStyle(fontSize: 18, color: Colors.white)),
+                child: const Text(
+                  "ऐकत आहे... (Listening...)",
+                  style: TextStyle(fontSize: 18, color: Colors.white),
+                ),
               ),
           ],
         );
@@ -225,8 +250,18 @@ class _Std1Level1StoryScreenState extends State<Std1Level1StoryScreen> {
       case 4:
         return Container(
           padding: const EdgeInsets.all(12),
-          decoration: BoxDecoration(color: Colors.white.withValues(alpha: 0.9), borderRadius: BorderRadius.circular(12)),
-          child: const Text("प्रतिमेतील मोठ्या वाहनावर टॅप करा (Tap the large vehicle)", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: AppColors.navy)),
+          decoration: BoxDecoration(
+            color: Colors.white.withValues(alpha: 0.9),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: const Text(
+            "प्रतिमेतील मोठ्या वाहनावर टॅप करा (Tap the large vehicle)",
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: AppColors.navy,
+            ),
+          ),
         );
       case 5:
         return Row(
@@ -241,14 +276,23 @@ class _Std1Level1StoryScreenState extends State<Std1Level1StoryScreen> {
           style: ElevatedButton.styleFrom(
             backgroundColor: AppColors.coral,
             padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30),
+            ),
           ),
           onPressed: () {
             final appState = AppStateScope.of(context);
             appState.completeLevel();
             Navigator.pop(context);
           },
-          child: const Text("Finish Level", style: TextStyle(fontSize: 22, color: Colors.white, fontWeight: FontWeight.bold)),
+          child: const Text(
+            "Finish Level",
+            style: TextStyle(
+              fontSize: 22,
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         );
       default:
         return const SizedBox();
@@ -278,12 +322,20 @@ class _Std1Level1StoryScreenState extends State<Std1Level1StoryScreen> {
                       color: Colors.white.withValues(alpha: 0.95),
                       borderRadius: BorderRadius.circular(16),
                       boxShadow: [
-                        BoxShadow(color: Colors.black.withValues(alpha: 0.1), blurRadius: 10, offset: const Offset(0, 4)),
+                        BoxShadow(
+                          color: Colors.black.withValues(alpha: 0.1),
+                          blurRadius: 10,
+                          offset: const Offset(0, 4),
+                        ),
                       ],
                     ),
                     child: Text(
                       currentText,
-                      style: const TextStyle(fontSize: 26, color: AppColors.navy, fontWeight: FontWeight.bold),
+                      style: const TextStyle(
+                        fontSize: 26,
+                        color: AppColors.navy,
+                        fontWeight: FontWeight.bold,
+                      ),
                       textAlign: TextAlign.center,
                     ),
                   )
@@ -291,14 +343,23 @@ class _Std1Level1StoryScreenState extends State<Std1Level1StoryScreen> {
                     key: const ValueKey('start_btn'),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.mint,
-                      padding: const EdgeInsets.symmetric(horizontal: 48, vertical: 20),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 48,
+                        vertical: 20,
+                      ),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
                       elevation: 8,
                     ),
                     onPressed: () => _playStep(2),
                     child: const Text(
-                      "प्रवास सुरू करूया (Start Journey)", 
-                      style: TextStyle(fontSize: 24, color: Colors.white, fontWeight: FontWeight.bold)
+                      "प्रवास सुरू करूया (Start Journey)",
+                      style: TextStyle(
+                        fontSize: 24,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
           ),
@@ -317,7 +378,8 @@ class _Std1Level1StoryScreenState extends State<Std1Level1StoryScreen> {
             Expanded(
               child: GestureDetector(
                 onTap: () {
-                  if (_showAction) _onIncorrectAnswer("नाही, मोठ्या वाहनावर टॅप करा");
+                  if (_showAction)
+                    _onIncorrectAnswer("नाही, मोठ्या वाहनावर टॅप करा");
                 },
                 child: Stack(
                   children: [
@@ -345,7 +407,10 @@ class _Std1Level1StoryScreenState extends State<Std1Level1StoryScreen> {
               gradient: LinearGradient(
                 begin: Alignment.bottomCenter,
                 end: Alignment.topCenter,
-                colors: [Colors.black.withValues(alpha: 0.8), Colors.transparent],
+                colors: [
+                  Colors.black.withValues(alpha: 0.8),
+                  Colors.transparent,
+                ],
               ),
             ),
             child: Column(
@@ -355,7 +420,9 @@ class _Std1Level1StoryScreenState extends State<Std1Level1StoryScreen> {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     MascotWidget(
-                      mood: _currentStep == 6 ? NovaMood.celebrating : NovaMood.happy,
+                      mood: _currentStep == 6
+                          ? NovaMood.celebrating
+                          : NovaMood.happy,
                       size: 90,
                       speaking: _isTtsPlaying,
                       showGlow: true,
@@ -371,7 +438,11 @@ class _Std1Level1StoryScreenState extends State<Std1Level1StoryScreen> {
                         ),
                         child: Text(
                           currentText,
-                          style: const TextStyle(fontSize: 20, color: AppColors.navy, fontWeight: FontWeight.bold),
+                          style: const TextStyle(
+                            fontSize: 20,
+                            color: AppColors.navy,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
@@ -380,7 +451,7 @@ class _Std1Level1StoryScreenState extends State<Std1Level1StoryScreen> {
                 if (_showAction) ...[
                   const SizedBox(height: 20),
                   _buildActionArea(),
-                ]
+                ],
               ],
             ),
           ),
@@ -401,15 +472,12 @@ class _Std1Level1StoryScreenState extends State<Std1Level1StoryScreen> {
         children: [
           // Background Image for story frames
           if (currentImagePath != null)
-            Image.asset(
-              currentImagePath,
-              fit: BoxFit.cover,
-            ),
+            Image.asset(currentImagePath, fit: BoxFit.cover),
 
           // Intro or Story Overlay
-          if (_currentStep == 1) 
+          if (_currentStep == 1)
             _buildStep1Intro(currentText)
-          else 
+          else
             _buildStoryOverlay(currentText),
 
           // Skip Button
@@ -422,7 +490,9 @@ class _Std1Level1StoryScreenState extends State<Std1Level1StoryScreen> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.black.withValues(alpha: 0.5),
                     foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
                   ),
                   onPressed: () {
                     _flutterTts.stop();
@@ -432,13 +502,15 @@ class _Std1Level1StoryScreenState extends State<Std1Level1StoryScreen> {
                     });
                   },
                   icon: const Icon(Icons.skip_next_rounded, size: 20),
-                  label: const Text("Skip", style: TextStyle(fontWeight: FontWeight.bold)),
+                  label: const Text(
+                    "Skip",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
                 ),
               ),
             ),
 
-          if (_currentStep == 6)
-            const ConfettiOverlay(play: true),
+          if (_currentStep == 6) const ConfettiOverlay(play: true),
         ],
       ),
     );

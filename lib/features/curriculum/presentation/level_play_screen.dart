@@ -14,7 +14,8 @@ class LevelPlayScreen extends StatefulWidget {
   State<LevelPlayScreen> createState() => _LevelPlayScreenState();
 }
 
-class _LevelPlayScreenState extends State<LevelPlayScreen> with SingleTickerProviderStateMixin {
+class _LevelPlayScreenState extends State<LevelPlayScreen>
+    with SingleTickerProviderStateMixin {
   final CurriculumLoader _curriculumLoader = CurriculumLoader();
   final DiagnosticManager _diagnosticManager = DiagnosticManager();
   final FlutterTts _flutterTts = FlutterTts();
@@ -25,7 +26,7 @@ class _LevelPlayScreenState extends State<LevelPlayScreen> with SingleTickerProv
   bool _showScaffoldHint = false;
   bool _showSuccessOverlay = false;
   late DateTime _questionStartTime;
-  
+
   late AnimationController _shakeController;
 
   // Initialize standard BKT state for a new level
@@ -70,7 +71,9 @@ class _LevelPlayScreenState extends State<LevelPlayScreen> with SingleTickerProv
   }
 
   void _handleAnswer(bool isCorrect) {
-    final timeTakenMs = DateTime.now().difference(_questionStartTime).inMilliseconds;
+    final timeTakenMs = DateTime.now()
+        .difference(_questionStartTime)
+        .inMilliseconds;
     final action = _diagnosticManager.evaluateResponse(
       isCorrect,
       timeTakenMs,
@@ -83,7 +86,7 @@ class _LevelPlayScreenState extends State<LevelPlayScreen> with SingleTickerProv
         _showScaffoldHint = false;
         _showSuccessOverlay = true;
       });
-      
+
       _flutterTts.speak("खूप छान!"); // Great job
 
       Future.delayed(const Duration(milliseconds: 1500), () {
@@ -174,14 +177,14 @@ class _LevelPlayScreenState extends State<LevelPlayScreen> with SingleTickerProv
                       Text(
                         'Question ${_currentQuestionIndex + 1} of ${_level!.questionPool.length}',
                         style: TextStyle(
-                          fontSize: 18, 
-                          fontWeight: FontWeight.bold, 
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
                           color: Colors.grey.shade700,
                         ),
                         textAlign: TextAlign.center,
                       ),
                       const SizedBox(height: 32),
-          
+
                       // Massive Question Card with Shake Animation
                       _buildCardShake(
                         Card(
@@ -191,13 +194,16 @@ class _LevelPlayScreenState extends State<LevelPlayScreen> with SingleTickerProv
                             borderRadius: BorderRadius.circular(24),
                           ),
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 48.0, horizontal: 24.0),
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 48.0,
+                              horizontal: 24.0,
+                            ),
                             child: Column(
                               children: [
                                 Text(
                                   _level!.storyIntro,
                                   style: const TextStyle(
-                                    fontSize: 32, 
+                                    fontSize: 32,
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black87,
                                   ),
@@ -205,8 +211,13 @@ class _LevelPlayScreenState extends State<LevelPlayScreen> with SingleTickerProv
                                 ),
                                 const SizedBox(height: 24),
                                 IconButton(
-                                  icon: const Icon(Icons.volume_up_rounded, size: 56, color: Colors.blue),
-                                  onPressed: () => _playStoryIntro(_level!.storyIntro),
+                                  icon: const Icon(
+                                    Icons.volume_up_rounded,
+                                    size: 56,
+                                    color: Colors.blue,
+                                  ),
+                                  onPressed: () =>
+                                      _playStoryIntro(_level!.storyIntro),
                                   tooltip: 'गोष्ट ऐका', // Listen to story
                                 ),
                               ],
@@ -214,9 +225,9 @@ class _LevelPlayScreenState extends State<LevelPlayScreen> with SingleTickerProv
                           ),
                         ),
                       ),
-                      
+
                       const Spacer(),
-          
+
                       // Scaffold Hint
                       if (_showScaffoldHint)
                         Container(
@@ -225,22 +236,33 @@ class _LevelPlayScreenState extends State<LevelPlayScreen> with SingleTickerProv
                           decoration: BoxDecoration(
                             color: Colors.amber.shade50,
                             borderRadius: BorderRadius.circular(16),
-                            border: Border.all(color: Colors.amber.shade300, width: 2),
+                            border: Border.all(
+                              color: Colors.amber.shade300,
+                              width: 2,
+                            ),
                           ),
                           child: Row(
                             children: [
-                              const Icon(Icons.lightbulb, color: Colors.orange, size: 36),
+                              const Icon(
+                                Icons.lightbulb,
+                                color: Colors.orange,
+                                size: 36,
+                              ),
                               const SizedBox(width: 16),
                               Expanded(
                                 child: Text(
                                   'मदत हवी आहे का? उत्तर: "${currentQuestion.targetAnswer}" हे असू शकते.',
-                                  style: const TextStyle(fontSize: 20, color: Colors.deepOrange, fontWeight: FontWeight.bold),
+                                  style: const TextStyle(
+                                    fontSize: 20,
+                                    color: Colors.deepOrange,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
                             ],
                           ),
                         ),
-          
+
                       // Interaction Widget
                       currentQuestion.type == 'voice_input'
                           ? VoiceInputWidget(
@@ -255,34 +277,50 @@ class _LevelPlayScreenState extends State<LevelPlayScreen> with SingleTickerProv
                                 TextField(
                                   controller: _tapAnswerController,
                                   decoration: InputDecoration(
-                                    labelText: 'तुमचे उत्तर लिहा (Type your answer)',
+                                    labelText:
+                                        'तुमचे उत्तर लिहा (Type your answer)',
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(16),
                                     ),
                                     filled: true,
                                     fillColor: Colors.white,
                                   ),
-                                  style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                                  style: const TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                   textAlign: TextAlign.center,
                                 ),
                                 const SizedBox(height: 24),
                                 ElevatedButton(
                                   onPressed: () {
-                                    final input = _tapAnswerController.text.trim();
-                                    bool isCorrect = input == currentQuestion.targetAnswer;
+                                    final input = _tapAnswerController.text
+                                        .trim();
+                                    bool isCorrect =
+                                        input == currentQuestion.targetAnswer;
                                     _handleAnswer(isCorrect);
                                   },
                                   style: ElevatedButton.styleFrom(
-                                    padding: const EdgeInsets.symmetric(vertical: 20),
+                                    padding: const EdgeInsets.symmetric(
+                                      vertical: 20,
+                                    ),
                                     minimumSize: const Size.fromHeight(60),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(16),
                                     ),
-                                    backgroundColor: Theme.of(context).colorScheme.primary,
+                                    backgroundColor: Theme.of(
+                                      context,
+                                    ).colorScheme.primary,
                                     foregroundColor: Colors.white,
                                     elevation: 6,
                                   ),
-                                  child: const Text('तपासा (Check)', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+                                  child: const Text(
+                                    'तपासा (Check)',
+                                    style: TextStyle(
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
                                 ),
                               ],
                             ),
@@ -294,7 +332,7 @@ class _LevelPlayScreenState extends State<LevelPlayScreen> with SingleTickerProv
             ],
           ),
         ),
-        
+
         // Full-screen Success Overlay
         if (_showSuccessOverlay)
           Positioned.fill(

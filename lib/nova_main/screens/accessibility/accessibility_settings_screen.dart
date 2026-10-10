@@ -22,12 +22,12 @@ class AccessibilitySettingsScreen extends StatelessWidget {
     final settings = appState.accessibility;
 
     return Scaffold(
-      backgroundColor: settings.highContrast ? AppColors.hcBackground : AppColors.bgLight,
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
         title: Text(
           AppStrings.accessibilityTitle,
           style: AppTextStyles.questionText.copyWith(
-            color: settings.highContrast ? AppColors.hcText : AppColors.navy,
+            color: Theme.of(context).colorScheme.onSurface,
           ),
         ),
         backgroundColor: Colors.transparent,
@@ -35,7 +35,7 @@ class AccessibilitySettingsScreen extends StatelessWidget {
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back_rounded,
-            color: settings.highContrast ? AppColors.hcText : AppColors.navy,
+            color: Theme.of(context).colorScheme.onSurface,
             size: 28,
           ),
           onPressed: () => Navigator.pop(context),
@@ -48,19 +48,64 @@ class AccessibilitySettingsScreen extends StatelessWidget {
               padding: const EdgeInsets.all(AppSpacing.lg),
               child: Center(
                 child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: AppSpacing.maxContentWidth),
+                  constraints: const BoxConstraints(
+                    maxWidth: AppSpacing.maxContentWidth,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
+                      // Appearance / Theme Selection
+                      Text(
+                        'Appearance (थीम निवडा)',
+                        style: AppTextStyles.headingLarge.copyWith(
+                          color: Theme.of(context).colorScheme.onSurface,
+                          fontSize: 22,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: _ThemeOptionCard(
+                              title: 'Light Theme',
+                              subtitle: 'Pastel purple',
+                              isSelected: !settings.isDarkMode,
+                              bgColor: const Color(0xFFE9DDFF),
+                              textColor: const Color(0xFF2F185E),
+                              onTap: () => appState.updateAccessibility(
+                                settings.copyWith(isDarkMode: false),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: _ThemeOptionCard(
+                              title: 'Dark Theme',
+                              subtitle: 'Deep purple',
+                              isSelected: settings.isDarkMode,
+                              bgColor: const Color(0xFF170D35),
+                              textColor: const Color(0xFFE5D9FF),
+                              onTap: () => appState.updateAccessibility(
+                                settings.copyWith(isDarkMode: true),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: AppSpacing.xxl),
+
                       // Voice Instructions
                       AccessibilityToggle(
                         icon: Icons.record_voice_over_rounded,
                         title: AppStrings.voiceInstructionsTitle,
                         subtitle: AppStrings.voiceInstructionsSubtitle,
                         value: settings.voiceInstructions,
-                        previewText: 'NOVA will read aloud instructions and options.',
+                        previewText:
+                            'NOVA will read aloud instructions and options.',
                         onChanged: (val) {
-                          appState.updateAccessibility(settings.copyWith(voiceInstructions: val));
+                          appState.updateAccessibility(
+                            settings.copyWith(voiceInstructions: val),
+                          );
                         },
                       ),
 
@@ -70,18 +115,27 @@ class AccessibilitySettingsScreen extends StatelessWidget {
                         title: AppStrings.hapticFeedbackTitle,
                         subtitle: AppStrings.hapticFeedbackSubtitle,
                         value: settings.hapticFeedback,
-                        previewText: 'Vibrates lightly when you tap buttons and select answers.',
+                        previewText:
+                            'Vibrates lightly when you tap buttons and select answers.',
                         onChanged: (val) {
-                          appState.updateAccessibility(settings.copyWith(hapticFeedback: val));
+                          appState.updateAccessibility(
+                            settings.copyWith(hapticFeedback: val),
+                          );
                         },
                       ),
                       if (settings.hapticFeedback)
                         Padding(
-                          padding: const EdgeInsets.only(left: 12.0, bottom: 8.0),
+                          padding: const EdgeInsets.only(
+                            left: 12.0,
+                            bottom: 8.0,
+                          ),
                           child: Align(
                             alignment: Alignment.centerLeft,
                             child: TextButton.icon(
-                              icon: const Icon(Icons.touch_app_rounded, size: 18),
+                              icon: const Icon(
+                                Icons.touch_app_rounded,
+                                size: 18,
+                              ),
                               label: const Text(AppStrings.testHaptics),
                               onPressed: () => HapticsService.mediumImpact(),
                             ),
@@ -94,9 +148,12 @@ class AccessibilitySettingsScreen extends StatelessWidget {
                         title: AppStrings.gestureNavTitle,
                         subtitle: AppStrings.gestureNavSubtitle,
                         value: settings.gestureNavigation,
-                        previewText: 'Swipe right for next, swipe left for previous, double tap to select.',
+                        previewText:
+                            'Swipe right for next, swipe left for previous, double tap to select.',
                         onChanged: (val) {
-                          appState.updateAccessibility(settings.copyWith(gestureNavigation: val));
+                          appState.updateAccessibility(
+                            settings.copyWith(gestureNavigation: val),
+                          );
                         },
                       ),
 
@@ -106,21 +163,12 @@ class AccessibilitySettingsScreen extends StatelessWidget {
                         title: AppStrings.largeTextTitle,
                         subtitle: AppStrings.largeTextSubtitle,
                         value: settings.largeText,
-                        previewText: 'This sample text reflects enlarged font scaling.',
+                        previewText:
+                            'This sample text reflects enlarged font scaling.',
                         onChanged: (val) {
-                          appState.updateAccessibility(settings.copyWith(largeText: val));
-                        },
-                      ),
-
-                      // High Contrast
-                      AccessibilityToggle(
-                        icon: Icons.contrast_rounded,
-                        title: AppStrings.highContrastTitle,
-                        subtitle: AppStrings.highContrastSubtitle,
-                        value: settings.highContrast,
-                        previewText: 'Deep black background with crisp golden and white accents.',
-                        onChanged: (val) {
-                          appState.updateAccessibility(settings.copyWith(highContrast: val));
+                          appState.updateAccessibility(
+                            settings.copyWith(largeText: val),
+                          );
                         },
                       ),
 
@@ -130,9 +178,12 @@ class AccessibilitySettingsScreen extends StatelessWidget {
                         title: AppStrings.reduceMotionTitle,
                         subtitle: AppStrings.reduceMotionSubtitle,
                         value: settings.reduceMotion,
-                        previewText: 'Soft fades instead of bouncing animations.',
+                        previewText:
+                            'Soft fades instead of bouncing animations.',
                         onChanged: (val) {
-                          appState.updateAccessibility(settings.copyWith(reduceMotion: val));
+                          appState.updateAccessibility(
+                            settings.copyWith(reduceMotion: val),
+                          );
                         },
                       ),
                       const SizedBox(height: AppSpacing.lg),
@@ -141,10 +192,10 @@ class AccessibilitySettingsScreen extends StatelessWidget {
                       Container(
                         padding: const EdgeInsets.all(AppSpacing.lg),
                         decoration: BoxDecoration(
-                          color: settings.highContrast ? AppColors.hcCard : Colors.white,
+                          color: Theme.of(context).cardTheme.color ?? const Color(0xFFF0E9FF),
                           borderRadius: AppSpacing.roundedCard,
                           border: Border.all(
-                            color: settings.highContrast ? AppColors.hcBorder : AppColors.borderLight,
+                            color: Theme.of(context).colorScheme.outline ?? AppColors.borderLight,
                             width: 2.0,
                           ),
                           boxShadow: AppSpacing.softShadow,
@@ -154,13 +205,17 @@ class AccessibilitySettingsScreen extends StatelessWidget {
                           children: [
                             Row(
                               children: [
-                                const Icon(Icons.hearing_rounded, color: AppColors.indigo, size: 28),
+                                const Icon(
+                                  Icons.hearing_rounded,
+                                  color: AppColors.indigo,
+                                  size: 28,
+                                ),
                                 const SizedBox(width: AppSpacing.sm),
                                 Expanded(
                                   child: Text(
                                     AppStrings.screenOffModeTitle,
                                     style: AppTextStyles.questionText.copyWith(
-                                      color: settings.highContrast ? AppColors.hcText : AppColors.navy,
+                                      color: Theme.of(context).textTheme.bodyLarge?.color,
                                       fontSize: 19,
                                     ),
                                   ),
@@ -171,7 +226,7 @@ class AccessibilitySettingsScreen extends StatelessWidget {
                             Text(
                               AppStrings.screenOffModeSubtitle,
                               style: AppTextStyles.bodySoft.copyWith(
-                                color: settings.highContrast ? AppColors.hcTextSecondary : AppColors.inkSoft,
+                                color: Theme.of(context).textTheme.bodySmall?.color,
                                 fontSize: 14,
                               ),
                             ),
@@ -180,7 +235,10 @@ class AccessibilitySettingsScreen extends StatelessWidget {
                               label: AppStrings.tryScreenOffBtn,
                               icon: Icons.headset_rounded,
                               onPressed: () {
-                                Navigator.pushNamed(context, AppRoutes.screenOffSimulation);
+                                Navigator.pushNamed(
+                                  context,
+                                  AppRoutes.screenOffSimulation,
+                                );
                               },
                             ),
                           ],
@@ -195,6 +253,81 @@ class AccessibilitySettingsScreen extends StatelessWidget {
           ),
           const DemoFab(),
         ],
+      ),
+    );
+  }
+}
+
+class _ThemeOptionCard extends StatelessWidget {
+  final String title;
+  final String subtitle;
+  final bool isSelected;
+  final Color bgColor;
+  final Color textColor;
+  final VoidCallback onTap;
+
+  const _ThemeOptionCard({
+    required this.title,
+    required this.subtitle,
+    required this.isSelected,
+    required this.bgColor,
+    required this.textColor,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: bgColor,
+          borderRadius: BorderRadius.circular(24),
+          border: Border.all(
+            color: isSelected ? const Color(0xFFFFD65C) : Colors.transparent,
+            width: 4,
+          ),
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.black12,
+              blurRadius: 8,
+              offset: Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Column(
+          children: [
+            Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: textColor.withOpacity(0.1),
+              ),
+              child: isSelected
+                  ? const Icon(
+                      Icons.check_circle_rounded,
+                      color: Color(0xFFFFD65C),
+                      size: 30,
+                    )
+                  : const SizedBox.shrink(),
+            ),
+            const SizedBox(height: 12),
+            Text(
+              title,
+              style: TextStyle(
+                color: textColor,
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
+            Text(
+              subtitle,
+              style: TextStyle(color: textColor.withOpacity(0.7), fontSize: 14),
+            ),
+          ],
+        ),
       ),
     );
   }

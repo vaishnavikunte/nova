@@ -10,13 +10,7 @@ enum VisualType {
   groupedDots,
 }
 
-enum OptionState {
-  idle,
-  selected,
-  correct,
-  gentleTryAgain,
-  disabled,
-}
+enum OptionState { idle, selected, correct, gentleTryAgain, disabled }
 
 class AnswerOptionModel {
   final String id;

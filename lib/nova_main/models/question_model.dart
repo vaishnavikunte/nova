@@ -23,9 +23,15 @@ class QuestionModel {
     required this.hints,
     required this.explanation,
     required this.spokenAnswers,
-  })  : assert(options.length >= 3, 'Must have at least 3 options'),
-        assert(correctIndex >= 0 && correctIndex < options.length, 'correctIndex out of range'),
-        assert(tier >= 1 && tier <= 3, 'Tier must be 1, 2, or 3'),
-        assert(hints.length == 3, 'Must provide exactly 3 progressive hints'),
-        assert(spokenAnswers.length > 0, 'Spoken answers list must not be empty');
+  }) : assert(options.length >= 3, 'Must have at least 3 options'),
+       assert(
+         correctIndex >= 0 && correctIndex < options.length,
+         'correctIndex out of range',
+       ),
+       assert(tier >= 1 && tier <= 3, 'Tier must be 1, 2, or 3'),
+       assert(hints.length == 3, 'Must provide exactly 3 progressive hints'),
+       assert(
+         spokenAnswers.length > 0,
+         'Spoken answers list must not be empty',
+       );
 }

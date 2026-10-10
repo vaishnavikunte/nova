@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:majhe_gaon/features/duel/duel_services.dart';
 import 'package:majhe_gaon/features/duel/duel_question_generator.dart';
+import '../../nova_main/widgets/child_character_widget.dart';
 
 class DuelArenaScreen extends StatefulWidget {
   final int seed;
@@ -16,7 +17,7 @@ class DuelArenaScreen extends StatefulWidget {
 class _DuelArenaScreenState extends State<DuelArenaScreen> {
   late List<MathQuestion> _questions;
   int _currentIndex = 0;
-  
+
   int _myScore = 0;
   int _opponentScore = 0;
 
@@ -32,7 +33,7 @@ class _DuelArenaScreenState extends State<DuelArenaScreen> {
     super.initState();
     // 1. Generate exact identical questions using the shared 16-bit seed
     _questions = DuelQuestionGenerator.generateQuestions(widget.seed);
-    
+
     // 2. Start 60-second rapid fire timer
     _startTimer();
 
@@ -73,12 +74,12 @@ class _DuelArenaScreenState extends State<DuelArenaScreen> {
         _currentIndex++;
       });
       _answerController.clear();
-      
+
       // Transmit single-byte payload (0x01) over BLE
       if (!widget.isHost) {
         _clientService.sendScoreUpdate(true);
       }
-      
+
       if (_currentIndex >= _questions.length) {
         _timer?.cancel();
         _endDuel();
@@ -86,7 +87,10 @@ class _DuelArenaScreenState extends State<DuelArenaScreen> {
     } else {
       _answerController.clear();
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('चुकीचे उत्तर! (Wrong!)'), duration: Duration(milliseconds: 500)),
+        const SnackBar(
+          content: Text('चुकीचे उत्तर! (Wrong!)'),
+          duration: Duration(milliseconds: 500),
+        ),
       );
     }
   }
@@ -105,7 +109,7 @@ class _DuelArenaScreenState extends State<DuelArenaScreen> {
               Navigator.of(context).pop();
             },
             child: const Text('OK'),
-          )
+          ),
         ],
       ),
     );
@@ -121,16 +125,22 @@ class _DuelArenaScreenState extends State<DuelArenaScreen> {
   @override
   Widget build(BuildContext context) {
     if (_currentIndex >= _questions.length && _timeLeft > 0) {
-      return const Scaffold(body: Center(child: Text("Waiting for opponent to finish...")));
+      return const Scaffold(
+        body: Center(child: Text("Waiting for opponent to finish...")),
+      );
     }
 
-    final currentQ = _currentIndex < _questions.length ? _questions[_currentIndex] : null;
+    final currentQ = _currentIndex < _questions.length
+        ? _questions[_currentIndex]
+        : null;
 
     return Scaffold(
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
         title: const Text('Ganit Dangal (Math Duel)'),
-        backgroundColor: Colors.blueAccent,
+        backgroundColor: Colors.transparent,
         foregroundColor: Colors.white,
+        elevation: 0,
       ),
       body: Padding(
         padding: const EdgeInsets.all(24.0),
@@ -139,23 +149,48 @@ class _DuelArenaScreenState extends State<DuelArenaScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('My Score: $_myScore', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.green)),
+                Text(
+                  'My Score: $_myScore',
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.green,
+                  ),
+                ),
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: _timeLeft <= 10 ? Colors.red.shade100 : Colors.grey.shade200,
+                    color: _timeLeft <= 10
+                        ? Colors.red.shade100
+                        : Colors.grey.shade200,
                     shape: BoxShape.circle,
                   ),
-                  child: Text('$_timeLeft', style: TextStyle(fontSize: 24, color: _timeLeft <= 10 ? Colors.red : Colors.black)),
+                  child: Text(
+                    '$_timeLeft',
+                    style: TextStyle(
+                      fontSize: 24,
+                      color: _timeLeft <= 10 ? Colors.red : Colors.black,
+                    ),
+                  ),
                 ),
-                Text('Opponent: $_opponentScore', style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.orange)),
+                Text(
+                  'Opponent: $_opponentScore',
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.orange,
+                  ),
+                ),
               ],
             ),
             const Spacer(),
             if (currentQ != null) ...[
               Text(
                 currentQ.equation,
-                style: const TextStyle(fontSize: 64, fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                  fontSize: 64,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               const SizedBox(height: 32),
               TextField(
@@ -173,12 +208,20 @@ class _DuelArenaScreenState extends State<DuelArenaScreen> {
               ElevatedButton(
                 onPressed: _submitAnswer,
                 style: ElevatedButton.styleFrom(
-                  padding: const EdgeInsets.symmetric(horizontal: 48, vertical: 16),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 48,
+                    vertical: 16,
+                  ),
+                  backgroundColor: const Color(0xFF7041D9), // Primary purple
+                  foregroundColor: Colors.white,
                 ),
                 child: const Text('SUBMIT', style: TextStyle(fontSize: 20)),
               ),
             ],
             const Spacer(),
+            // Animated child celebrating math!
+            const ChildCharacterWidget(size: 100, prop: ChildProp.none),
+            const SizedBox(height: 20),
           ],
         ),
       ),

@@ -1,8 +1,4 @@
-enum SpeechSpeed {
-  slow,
-  normal,
-  fast,
-}
+enum SpeechSpeed { slow, normal, fast }
 
 class AccessibilitySettings {
   final bool voiceInstructions;
@@ -10,6 +6,7 @@ class AccessibilitySettings {
   final bool gestureNavigation;
   final bool largeText;
   final bool highContrast;
+  final bool isDarkMode;
   final bool reduceMotion;
   final SpeechSpeed speechSpeed;
   final bool screenOffMode;
@@ -20,6 +17,8 @@ class AccessibilitySettings {
     this.gestureNavigation = false,
     this.largeText = false,
     this.highContrast = false,
+    this.isDarkMode =
+        true, // Default to dark mode to match the purple theme reference! Wait, no, dark mode is deep purple, light is pastel
     this.reduceMotion = false,
     this.speechSpeed = SpeechSpeed.normal,
     this.screenOffMode = false,
@@ -31,6 +30,7 @@ class AccessibilitySettings {
     bool? gestureNavigation,
     bool? largeText,
     bool? highContrast,
+    bool? isDarkMode,
     bool? reduceMotion,
     SpeechSpeed? speechSpeed,
     bool? screenOffMode,
@@ -41,6 +41,7 @@ class AccessibilitySettings {
       gestureNavigation: gestureNavigation ?? this.gestureNavigation,
       largeText: largeText ?? this.largeText,
       highContrast: highContrast ?? this.highContrast,
+      isDarkMode: isDarkMode ?? this.isDarkMode,
       reduceMotion: reduceMotion ?? this.reduceMotion,
       speechSpeed: speechSpeed ?? this.speechSpeed,
       screenOffMode: screenOffMode ?? this.screenOffMode,

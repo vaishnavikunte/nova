@@ -30,7 +30,7 @@ class DuelQuestionGenerator {
         questions.add(MathQuestion('$a × $b', a * b));
       }
     }
-    
+
     return questions;
   }
 }

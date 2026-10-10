@@ -26,7 +26,8 @@ class AnswerOptionWidget extends StatefulWidget {
   State<AnswerOptionWidget> createState() => _AnswerOptionWidgetState();
 }
 
-class _AnswerOptionWidgetState extends State<AnswerOptionWidget> with SingleTickerProviderStateMixin {
+class _AnswerOptionWidgetState extends State<AnswerOptionWidget>
+    with SingleTickerProviderStateMixin {
   late AnimationController _popController;
   late Animation<double> _scaleAnimation;
 
@@ -37,9 +38,10 @@ class _AnswerOptionWidgetState extends State<AnswerOptionWidget> with SingleTick
       vsync: this,
       duration: const Duration(milliseconds: 140),
     );
-    _scaleAnimation = Tween<double>(begin: 1.0, end: 0.96).animate(
-      CurvedAnimation(parent: _popController, curve: Curves.easeInOut),
-    );
+    _scaleAnimation = Tween<double>(
+      begin: 1.0,
+      end: 0.96,
+    ).animate(CurvedAnimation(parent: _popController, curve: Curves.easeInOut));
   }
 
   @override
@@ -86,7 +88,11 @@ class _AnswerOptionWidgetState extends State<AnswerOptionWidget> with SingleTick
             color: AppColors.coral.withValues(alpha: 0.2),
             shape: BoxShape.circle,
           ),
-          child: const Icon(Icons.loop_rounded, color: AppColors.coral, size: 20),
+          child: const Icon(
+            Icons.loop_rounded,
+            color: AppColors.coral,
+            size: 20,
+          ),
         );
         break;
 
@@ -100,7 +106,11 @@ class _AnswerOptionWidgetState extends State<AnswerOptionWidget> with SingleTick
             color: AppColors.indigo,
             shape: BoxShape.circle,
           ),
-          child: const Icon(Icons.arrow_forward_rounded, color: Colors.white, size: 20),
+          child: const Icon(
+            Icons.arrow_forward_rounded,
+            color: Colors.white,
+            size: 20,
+          ),
         );
         break;
 
@@ -124,8 +134,13 @@ class _AnswerOptionWidgetState extends State<AnswerOptionWidget> with SingleTick
           ),
           alignment: Alignment.center,
           child: Text(
-            widget.index != null ? String.fromCharCode(65 + widget.index!) : '•',
-            style: AppTextStyles.label.copyWith(color: AppColors.inkSoft, fontWeight: FontWeight.bold),
+            widget.index != null
+                ? String.fromCharCode(65 + widget.index!)
+                : '•',
+            style: AppTextStyles.label.copyWith(
+              color: AppColors.inkSoft,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         );
         break;
@@ -141,14 +156,21 @@ class _AnswerOptionWidgetState extends State<AnswerOptionWidget> with SingleTick
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 220),
             curve: Curves.easeOutCubic,
-            constraints: const BoxConstraints(minHeight: AppSpacing.minOptionHeight),
+            constraints: const BoxConstraints(
+              minHeight: AppSpacing.minOptionHeight,
+            ),
             margin: const EdgeInsets.symmetric(vertical: AppSpacing.xs),
-            padding: const EdgeInsets.symmetric(horizontal: AppSpacing.lg, vertical: AppSpacing.md),
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppSpacing.lg,
+              vertical: AppSpacing.md,
+            ),
             decoration: BoxDecoration(
               color: backgroundColor,
               borderRadius: AppSpacing.roundedCard,
               border: Border.all(color: borderColor, width: 2.2),
-              boxShadow: widget.state == OptionState.selected || widget.state == OptionState.correct
+              boxShadow:
+                  widget.state == OptionState.selected ||
+                      widget.state == OptionState.correct
                   ? AppSpacing.softShadow
                   : null,
             ),
@@ -190,10 +212,7 @@ class _AnswerOptionWidgetState extends State<AnswerOptionWidget> with SingleTick
         size: 52,
       );
     } else if (opt.visualType == VisualType.customShapes) {
-      return ShapeVisual(
-        shape: opt.visualData ?? 'square',
-        size: 46,
-      );
+      return ShapeVisual(shape: opt.visualData ?? 'square', size: 46);
     }
     return const SizedBox.shrink();
   }

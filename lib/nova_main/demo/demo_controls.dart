@@ -68,7 +68,11 @@ class _DemoControlsSheetState extends State<DemoControlsSheet> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(Icons.build_rounded, color: AppColors.purple, size: 22),
+                    const Icon(
+                      Icons.build_rounded,
+                      color: AppColors.purple,
+                      size: 22,
+                    ),
                     const SizedBox(width: 8),
                     Text(
                       'Evaluator Demo Controls',
@@ -120,11 +124,17 @@ class _DemoControlsSheetState extends State<DemoControlsSheet> {
                     }),
                     _buildChip('Accessibility', () {
                       Navigator.pop(context);
-                      Navigator.pushNamed(context, AppRoutes.accessibilitySettings);
+                      Navigator.pushNamed(
+                        context,
+                        AppRoutes.accessibilitySettings,
+                      );
                     }),
                     _buildChip('Screen-Off Sim', () {
                       Navigator.pop(context);
-                      Navigator.pushNamed(context, AppRoutes.screenOffSimulation);
+                      Navigator.pushNamed(
+                        context,
+                        AppRoutes.screenOffSimulation,
+                      );
                     }),
                     _buildChip('🔄 Reset Demo', () {
                       appState.resetDemo();
@@ -164,7 +174,10 @@ class _DemoControlsSheetState extends State<DemoControlsSheet> {
                 const SizedBox(height: 12),
                 Row(
                   children: [
-                    Text('Starting Level: ${appState.student.currentLevel}', style: AppTextStyles.label),
+                    Text(
+                      'Starting Level: ${appState.student.currentLevel}',
+                      style: AppTextStyles.label,
+                    ),
                     Expanded(
                       child: Slider(
                         value: appState.student.currentLevel.toDouble(),
@@ -229,9 +242,13 @@ class _DemoControlsSheetState extends State<DemoControlsSheet> {
                   children: [
                     ChoiceChip(
                       label: const Text('🚀 Confident'),
-                      selected: appState.forcedEmotion == EmotionState.confident,
+                      selected:
+                          appState.forcedEmotion == EmotionState.confident,
                       onSelected: (_) {
-                        appState.setForcedEmotion(EmotionState.confident, lock: appState.lockEmotion);
+                        appState.setForcedEmotion(
+                          EmotionState.confident,
+                          lock: appState.lockEmotion,
+                        );
                         _toast('Simulating Confident');
                       },
                     ),
@@ -239,15 +256,22 @@ class _DemoControlsSheetState extends State<DemoControlsSheet> {
                       label: const Text('💡 Confused'),
                       selected: appState.forcedEmotion == EmotionState.confused,
                       onSelected: (_) {
-                        appState.setForcedEmotion(EmotionState.confused, lock: appState.lockEmotion);
+                        appState.setForcedEmotion(
+                          EmotionState.confused,
+                          lock: appState.lockEmotion,
+                        );
                         _toast('Simulating Confused');
                       },
                     ),
                     ChoiceChip(
                       label: const Text('🌱 Frustrated'),
-                      selected: appState.forcedEmotion == EmotionState.frustrated,
+                      selected:
+                          appState.forcedEmotion == EmotionState.frustrated,
                       onSelected: (_) {
-                        appState.setForcedEmotion(EmotionState.frustrated, lock: appState.lockEmotion);
+                        appState.setForcedEmotion(
+                          EmotionState.frustrated,
+                          lock: appState.lockEmotion,
+                        );
                         _toast('Simulating Frustrated');
                       },
                     ),
@@ -255,7 +279,10 @@ class _DemoControlsSheetState extends State<DemoControlsSheet> {
                       label: const Text('😊 Neutral'),
                       selected: appState.forcedEmotion == EmotionState.neutral,
                       onSelected: (_) {
-                        appState.setForcedEmotion(EmotionState.neutral, lock: appState.lockEmotion);
+                        appState.setForcedEmotion(
+                          EmotionState.neutral,
+                          lock: appState.lockEmotion,
+                        );
                         _toast('Simulating Neutral');
                       },
                     ),
@@ -266,7 +293,10 @@ class _DemoControlsSheetState extends State<DemoControlsSheet> {
                   title: const Text('Lock emotion until changed'),
                   value: appState.lockEmotion,
                   onChanged: (val) {
-                    appState.setForcedEmotion(appState.forcedEmotion, lock: val ?? false);
+                    appState.setForcedEmotion(
+                      appState.forcedEmotion,
+                      lock: val ?? false,
+                    );
                   },
                 ),
                 const SizedBox(height: AppSpacing.lg),
@@ -276,7 +306,9 @@ class _DemoControlsSheetState extends State<DemoControlsSheet> {
                 SwitchListTile(
                   contentPadding: EdgeInsets.zero,
                   title: const Text('Simulate Voice Mishear Once'),
-                  subtitle: const Text('Recogniser returns "Fore" to demo retry'),
+                  subtitle: const Text(
+                    'Recogniser returns "Fore" to demo retry',
+                  ),
                   value: appState.voiceMishearOnce,
                   onChanged: (val) {
                     appState.setVoiceMishearOnce(val);
@@ -330,7 +362,11 @@ class _DemoControlsSheetState extends State<DemoControlsSheet> {
                     'Tier: ${appState.currentTier}  •  Emotion: ${appState.currentEmotion.name}\n'
                     'Stars: ${appState.student.stars}  •  Streak: ${appState.student.streak}\n'
                     'Hints In Session: ${appState.hintsUsedInSession}',
-                    style: const TextStyle(fontFamily: 'monospace', fontSize: 13, height: 1.5),
+                    style: const TextStyle(
+                      fontFamily: 'monospace',
+                      fontSize: 13,
+                      height: 1.5,
+                    ),
                   ),
                 ),
               ],
@@ -344,17 +380,87 @@ class _DemoControlsSheetState extends State<DemoControlsSheet> {
   void _forceAssessment(AppState appState, List<int> answers) {
     final outcome = AssessmentService.evaluate(
       questions: const [
-        AssessmentQuestion(id: '1', classNumber: 4, skillTag: 'numbers', question: '', options: [], correctIndex: 1, semanticLabel: ''),
-        AssessmentQuestion(id: '2', classNumber: 4, skillTag: 'shapes', question: '', options: [], correctIndex: 0, semanticLabel: ''),
-        AssessmentQuestion(id: '3', classNumber: 4, skillTag: 'addsub', question: '', options: [], correctIndex: 1, semanticLabel: ''),
-        AssessmentQuestion(id: '4', classNumber: 4, skillTag: 'addsub', question: '', options: [], correctIndex: 0, semanticLabel: ''),
-        AssessmentQuestion(id: '5', classNumber: 4, skillTag: 'multiply', question: '', options: [], correctIndex: 1, semanticLabel: ''),
-        AssessmentQuestion(id: '6', classNumber: 4, skillTag: 'divide', question: '', options: [], correctIndex: 1, semanticLabel: ''),
-        AssessmentQuestion(id: '7', classNumber: 4, skillTag: 'fractions', question: '', options: [], correctIndex: 0, semanticLabel: ''),
-        AssessmentQuestion(id: '8', classNumber: 4, skillTag: 'patterns', question: '', options: [], correctIndex: 0, semanticLabel: ''),
+        AssessmentQuestion(
+          id: '1',
+          classNumber: 4,
+          skillTag: 'numbers',
+          question: '',
+          options: [],
+          correctIndex: 1,
+          semanticLabel: '',
+        ),
+        AssessmentQuestion(
+          id: '2',
+          classNumber: 4,
+          skillTag: 'shapes',
+          question: '',
+          options: [],
+          correctIndex: 0,
+          semanticLabel: '',
+        ),
+        AssessmentQuestion(
+          id: '3',
+          classNumber: 4,
+          skillTag: 'addsub',
+          question: '',
+          options: [],
+          correctIndex: 1,
+          semanticLabel: '',
+        ),
+        AssessmentQuestion(
+          id: '4',
+          classNumber: 4,
+          skillTag: 'addsub',
+          question: '',
+          options: [],
+          correctIndex: 0,
+          semanticLabel: '',
+        ),
+        AssessmentQuestion(
+          id: '5',
+          classNumber: 4,
+          skillTag: 'multiply',
+          question: '',
+          options: [],
+          correctIndex: 1,
+          semanticLabel: '',
+        ),
+        AssessmentQuestion(
+          id: '6',
+          classNumber: 4,
+          skillTag: 'divide',
+          question: '',
+          options: [],
+          correctIndex: 1,
+          semanticLabel: '',
+        ),
+        AssessmentQuestion(
+          id: '7',
+          classNumber: 4,
+          skillTag: 'fractions',
+          question: '',
+          options: [],
+          correctIndex: 0,
+          semanticLabel: '',
+        ),
+        AssessmentQuestion(
+          id: '8',
+          classNumber: 4,
+          skillTag: 'patterns',
+          question: '',
+          options: [],
+          correctIndex: 0,
+          semanticLabel: '',
+        ),
       ],
       selectedOptionIndices: answers,
-      gateLevels: const {'numbers': 1, 'addsub': 2, 'multiply': 3, 'divide': 4, 'fractions': 6},
+      gateLevels: const {
+        'numbers': 1,
+        'addsub': 2,
+        'multiply': 3,
+        'divide': 4,
+        'fractions': 6,
+      },
     );
     appState.submitAssessment(outcome);
   }
@@ -373,9 +479,15 @@ class _DemoControlsSheetState extends State<DemoControlsSheet> {
     );
   }
 
-  Widget _buildChip(String label, VoidCallback onTap, {bool isDestructive = false}) {
+  Widget _buildChip(
+    String label,
+    VoidCallback onTap, {
+    bool isDestructive = false,
+  }) {
     return ActionChip(
-      backgroundColor: isDestructive ? const Color(0xFFFFECEC) : const Color(0xFFF1F5F9),
+      backgroundColor: isDestructive
+          ? const Color(0xFFFFECEC)
+          : const Color(0xFFF1F5F9),
       side: BorderSide(
         color: isDestructive ? AppColors.coral : AppColors.borderLight,
       ),

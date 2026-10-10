@@ -25,9 +25,14 @@ class AssessmentIntroScreen extends StatelessWidget {
           SafeArea(
             child: Center(
               child: SingleChildScrollView(
-                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xl, vertical: AppSpacing.lg),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppSpacing.xl,
+                  vertical: AppSpacing.lg,
+                ),
                 child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: AppSpacing.maxContentWidth),
+                  constraints: const BoxConstraints(
+                    maxWidth: AppSpacing.maxContentWidth,
+                  ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -82,7 +87,10 @@ class AssessmentIntroScreen extends StatelessWidget {
                         label: AppStrings.startAssessment,
                         icon: Icons.play_arrow_rounded,
                         onPressed: () {
-                          Navigator.pushNamed(context, AppRoutes.assessmentQuestion);
+                          Navigator.pushNamed(
+                            context,
+                            AppRoutes.assessmentQuestion,
+                          );
                         },
                       ),
                       const SizedBox(height: AppSpacing.md),
@@ -91,7 +99,10 @@ class AssessmentIntroScreen extends StatelessWidget {
                       TextButton(
                         onPressed: () {
                           appState.setCurrentLevel(1);
-                          Navigator.pushReplacementNamed(context, AppRoutes.home);
+                          Navigator.pushReplacementNamed(
+                            context,
+                            AppRoutes.home,
+                          );
                         },
                         child: Text(
                           AppStrings.skipAssessment,
