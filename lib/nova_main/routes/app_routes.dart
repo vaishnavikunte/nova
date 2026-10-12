@@ -12,6 +12,7 @@ class AppRoutes {
   static const String home = '/home';
   static const String levelDetail = '/level-detail';
   static const String story = '/story';
+  static const String lessonPlayer = '/lesson-player';
   static const String levelComplete = '/level-complete';
   static const String accessibilitySettings = '/accessibility-settings';
   static const String screenOffSimulation = '/screen-off-simulation';

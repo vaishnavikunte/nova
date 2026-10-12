@@ -9,6 +9,7 @@ import '../progress/progress_screen.dart';
 import 'adventure_map_screen.dart';
 import '../../services/app_state.dart';
 import '../../widgets/mascot_widget.dart';
+import '../../models/story_beat.dart';
 import '../../routes/app_routes.dart';
 import '../accessibility/accessibility_settings_screen.dart';
 import '../onboarding/student_setup_screen.dart';

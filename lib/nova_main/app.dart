@@ -16,6 +16,7 @@ import 'screens/onboarding/splash_screen.dart';
 import 'screens/onboarding/student_setup_screen.dart';
 import 'screens/onboarding/welcome_screen.dart';
 import 'screens/story/story_screen.dart';
+import '../features/lessons/presentation/screens/lesson_player_screen.dart';
 import 'services/app_state.dart';
 import 'theme/app_theme.dart';
 import 'widgets/global_purple_theme.dart';
@@ -33,7 +34,7 @@ class NovaApp extends StatelessWidget {
       title: AppStrings.appName,
       debugShowCheckedModeBanner: false,
       theme: accessibility.highContrast
-          ? AppTheme.highContrastTheme
+          ? AppTheme.darkTheme
           : AppTheme.lightTheme,
       builder: (context, child) {
         // Accessibility Text Scaling: multiply by 1.3 if largeText is ON, clamp at 2.0 total
@@ -111,6 +112,15 @@ class NovaApp extends StatelessWidget {
           case AppRoutes.story:
             return RouteTransitions.slideUp(
               const StoryScreen(),
+              reduceMotion: reduceMotion,
+            );
+
+          case AppRoutes.lessonPlayer:
+            return RouteTransitions.slideUp(
+              LessonPlayerScreen(
+                standard: appState.student.classNumber,
+                level: appState.activeLevel?.number ?? appState.student.currentLevel,
+              ),
               reduceMotion: reduceMotion,
             );
 

@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import '../../constants/app_strings.dart';
 import '../../demo/demo_fab.dart';
-import '../../routes/app_routes.dart';
 import '../../services/app_state.dart';
 import '../../theme/app_colors.dart';
 import '../../theme/app_spacing.dart';
 import '../../theme/app_text_styles.dart';
 import '../../widgets/primary_button.dart';
-import '../../../features/curriculum/presentation/std1_level1_story_screen.dart';
+import '../../../features/lessons/presentation/screens/lesson_player_screen.dart';
 import '../story/story_screen.dart';
 import '../../widgets/child_character_widget.dart';
 
@@ -186,8 +185,10 @@ class LevelDetailScreen extends StatelessWidget {
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>
-                                    const Std1Level1StoryScreen(),
+                                builder: (context) => const LessonPlayerScreen(
+                                  standard: 1,
+                                  level: 1,
+                                ),
                               ),
                             );
                           } else {

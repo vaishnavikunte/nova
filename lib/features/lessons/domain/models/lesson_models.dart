@@ -1,6 +1,4 @@
-import 'package:flutter/foundation.dart';
-
-enum QuestionType { tap, voice, tapOrVoice }
+enum QuestionType { tap, voice, tapOrVoice, matchPairs }
 enum SceneId { house, roofAndGround, farm, questionArea }
 enum VisualCue { sun, roof, chiu, ground, ganya, tractor, bucket, none }
 
@@ -48,12 +46,37 @@ class QuestionOption {
   });
 }
 
+class MatchingPair {
+  final String id;
+  final String leftLabel;
+  final String? leftSublabel;
+  final String leftVisualKey;
+  final String leftSemanticLabel;
+  final String rightLabel;
+  final String? rightSublabel;
+  final String rightVisualKey;
+  final String rightSemanticLabel;
+
+  const MatchingPair({
+    required this.id,
+    required this.leftLabel,
+    this.leftSublabel,
+    required this.leftVisualKey,
+    required this.leftSemanticLabel,
+    required this.rightLabel,
+    this.rightSublabel,
+    required this.rightVisualKey,
+    required this.rightSemanticLabel,
+  });
+}
+
 class LessonQuestion {
   final String id;
   final String subject;
   final NarrationLine prompt;
   final QuestionType type;
   final List<QuestionOption> options;
+  final List<MatchingPair> matchingPairs;
   final String correctOptionId;
   final List<NarrationLine> correctFeedback;
   final List<NarrationLine> retryFeedback;
@@ -65,8 +88,9 @@ class LessonQuestion {
     required this.subject,
     required this.prompt,
     required this.type,
-    required this.options,
-    required this.correctOptionId,
+    this.options = const [],
+    this.matchingPairs = const [],
+    this.correctOptionId = '',
     required this.correctFeedback,
     required this.retryFeedback,
     this.hint,

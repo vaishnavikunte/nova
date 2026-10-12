@@ -19,6 +19,11 @@ class LessonState {
   final bool isListening;
   final String transcript;
   final String feedbackText;
+  final Set<String> completedPairIds;
+  final String? selectedOptionId;
+  final bool? isCorrectAnswer;
+  final bool showContinueButton;
+  final bool isMuted;
 
   const LessonState({
     this.lesson,
@@ -32,6 +37,11 @@ class LessonState {
     this.isListening = false,
     this.transcript = '',
     this.feedbackText = '',
+    this.completedPairIds = const {},
+    this.selectedOptionId,
+    this.isCorrectAnswer,
+    this.showContinueButton = false,
+    this.isMuted = false,
   });
 
   LessonState copyWith({
@@ -46,6 +56,12 @@ class LessonState {
     bool? isListening,
     String? transcript,
     String? feedbackText,
+    Set<String>? completedPairIds,
+    String? selectedOptionId,
+    bool? isCorrectAnswer,
+    bool? showContinueButton,
+    bool? isMuted,
+    bool clearSelectedOption = false,
   }) {
     return LessonState(
       lesson: lesson ?? this.lesson,
@@ -59,6 +75,11 @@ class LessonState {
       isListening: isListening ?? this.isListening,
       transcript: transcript ?? this.transcript,
       feedbackText: feedbackText ?? this.feedbackText,
+      completedPairIds: completedPairIds ?? this.completedPairIds,
+      selectedOptionId: clearSelectedOption ? null : (selectedOptionId ?? this.selectedOptionId),
+      isCorrectAnswer: clearSelectedOption ? null : (isCorrectAnswer ?? this.isCorrectAnswer),
+      showContinueButton: showContinueButton ?? this.showContinueButton,
+      isMuted: isMuted ?? this.isMuted,
     );
   }
 }
@@ -83,11 +104,22 @@ class LessonEngine extends Notifier<LessonState> {
       currentQuestionIndex: 0,
       currentCue: VisualCue.none,
       feedbackText: '',
+      completedPairIds: {},
+      clearSelectedOption: true,
+      showContinueButton: false,
     );
   }
 
   Future<void> startLesson() async {
     await playCurrentBeat();
+  }
+
+  void toggleSound() {
+    final newMuted = !state.isMuted;
+    if (newMuted) {
+      _ttsService.stop();
+    }
+    state = state.copyWith(isMuted: newMuted);
   }
 
   Future<void> playCurrentBeat() async {
@@ -99,25 +131,51 @@ class LessonEngine extends Notifier<LessonState> {
       novaState: NovaState.talking, 
       currentCue: VisualCue.none,
       feedbackText: beat.narration.displayText,
+      showContinueButton: false,
     );
     
-    await _ttsService.playNarration(
-      beat.narration,
-      onSegmentStart: (cue) {
-        if (cue != null) {
-          state = state.copyWith(currentCue: cue);
-        }
-      },
-    );
+    if (!state.isMuted) {
+      await _ttsService.playNarration(
+        beat.narration,
+        onSegmentStart: (cue) {
+          if (cue != null) {
+            state = state.copyWith(currentCue: cue);
+          }
+        },
+      );
+    }
 
-    state = state.copyWith(isPlayingAudio: false, novaState: NovaState.idle);
+    state = state.copyWith(
+      isPlayingAudio: false, 
+      novaState: NovaState.idle,
+      showContinueButton: true,
+    );
 
     if (beat.requiresMicInteraction) {
       await startListeningForBeat();
-    } else {
-      // Auto advance after brief pause
-      Future.delayed(const Duration(seconds: 1), () => nextBeat());
     }
+  }
+
+  Future<void> replayCurrentBeat() async {
+    if (state.isPlayingAudio) {
+      await _ttsService.stop();
+    }
+    await playCurrentBeat();
+  }
+
+  void skipStory() {
+    _ttsService.stop();
+    _asrService.stopListening();
+    state = state.copyWith(
+      phase: LessonPhase.challenge,
+      currentQuestionIndex: 0,
+      isListening: false,
+      isPlayingAudio: false,
+      completedPairIds: {},
+      clearSelectedOption: true,
+      showContinueButton: false,
+    );
+    _playCurrentQuestion();
   }
 
   Future<void> startListeningForBeat() async {
@@ -127,13 +185,19 @@ class LessonEngine extends Notifier<LessonState> {
         state = state.copyWith(transcript: words);
         if (words.toLowerCase().contains("good morning") || words.toLowerCase().contains("good")) {
           await _asrService.stopListening();
-          state = state.copyWith(isListening: false, novaState: NovaState.happy, feedbackText: 'Excellent!');
-          await _ttsService.playNarration(const NarrationLine(
-            displayText: "Excellent!",
-            semanticDescription: "Happy",
-            segments: [NarrationSegment(text: "Excellent!", languageTag: 'en-IN')]
-          ));
-          nextBeat();
+          state = state.copyWith(
+            isListening: false, 
+            novaState: NovaState.happy, 
+            feedbackText: 'शाब्बास! Good Morning!',
+            showContinueButton: true,
+          );
+          if (!state.isMuted) {
+            await _ttsService.playNarration(const NarrationLine(
+              displayText: "Excellent! Good Morning!",
+              semanticDescription: "Happy",
+              segments: [NarrationSegment(text: "Good Morning!", languageTag: 'en-IN')],
+            ));
+          }
         }
       },
     );
@@ -141,13 +205,26 @@ class LessonEngine extends Notifier<LessonState> {
 
   void nextBeat() {
     if (state.lesson == null) return;
+    _ttsService.stop();
+    _asrService.stopListening();
     
     if (state.currentBeatIndex + 1 < state.lesson!.beats.length) {
-      state = state.copyWith(currentBeatIndex: state.currentBeatIndex + 1);
+      state = state.copyWith(
+        currentBeatIndex: state.currentBeatIndex + 1,
+        isListening: false,
+        clearSelectedOption: true,
+      );
       playCurrentBeat();
     } else {
       // Transition to challenge phase
-      state = state.copyWith(phase: LessonPhase.challenge, currentQuestionIndex: 0);
+      state = state.copyWith(
+        phase: LessonPhase.challenge, 
+        currentQuestionIndex: 0,
+        isListening: false,
+        completedPairIds: {},
+        clearSelectedOption: true,
+        showContinueButton: false,
+      );
       _playCurrentQuestion();
     }
   }
@@ -160,14 +237,26 @@ class LessonEngine extends Notifier<LessonState> {
       isPlayingAudio: true, 
       novaState: NovaState.talking,
       feedbackText: question.prompt.displayText,
+      clearSelectedOption: true,
+      showContinueButton: false,
+      completedPairIds: {},
     );
     
-    await _ttsService.playNarration(question.prompt);
+    if (!state.isMuted) {
+      await _ttsService.playNarration(question.prompt);
+    }
     state = state.copyWith(isPlayingAudio: false, novaState: NovaState.idle);
 
     if (question.type == QuestionType.voice || question.type == QuestionType.tapOrVoice) {
       startListeningForQuestion(question);
     }
+  }
+
+  Future<void> replayCurrentQuestion() async {
+    if (state.isPlayingAudio) {
+      await _ttsService.stop();
+    }
+    await _playCurrentQuestion();
   }
 
   Future<void> startListeningForQuestion(LessonQuestion question) async {
@@ -177,7 +266,6 @@ class LessonEngine extends Notifier<LessonState> {
         state = state.copyWith(transcript: words);
         final lowerWords = words.toLowerCase();
         
-        // Find if spoken words match any option
         for (final option in question.options) {
           for (final alias in option.spokenAliases) {
             if (lowerWords.contains(alias.toLowerCase())) {
@@ -194,7 +282,6 @@ class LessonEngine extends Notifier<LessonState> {
   Future<void> submitAnswer(String optionId) async {
     if (state.lesson == null || state.phase != LessonPhase.challenge) return;
     
-    // Stop listening if we were
     if (state.isListening) {
       await _asrService.stopListening();
       state = state.copyWith(isListening: false);
@@ -203,26 +290,92 @@ class LessonEngine extends Notifier<LessonState> {
     final question = state.lesson!.questions[state.currentQuestionIndex];
     if (optionId == question.correctOptionId) {
       // Correct!
-      state = state.copyWith(novaState: NovaState.happy, feedbackText: question.correctFeedback.first.displayText);
-      await _ttsService.playNarration(question.correctFeedback.first);
-      
-      if (state.currentQuestionIndex + 1 < state.lesson!.questions.length) {
-        state = state.copyWith(currentQuestionIndex: state.currentQuestionIndex + 1);
-        _playCurrentQuestion();
-      } else {
-        // Finish challenge
-        state = state.copyWith(phase: LessonPhase.summary);
-        _playSummary();
+      state = state.copyWith(
+        selectedOptionId: optionId,
+        isCorrectAnswer: true,
+        novaState: NovaState.happy, 
+        feedbackText: question.correctFeedback.first.displayText,
+        showContinueButton: true,
+      );
+      if (!state.isMuted) {
+        await _ttsService.playNarration(question.correctFeedback.first);
       }
     } else {
-      // Incorrect
-      state = state.copyWith(novaState: NovaState.talking, feedbackText: question.retryFeedback.first.displayText);
-      await _ttsService.playNarration(question.retryFeedback.first);
+      // Incorrect / Retry
+      state = state.copyWith(
+        selectedOptionId: optionId,
+        isCorrectAnswer: false,
+        novaState: NovaState.talking, 
+        feedbackText: question.retryFeedback.first.displayText,
+        showContinueButton: false,
+      );
+      if (!state.isMuted) {
+        await _ttsService.playNarration(question.retryFeedback.first);
+      }
       state = state.copyWith(novaState: NovaState.idle);
       
       if (question.type == QuestionType.voice || question.type == QuestionType.tapOrVoice) {
         startListeningForQuestion(question);
       }
+    }
+  }
+
+  Future<void> submitPairMatch(String leftId, String rightId) async {
+    if (state.lesson == null || state.phase != LessonPhase.challenge) return;
+    final question = state.lesson!.questions[state.currentQuestionIndex];
+
+    if (leftId == rightId) {
+      // Correct match!
+      final updatedCompleted = Set<String>.from(state.completedPairIds)..add(leftId);
+      final allDone = updatedCompleted.length >= question.matchingPairs.length;
+
+      state = state.copyWith(
+        completedPairIds: updatedCompleted,
+        novaState: allDone ? NovaState.happy : NovaState.talking,
+        feedbackText: allDone
+            ? question.correctFeedback.first.displayText
+            : 'शाब्बास! बरोबर जोडी! ($updatedCompleted.length / ${question.matchingPairs.length})',
+        showContinueButton: allDone,
+      );
+
+      if (allDone && !state.isMuted) {
+        await _ttsService.playNarration(question.correctFeedback.first);
+      }
+    } else {
+      // Mismatch!
+      state = state.copyWith(
+        novaState: NovaState.talking,
+        feedbackText: question.retryFeedback.first.displayText,
+        showContinueButton: false,
+      );
+      if (!state.isMuted) {
+        await _ttsService.playNarration(question.retryFeedback.first);
+      }
+      state = state.copyWith(novaState: NovaState.idle);
+    }
+  }
+
+  void nextQuestion() {
+    if (state.lesson == null) return;
+    _ttsService.stop();
+    _asrService.stopListening();
+
+    if (state.currentQuestionIndex + 1 < state.lesson!.questions.length) {
+      state = state.copyWith(
+        currentQuestionIndex: state.currentQuestionIndex + 1,
+        clearSelectedOption: true,
+        completedPairIds: {},
+        showContinueButton: false,
+      );
+      _playCurrentQuestion();
+    } else {
+      // Finish challenge, open summary
+      state = state.copyWith(
+        phase: LessonPhase.summary,
+        clearSelectedOption: true,
+        showContinueButton: true,
+      );
+      _playSummary();
     }
   }
 
@@ -234,18 +387,26 @@ class LessonEngine extends Notifier<LessonState> {
       isPlayingAudio: true, 
       novaState: NovaState.talking,
       feedbackText: summary.overallNarration.displayText,
+      showContinueButton: true,
     );
     
-    await _ttsService.playNarration(summary.overallNarration);
+    if (!state.isMuted) {
+      await _ttsService.playNarration(summary.overallNarration);
+    }
     state = state.copyWith(
       phase: LessonPhase.celebration, 
       isPlayingAudio: false, 
       novaState: NovaState.happy,
-      feedbackText: 'Lesson Complete!',
+      feedbackText: 'शाब्बास! आजचा धडा पूर्ण झाला!',
     );
   }
 
-  @override
+  void resetLesson() {
+    if (state.lesson == null) return;
+    loadLesson(state.lesson!);
+    startLesson();
+  }
+
   void dispose() {
     _asrService.stopListening();
     _ttsService.stop();
