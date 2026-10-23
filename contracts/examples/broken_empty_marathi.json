@@ -1,0 +1,110 @@
+{
+  "schema_version": "2.0",
+  "level_id": "L_M1_COUNT_10_T1_mango_001",
+  "skill_id": "M1_COUNT_10",
+  "grade": 1,
+  "difficulty_tier": 1,
+  "theme": "mango_grove",
+  "title": {
+    "mr": "चिंटूचे आंबे",
+    "en": "Chintu's Mangoes"
+  },
+  "summary": {
+    "mr": "चिंटूने आंबे मोजायला शिकले.",
+    "en": "Chintu learned to count mangoes."
+  },
+  "scenes": [
+    {
+      "scene_id": 1,
+      "text": {
+        "mr": "",
+        "en": "Chintu came to the mango grove."
+      },
+      "backdrop": "bg_banyan_grove",
+      "actors": [
+        {
+          "id": "char_chintu",
+          "slot": "left",
+          "expression": "happy",
+          "enter": "walk_in_left"
+        }
+      ],
+      "props": [],
+      "timeline": [
+        {
+          "at": 0.0,
+          "do": "narrate"
+        }
+      ]
+    },
+    {
+      "scene_id": 2,
+      "text": {
+        "mr": "चिंटूला झाडाखाली आंबे सापडले! किती आंबे आहेत?",
+        "en": "Chintu found mangoes under the tree! How many mangoes are there?"
+      },
+      "backdrop": "bg_banyan_grove",
+      "actors": [
+        {
+          "id": "char_chintu",
+          "slot": "left",
+          "expression": "curious"
+        },
+        {
+          "id": "char_tiger",
+          "slot": "right",
+          "expression": "idle",
+          "loop": "idle_bounce"
+        }
+      ],
+      "props": [
+        {
+          "id": "prop_mango",
+          "slot": "ground_center",
+          "count": 5,
+          "enter": "pop_in_staggered"
+        }
+      ],
+      "timeline": [
+        {
+          "at": 0.0,
+          "do": "narrate"
+        },
+        {
+          "at": 1.5,
+          "do": "point_at",
+          "actor": "char_chintu",
+          "play": "point_at"
+        },
+        {
+          "at": 3.0,
+          "do": "show_question"
+        }
+      ],
+      "question_ref": "Q1",
+      "on_correct": {
+        "actor": "char_chintu",
+        "expression": "happy",
+        "play": "jump",
+        "sfx": "sfx_cheer"
+      },
+      "on_wrong": {
+        "actor": "char_tiger",
+        "expression": "encouraging",
+        "play": "head_tilt"
+      }
+    }
+  ],
+  "questions": [
+    {
+      "id": "Q1",
+      "type": "voice_input",
+      "prompt": {
+        "mr": "किती आंबे आहेत?",
+        "en": "How many mangoes are there?"
+      },
+      "answer": 5,
+      "counts_prop": "prop_mango"
+    }
+  ]
+}
